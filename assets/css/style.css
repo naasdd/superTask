@@ -34,6 +34,8 @@ header{
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    animation: headeranimation .5s ease-out 3s both;
+    z-index: 999;
 }
 .iconeHeader{
     margin-top: 25px;
@@ -69,9 +71,19 @@ header{
 .menu i{
     font-size: 30px;
     color: var(--icons);
+    transition: all .15s ease-in-out;
 }
 .menu i:first-child{
     font-size: 45px;
+}
+.menu i:nth-child(2):hover{
+    font-size: 35px;
+    color: var(--azul);
+    cursor: pointer;
+}
+
+section{
+    display: none;
 }
 
 
@@ -85,4 +97,27 @@ main{
 main > h1{
     font-weight: 200;
     font-size: 40px;
+    
+    animation: tituloanimation 2s cubic-bezier(0.075, 0.82, 0.165, 1) 1s both;
+    animation-duration: 2s;
+}
+
+
+
+@keyframes headeranimation{
+    from{
+        transform: translateX(-100%);
+    }
+    to{
+        transform: translateX(0%);
+    }
+}
+
+@keyframes tituloanimation {
+     from{
+        transform: translateY(-1000%);
+     }
+     to{
+        transform: translateY(0%);
+     }
 }
