@@ -5,6 +5,7 @@
     padding: 0;
     margin: 0;
     color: white;
+    
 }
 
 :root{
@@ -22,6 +23,23 @@ body{
     flex-direction: row;
     min-height: 100vh;
     width: 100vw;
+    overflow: hidden;
+}
+.blur1, .blur2{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: 200px;
+    height: 600px;
+    border-radius: 31px;
+    background: #8CD2E6;
+    -webkit-filter: blur(200px);
+    top: 20%;
+    left: 180px;
+}
+.blur2{
+    top: -200px;
+    left: 105%;
 }
 
 header{
@@ -34,7 +52,7 @@ header{
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    animation: headeranimation .5s ease-out 3s both;
+    animation: headeranimation 1s ease-out 3s both;
     z-index: 999;
 }
 .iconeHeader{
@@ -71,13 +89,13 @@ header{
 .menu i{
     font-size: 30px;
     color: var(--icons);
-    transition: all .15s ease-in-out;
+    transition: all .3s;
 }
 .menu i:first-child{
     font-size: 45px;
 }
 .menu i:nth-child(2):hover{
-    font-size: 35px;
+    font-size: 45px;
     color: var(--azul);
     cursor: pointer;
 }
@@ -86,6 +104,16 @@ section{
     display: none;
 }
 
+.paginatitulo{
+    display: none;
+    margin: 30px 0;
+    font-weight: 300;
+    font-size: 50px;
+    
+}
+.container{
+    display: none;
+}
 
 
 main{
@@ -94,7 +122,7 @@ main{
     align-items: center;
     width: 100%;
 }
-main > h1{
+.supertasktitulo{
     font-weight: 200;
     font-size: 40px;
     
@@ -121,3 +149,4 @@ main > h1{
         transform: translateY(0%);
      }
 }
+
