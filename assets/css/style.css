@@ -18,6 +18,9 @@
     --backgroundHeader: #191919;
     --txtdesc: #B3B3B3;
 }
+::-webkit-scrollbar{
+    width: 1px;
+}
 
 body{
     background-color: var(--background);
@@ -25,7 +28,7 @@ body{
     flex-direction: row;
     min-height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 .blur1, .blur2{
     display: none;
