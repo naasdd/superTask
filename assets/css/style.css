@@ -14,7 +14,9 @@
     --escuro: #8CB6E6;
     --icons: #787878;
     --background: #1B1B1B;
-    --backgroundSecundario: #141414;
+    --backgroundSecundario: #161616;
+    --backgroundHeader: #191919;
+    --txtdesc: #B3B3B3;
 }
 
 body{
@@ -45,14 +47,14 @@ body{
 header{
     width: 150px;
     height: 100%;
-    background-color: var(--backgroundSecundario);
+    background-color: var(--backgroundHeader);
     position: fixed;
     left: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    animation: headeranimation 1s ease-out 3s both;
+    animation: headeranimation 1s cubic-bezier(0.19, 1, 0.22, 1) 2s both;
     z-index: 999;
 }
 .iconeHeader{
@@ -90,6 +92,11 @@ header{
     font-size: 30px;
     color: var(--icons);
     transition: all .3s;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .menu i:first-child{
     font-size: 45px;
@@ -107,7 +114,7 @@ section{
 .paginatitulo{
     display: none;
     margin: 30px 0;
-    font-weight: 300;
+    font-weight: 500;
     font-size: 50px;
     
 }
@@ -126,10 +133,23 @@ main{
     font-weight: 200;
     font-size: 40px;
     
-    animation: tituloanimation 2s cubic-bezier(0.075, 0.82, 0.165, 1) 1s both;
-    animation-duration: 2s;
+}
+.iconelogo{
+    width: 100px;
+    height: auto;
+    margin: 20px;
+}
+.logoetitulo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    animation: tituloanimation 2s cubic-bezier(0.19, 1, 0.22, 1) 0.1s both;
 }
 
+#criarProjeto{
+    display: none;
+}
 
 
 @keyframes headeranimation{
