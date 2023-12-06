@@ -38,8 +38,9 @@
         </div>
         <h1 class="paginatitulo">Projects</h1>
 
+
         <div class="container" id="container"> 
-            <div class="projeto">
+            <!-- <div class="projeto">
                 <h1>Lorem inspum</h1>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium cum, suscipit aliquid </p>
                 <div class="porcentagem">
@@ -49,13 +50,14 @@
                     <button>Ver mais</button>
                     <button>06/12/2023</button>
                 </div>
-            </div>
+            </div> -->
 
             <div class="addprojeto" id="addprojeto" onclick="opencreateProject()">
                 <i class="bi bi-plus-lg"></i>
             </div>
            
         </div>
+
 
         <div id="criarProjeto" onclick="closecreate()">
             <div id="projetoContainer" onmouseover="overcreatehud()" onmouseout="outcreatehud()">
@@ -64,9 +66,26 @@
                 <input type="text" id="projectdesc">
                 <button onclick="createProject()">Criar</button>
             </div>
+
+            <div id="vermaisContainer" onmouseover="overcreatehud()" onmouseout="outcreatehud()">
+                <div class="headervermais">
+                    <h1>Detalhes do projeto</h1>
+                </div>
+                <div class="infoproj">
+                    <h1 id="tituloproj">Carregando...</h1>
+                    <p id="descproj">Carregando...</p>
+                </div>
+                <div class="status">
+
+                </div>
+            </div>
         </div>
 
+        
+
+
     </main>
+
     <div class="blur1"></div>
     <div class="blur2"></div>
     

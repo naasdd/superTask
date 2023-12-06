@@ -23,11 +23,15 @@ let projetos = [];
 let projectname = ''
 let projectdesc = ''
 let criarprojeto = document.getElementById('criarProjeto')
+let projetoContainer = document.getElementById('projetoContainer')
+let vermaisContainer = document.getElementById('vermaisContainer')
 let hudproject = false
 
 function opencreateProject(){
     if(!hudproject){
         criarprojeto.style.display = 'flex'
+        projetoContainer.style.display = 'flex'
+        
     }
 }
 function outcreatehud(){
@@ -40,9 +44,29 @@ function overcreatehud(){
 function closecreate(){
     if(hudproject){
         criarprojeto.style.display = 'none'
+        projetoContainer.style.display = 'none'
         hudproject = false
+        vermaisContainer.style.display = 'none'
     }
 }
+
+let tituloproj = document.getElementById('tituloproj')
+let descproj = document.getElementById('descproj')
+
+function vermais(idbotao){
+    if(!hudproject){
+        criarprojeto.style.display = 'flex'
+        vermaisContainer.style.display = 'flex'
+    }
+    console.log('clicou em ver mais')
+    console.log(idbotao)
+
+    tituloproj.innerHTML = projetos[idbotao].nome
+    descproj.innerHTML = projetos[idbotao].desc
+}
+
+
+
 
 function createProject(){
     let newProject = document.createElement('div');
@@ -56,7 +80,19 @@ function createProject(){
 
     newProject.className = 'projeto'
     newProject.id = 'projeto' + projetos.length
-    newProject.innerHTML = `<h1>${projetos[projetos.length - 1].nome}</h1><p>${projetos[projetos.length - 1].desc}</p><div class="porcentagem"></div><div class="botoes"><button>Ver mais</button><button>06/12/2023</button></div>`
+    newProject.innerHTML = `<h1>${projetos[projetos.length - 1].nome}</h1><p>${projetos[projetos.length - 1].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${projetos.length - 1})">Ver mais</button><button>06/12/2023</button></div>`
 
     document.getElementById('container').appendChild(newProject)
 }
+
+
+let newProject = document.createElement('div');
+projetos.push({
+    nome: 'Título de teste',
+    desc: 'Descrição do projeto ficará aqui.'
+})
+newProject.className = 'projeto'
+    newProject.id = 'projeto' + projetos.length
+    newProject.innerHTML = `<h1>${projetos[projetos.length - 1].nome}</h1><p>${projetos[projetos.length - 1].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${projetos.length - 1})">Ver mais</button><button>06/12/2023</button></div>`
+
+    document.getElementById('container').appendChild(newProject)
