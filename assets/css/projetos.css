@@ -219,17 +219,55 @@ main{
 .divdesc{
     margin: 0;
     height: 150px;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .divnome h2, .divdesc h2{
     font-weight: 200;
 }
 
-#projetoContainer input{
+.divnome input, .divdesc input{
     color: white;
     width: 100%;
     height: 80%;
+    background-color: var(--backgroundSecundario);
+    border: none;
+    border-radius: 20px;
+    outline: 0;
+    padding: 10px 20px;
+    font-size: 22px;
+}
+.divprazo{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.divprazo h2{
+    width: 100%;
+    font-weight: 200;
+    text-align: center;
+    margin-bottom: -10px;
+}
+.divprazo2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+.divprazo2 i{
+    font-size: 60px;
+    color: var(--icons);
+}
+.projectdate{
+    color: white;
+    width: 30%;
+    height: 30px;
     background-color: var(--backgroundSecundario);
     border: none;
     border-radius: 20px;
@@ -239,17 +277,56 @@ main{
     align-items: flex-start;
     text-align: start;
     padding: 10px 20px;
+    font-size: 26px;
 }
-.divprazo{
-    width: 100%;
-    height: 150px;
-    border: solid 1px gray;
-}
+
 .divporcentagem{
     width: 100%;
     height: 150px;
     border: solid 1px gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+.divporcentagem h2{
+    max-width: 60%;
+    text-align: center;
+    font-weight: 200;
+    font-size: 20px;
+}
+.divporcentagem2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+.inputsim, .inputnao{
+    display: flex;
+    flex-direction: row;
+    border: solid 1px black;
+    width: 30%;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+}
+.inputsim p, .inputnao p{
+    font-size: 22px;
+    color: darkgray;
+}
+.inputsim input, .inputnao input{
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    
+}
+
+
+
+
+
 #projetoContainer button{
     width: 300px;
     height: 50px;
