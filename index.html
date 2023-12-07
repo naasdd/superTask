@@ -62,9 +62,21 @@
         <div id="criarProjeto" onclick="closecreate()">
             <div id="projetoContainer" onmouseover="overcreatehud()" onmouseout="outcreatehud()">
                 <h1>Defina seu novo projeto</h1>
-                <input type="text" id="projectname">
-                <input type="text" id="projectdesc">
-                <button onclick="createProject()">Criar</button>
+                <div class="divnome">
+                    <h2>Nome do projeto</h2>
+                    <input type="text" id="projectname">
+                </div>
+                <div class="divdesc">
+                    <h2>Descrição do projeto</h2>
+                    <input type="text" id="projectdesc">
+                </div>
+                <div class="divprazo">
+
+                </div>
+                <div class="divporcentagem">
+
+                </div>
+                <button onclick="createProject()">Criar novo projeto</button>
             </div>
 
             <div id="vermaisContainer" onmouseover="overcreatehud()" onmouseout="outcreatehud()">
