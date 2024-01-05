@@ -109,6 +109,16 @@ header{
     color: var(--azul);
     cursor: pointer;
 }
+.menu i:nth-child(3):hover{
+    font-size: 45px;
+    color: var(--roxo);
+    cursor: pointer;
+}
+.menu i:nth-child(4):hover{
+    font-size: 45px;
+    color: var(--escuro);
+    cursor: pointer;
+}
 
 section{
     display: none;

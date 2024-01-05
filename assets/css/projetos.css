@@ -25,7 +25,8 @@ section{
     animation: headeranimation 1.2s cubic-bezier(0.19, 1, 0.22, 1) 1;
     margin-left: 150px;
     width: 500px;
-    height: 100vh;
+    min-height: 100vh;
+    max-height: 100%;
     background-color: var(--backgroundHeader);
     z-index: 2;
 }
@@ -84,7 +85,8 @@ main{
     align-items: start;
     width: 90%;
     min-width: 300px;
-    height: 80vh;
+    min-height: 80vh;
+    height: min-content;
     background-color: var(--backgroundSecundario);
     border-radius: 50px;
     margin: 0px 30px;
@@ -288,6 +290,7 @@ main{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    opacity: 0;
 }
 .divporcentagem h2{
     max-width: 60%;

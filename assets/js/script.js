@@ -27,6 +27,7 @@ let criarprojeto = document.getElementById('criarProjeto')
 let projetoContainer = document.getElementById('projetoContainer')
 let vermaisContainer = document.getElementById('vermaisContainer')
 let hudproject = false
+let container = document.getElementById('container')
 
 function opencreateProject(){
     if(!hudproject){
@@ -65,6 +66,7 @@ function vermais(idbotao){
 
     tituloproj.innerHTML = projetos[idbotao].nome
     descproj.innerHTML = projetos[idbotao].desc
+    hudproject = true
 }
 
 
@@ -87,22 +89,48 @@ function createProject(){
     newProject.innerHTML = `<h1>${projetos[projetos.length - 1].nome}</h1><p>${projetos[projetos.length - 1].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${projetos.length - 1})">Ver mais</button><button>${projetos[projetos.length - 1].date}</button></div>`
 
     document.getElementById('container').appendChild(newProject)
+
+    drawProjects()
+}
+
+
+function drawProjects(){
+    container.innerHTML = ''
+
+
+    for(i= projetos.length-1; i >= 0; i--){
+
+        let newProject = document.createElement('div');
+        newProject.className = 'projeto'
+        newProject.id = 'projeto' + i
+        newProject.innerHTML = `<h1>${projetos[i].nome}</h1><p>${projetos[i].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${i})">Ver mais</button><button>${projetos[i].date}</button></div>`
+
+        document.getElementById('container').appendChild(newProject)
+    }
+    let divadicionar = document.createElement('div')
+
+    divadicionar.className = "addprojeto"
+    divadicionar.id = "addprojeto"
+    divadicionar.setAttribute('onclick', 'opencreateProject()')
+
+    let iconeadicionar = document.createElement('i')
+    iconeadicionar.className = "bi bi-plus-lg"
+
+    document.getElementById('container').appendChild(divadicionar)
+    document.getElementById('addprojeto').appendChild(iconeadicionar)
 }
 
 
 
 
+// let newProject = document.createElement('div');
+// projetos.push({
+//     nome: 'Título de teste',
+//     desc: 'Descrição para teste de projeto do superTask para com que eu tenha melhor visibildade e controle no desenvolvimento da aplicação.',
+//     date: '20/12/2023'
+// })
+// newProject.className = 'projeto'
+//     newProject.id = 'projeto' + projetos.length
+//     newProject.innerHTML = `<h1>${projetos[projetos.length - 1].nome}</h1><p>${projetos[projetos.length - 1].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${projetos.length - 1})">Ver mais</button><button>${projetos[projetos.length - 1].date}</button></div>`
 
-
-
-let newProject = document.createElement('div');
-projetos.push({
-    nome: 'Título de teste',
-    desc: 'Descrição para teste de projeto do superTask para com que eu tenha melhor visibildade e controle no desenvolvimento da aplicação.',
-    date: '20/12/2023'
-})
-newProject.className = 'projeto'
-    newProject.id = 'projeto' + projetos.length
-    newProject.innerHTML = `<h1>${projetos[projetos.length - 1].nome}</h1><p>${projetos[projetos.length - 1].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${projetos.length - 1})">Ver mais</button><button>${projetos[projetos.length - 1].date}</button></div>`
-
-    document.getElementById('container').appendChild(newProject)
+//     document.getElementById('container').appendChild(newProject)
