@@ -30,11 +30,9 @@ let hudproject = false
 let container = document.getElementById('container')
 
 function opencreateProject(){
-    if(!hudproject){
         criarprojeto.style.display = 'flex'
         projetoContainer.style.display = 'flex'
         
-    }
 }
 function outcreatehud(){
     hudproject = true
@@ -45,24 +43,39 @@ function overcreatehud(){
 }
 function closecreate(){
     if(hudproject){
-        criarprojeto.style.display = 'none'
-        projetoContainer.style.display = 'none'
-        hudproject = false
-        vermaisContainer.style.display = 'none'
+        criarprojeto.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+        projetoContainer.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+        vermaisContainer.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+        
+        
+        // "timer" para que esses códigos apenas sejam rodados depois de acabar a animacao anterior
+        setTimeout(function() {
+            hudproject = false
+
+            criarprojeto.style.display = 'none';
+            projetoContainer.style.display = 'none';
+            vermaisContainer.style.display = 'none';
+
+            criarprojeto.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+        projetoContainer.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+        vermaisContainer.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+
+        }, 700);  //tempo em ms
     }
 }
+
 
 let tituloproj = document.getElementById('tituloproj')
 let descproj = document.getElementById('descproj')
 
 
 function vermais(idbotao){
-    if(!hudproject){
-        criarprojeto.style.display = 'flex'
-        vermaisContainer.style.display = 'flex'
-    }
+
+    criarprojeto.style.display = 'flex'
+    vermaisContainer.style.display = 'flex'
+    
     console.log('clicou em ver mais')
-    console.log(idbotao)
+    console.log(`button id is  ${idbotao}`)
 
     tituloproj.innerHTML = projetos[idbotao].nome
     descproj.innerHTML = projetos[idbotao].desc
@@ -123,14 +136,16 @@ function drawProjects(){
 
 
 
-// let newProject = document.createElement('div');
-// projetos.push({
-//     nome: 'Título de teste',
-//     desc: 'Descrição para teste de projeto do superTask para com que eu tenha melhor visibildade e controle no desenvolvimento da aplicação.',
-//     date: '20/12/2023'
-// })
-// newProject.className = 'projeto'
-//     newProject.id = 'projeto' + projetos.length
-//     newProject.innerHTML = `<h1>${projetos[projetos.length - 1].nome}</h1><p>${projetos[projetos.length - 1].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${projetos.length - 1})">Ver mais</button><button>${projetos[projetos.length - 1].date}</button></div>`
+let newProject = document.createElement('div');
+projetos.push({
+    nome: 'Título de teste',
+    desc: 'Descrição para teste de projeto do superTask para com que eu tenha melhor visibildade e controle no desenvolvimento da aplicação.',
+    date: '20/12/2023'
+})
+newProject.className = 'projeto'
+    newProject.id = 'projeto' + projetos.length
+    newProject.innerHTML = `<h1>${projetos[projetos.length - 1].nome}</h1><p>${projetos[projetos.length - 1].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${projetos.length - 1})">Ver mais</button><button>${projetos[projetos.length - 1].date}</button></div>`
 
-//     document.getElementById('container').appendChild(newProject)
+    document.getElementById('container').appendChild(newProject)
+
+    drawProjects()
