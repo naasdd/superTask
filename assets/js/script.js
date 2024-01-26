@@ -3,14 +3,12 @@ let titulo = document.getElementById('titulopag')
 let iconelogo = document.getElementById('iconelogo')
 let titulosupertask = document.getElementById('superTask')
 
-// let srcscript = document.getElementById('scriptpagina')
 
 function projects(){
     estilo.href = './assets/css/projetos.css'
     titulo.innerHTML = 'Projetos'
     iconelogo.remove()
     titulosupertask.remove()
-    // srcscript.src = "./assets/js/projetos.js"
 }
 
 
@@ -97,11 +95,6 @@ function createProject(){
         date: datep
     });
 
-    newProject.className = 'projeto'
-    newProject.id = 'projeto' + projetos.length
-    newProject.innerHTML = `<h1>${projetos[projetos.length - 1].nome}</h1><p>${projetos[projetos.length - 1].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${projetos.length - 1})">Ver mais</button><button>${projetos[projetos.length - 1].date}</button></div>`
-
-    document.getElementById('container').appendChild(newProject)
 
     drawProjects()
 }
@@ -116,7 +109,7 @@ function drawProjects(){
         let newProject = document.createElement('div');
         newProject.className = 'projeto'
         newProject.id = 'projeto' + i
-        newProject.innerHTML = `<h1>${projetos[i].nome}</h1><p>${projetos[i].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${i})">Ver mais</button><button>${projetos[i].date}</button></div>`
+        newProject.innerHTML = `<h1>${projetos[i].nome}</h1><p>${projetos[i].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${i})">Ver mais</button><button onclick="projectdata(${i})">${projetos[i].date}</button></div>`
 
         document.getElementById('container').appendChild(newProject)
     }
@@ -134,6 +127,37 @@ function drawProjects(){
 }
 
 
+function projectdata(i){
+    console.log(i)
+    console.log(projetos[i].date)
+
+    let txtnotificacao = document.getElementById('txtnotificacao')
+
+    txtnotificacao.innerHTML = `Faltam <span> X </span> dias para o prazo de <span>${projetos[i].nome}</span>.`
+
+    let divnotificacao = document.getElementById('divnotificacao')
+    divnotificacao.style.display = 'flex'
+    divnotificacao.style.animation = 'notificacaoanimacao 1.5s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+
+    
+
+    setTimeout(function() {
+
+        console.log('animacao inversa')
+
+        divnotificacao.style.animation = 'notificacaoanimacaoinversa 3s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+
+        setTimeout(function(){
+
+            divnotificacao.style.display = 'none'
+            console.log('display none')
+        }, 3000)
+            
+    }, 5000); 
+}
+
+
+
 
 
 let newProject = document.createElement('div');
@@ -142,10 +166,5 @@ projetos.push({
     desc: 'Descrição para teste de projeto do superTask para com que eu tenha melhor visibildade e controle no desenvolvimento da aplicação.',
     date: '20/12/2023'
 })
-newProject.className = 'projeto'
-    newProject.id = 'projeto' + projetos.length
-    newProject.innerHTML = `<h1>${projetos[projetos.length - 1].nome}</h1><p>${projetos[projetos.length - 1].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${projetos.length - 1})">Ver mais</button><button>${projetos[projetos.length - 1].date}</button></div>`
-
-    document.getElementById('container').appendChild(newProject)
 
     drawProjects()
