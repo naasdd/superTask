@@ -97,6 +97,8 @@ function createProject(){
 
 
     drawProjects()
+    hudproject = true
+    closecreate()
 }
 
 
@@ -139,7 +141,29 @@ function projectdata(i){
     divnotificacao.style.display = 'flex'
     divnotificacao.style.animation = 'notificacaoanimacao 1.5s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
 
-    
+    let data_atual = new Date()
+    let dia_atual = data_atual.getDate()
+    let mes_atual = data_atual.getMonth()
+    let ano_atual = data_atual.getFullYear()
+
+    console.log(`${dia_atual}, ${mes_atual}, ${ano_atual}`)
+
+    let dataprojeto = projetos[i].date
+    let splitdate = dataprojeto.split('-')
+    console.log(splitdate)
+
+    for(i = 0; i < 3; i++){
+        splitdate[i] = parseInt(splitdate[i])
+    }
+    console.log(splitdate)
+
+    let soma_dias_atual = ano_atual*365 + mes_atual*31 + dia_atual
+    console.log(soma_dias_atual)
+    let soma_dias_prazo = splitdate[0]*365 + splitdate[1]*31 + splitdate[2]
+    console.log(`Dias restantes: ${soma_dias_prazo - soma_dias_atual}`)
+
+
+
 
     setTimeout(function() {
 
@@ -162,9 +186,11 @@ function projectdata(i){
 
 let newProject = document.createElement('div');
 projetos.push({
-    nome: 'Título de teste',
+    nome: 'Volta as aulas',
     desc: 'Descrição para teste de projeto do superTask para com que eu tenha melhor visibildade e controle no desenvolvimento da aplicação.',
-    date: '20/12/2023'
+    date: '2024-02-05'
 })
 
     drawProjects()
+
+    console.log('versão 27/01/2024 alogritmo ainda nao esta pronto')
