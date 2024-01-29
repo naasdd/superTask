@@ -63,9 +63,12 @@ function closecreate(){
 }
 
 
+
 let tituloproj = document.getElementById('tituloproj')
 let descproj = document.getElementById('descproj')
-
+let dataproj = document.getElementById('dataproj')
+let acoes = document.getElementById('acoes')
+let divstatus = document.getElementById('divstatus')
 
 function vermais(idbotao){
 
@@ -75,9 +78,23 @@ function vermais(idbotao){
     console.log('clicou em ver mais')
     console.log(`button id is  ${idbotao}`)
 
+    if(projetos[idbotao].date == 'undefined/undefined/'){
+        divstatus.style.display = 'none'
+    }
+    else{
+        divstatus.style.display = 'block'
+    }
+
+    acoes.innerHTML = `<i class="bi bi-x-lg" onclick="fechar_vermais()"></i> <i class="bi bi-trash" onclick="deleteProject(${idbotao})"></i>`
     tituloproj.innerHTML = projetos[idbotao].nome
     descproj.innerHTML = projetos[idbotao].desc
+    dataproj.innerHTML = projetos[idbotao].date
     hudproject = true
+}
+
+function fechar_vermais(){
+    hudproject = true
+    closecreate()
 }
 
 
@@ -87,13 +104,19 @@ function createProject(){
     let newProject = document.createElement('div');
     titulo = document.getElementById('projectname').value
     desc = document.getElementById('projectdesc').value
-    datep = document.getElementById('projectdate').value
+    datap = document.getElementById('projectdate').value
+
+    let datap_dividida = datap.split('-')
+    let datap_formatada = `${datap_dividida[2]}/${datap_dividida[1]}/${datap_dividida[0]}`
 
     projetos.push({
         nome: titulo,
         desc: desc,
-        date: datep
+        date: datap_formatada
     });
+
+
+
 
 
     drawProjects()
@@ -101,17 +124,31 @@ function createProject(){
     closecreate()
 }
 
+function deleteProject(i){
+    console.log(projetos)
+    projetos.pop(i)
+    console.log(projetos)
+
+    drawProjects()
+    fechar_vermais()
+}
+
 
 function drawProjects(){
     container.innerHTML = ''
-
 
     for(i= projetos.length-1; i >= 0; i--){
 
         let newProject = document.createElement('div');
         newProject.className = 'projeto'
         newProject.id = 'projeto' + i
-        newProject.innerHTML = `<h1>${projetos[i].nome}</h1><p>${projetos[i].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${i})">Ver mais</button><button onclick="projectdata(${i})">${projetos[i].date}</button></div>`
+
+        if(projetos[i].date == 'undefined/undefined/'){
+            newProject.innerHTML = `<h1>${projetos[i].nome}</h1><p>${projetos[i].desc}</p><div class="porcentagem"></div><div class="botoes"><button style="width:100%" onclick="vermais(${i})">Ver mais</button></div>`
+        }
+        else{
+            newProject.innerHTML = `<h1>${projetos[i].nome}</h1><p>${projetos[i].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${i})">Ver mais</button><button onclick="projectdata(${i})">${projetos[i].date}</button></div>`
+        }
 
         document.getElementById('container').appendChild(newProject)
     }
@@ -130,51 +167,37 @@ function drawProjects(){
 
 
 function projectdata(i){
-    console.log(i)
-    console.log(projetos[i].date)
 
     let txtnotificacao = document.getElementById('txtnotificacao')
-
-    txtnotificacao.innerHTML = `Faltam <span> X </span> dias para o prazo de <span>${projetos[i].nome}</span>.`
-
     let divnotificacao = document.getElementById('divnotificacao')
     divnotificacao.style.display = 'flex'
     divnotificacao.style.animation = 'notificacaoanimacao 1.5s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
 
     let data_atual = new Date()
     let dia_atual = data_atual.getDate()
-    let mes_atual = data_atual.getMonth()
+    let mes_atual = data_atual.getMonth() + 1
     let ano_atual = data_atual.getFullYear()
 
-    console.log(`${dia_atual}, ${mes_atual}, ${ano_atual}`)
-
     let dataprojeto = projetos[i].date
-    let splitdate = dataprojeto.split('-')
-    console.log(splitdate)
+    let splitdate = dataprojeto.split('/')
 
-    for(i = 0; i < 3; i++){
-        splitdate[i] = parseInt(splitdate[i])
+    for(j = 0; j < 3; j++){
+        splitdate[j] = parseInt(splitdate[j])
     }
-    console.log(splitdate)
 
     let soma_dias_atual = ano_atual*365 + mes_atual*31 + dia_atual
-    console.log(soma_dias_atual)
-    let soma_dias_prazo = splitdate[0]*365 + splitdate[1]*31 + splitdate[2]
-    console.log(`Dias restantes: ${soma_dias_prazo - soma_dias_atual}`)
+    let soma_dias_prazo = splitdate[2]*365 + splitdate[1]*31 + splitdate[0]
+    let dias_restantes = soma_dias_prazo - soma_dias_atual
 
-
-
+    txtnotificacao.innerHTML = `Faltam <span> ${dias_restantes} </span> dias para o prazo de <span>${projetos[i].nome}</span>.`
 
     setTimeout(function() {
-
-        console.log('animacao inversa')
 
         divnotificacao.style.animation = 'notificacaoanimacaoinversa 3s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
 
         setTimeout(function(){
 
             divnotificacao.style.display = 'none'
-            console.log('display none')
         }, 3000)
             
     }, 5000); 
@@ -182,15 +205,11 @@ function projectdata(i){
 
 
 
-
-
 let newProject = document.createElement('div');
 projetos.push({
-    nome: 'Volta as aulas',
-    desc: 'Descrição para teste de projeto do superTask para com que eu tenha melhor visibildade e controle no desenvolvimento da aplicação.',
-    date: '2024-02-05'
+    nome: 'superTask',
+    desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the',
+    date: '05/02/2024'
 })
-
     drawProjects()
-
-    console.log('versão 27/01/2024 alogritmo ainda nao esta pronto')
+    console.log('versão 29/01/2024')
