@@ -171,15 +171,18 @@ function drawProjects(){
 
     if(projetos == ''){
         console.log('vazio')
-        container.style.display = 'flex'
-        container.style.justifyContent = 'center'
-        container.style.alignItems = 'center'
-        addprojeto.style.border = 'none'
-        addprojeto.style.flexDirection = 'column'
-        addprojeto.style.opacity = '1'
-        addprojeto.style.width = ' 700px'
-        addprojeto.style.height = '160px'
-        addprojeto.innerHTML = '<p>Não há nada aqui... que tal criar algum projeto?</p> <br> <i class="bi bi-plus-lg"></i>'
+        setTimeout(function(){
+            container.style.display = 'flex'
+            container.style.justifyContent = 'center'
+            container.style.alignItems = 'center'
+            addprojeto.style.border = 'none'
+            addprojeto.style.flexDirection = 'column'
+            addprojeto.style.opacity = '1'
+            addprojeto.style.width = ' 700px'
+            addprojeto.style.height = '160px'
+            addprojeto.innerHTML = '<p>Não há nada aqui... que tal criar algum projeto?</p> <br> <i class="bi bi-plus-lg"></i>'
+        }, 300)
+            
     }
     else{
         container.style.display = 'grid'
