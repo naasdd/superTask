@@ -9,6 +9,7 @@ function projects(){
     titulo.innerHTML = 'Projetos'
     iconelogo.remove()
     titulosupertask.remove()
+    drawProjects()
 }
 
 
@@ -26,6 +27,9 @@ let projetoContainer = document.getElementById('projetoContainer')
 let vermaisContainer = document.getElementById('vermaisContainer')
 let hudproject = false
 let container = document.getElementById('container')
+
+
+
 
 function opencreateProject(){
         criarprojeto.style.display = 'flex'
@@ -163,6 +167,29 @@ function drawProjects(){
 
     document.getElementById('container').appendChild(divadicionar)
     document.getElementById('addprojeto').appendChild(iconeadicionar)
+
+
+    if(projetos == ''){
+        console.log('vazio')
+        container.style.display = 'flex'
+        container.style.justifyContent = 'center'
+        container.style.alignItems = 'center'
+        addprojeto.style.border = 'none'
+        addprojeto.style.flexDirection = 'column'
+        addprojeto.style.opacity = '1'
+        addprojeto.style.width = ' 700px'
+        addprojeto.style.height = '160px'
+        addprojeto.innerHTML = '<p>Não há nada aqui... que tal criar algum projeto?</p> <br> <i class="bi bi-plus-lg"></i>'
+    }
+    else{
+        container.style.display = 'grid'
+        container.style.justifyContent = 'center'
+        container.style.alignItems = 'start'
+        addprojeto.style.border = 'dashed 2px var(--azul)'
+        addprojeto.style.opacity = '.15'
+        addprojeto.style.width = ' 90%'
+        addprojeto.style.height = '260px'
+    }
 }
 
 
@@ -206,10 +233,12 @@ function projectdata(i){
 
 
 let newProject = document.createElement('div');
-projetos.push({
-    nome: 'superTask',
-    desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the',
-    date: '05/02/2024'
-})
-    drawProjects()
-    console.log('versão 29/01/2024')
+// projetos.push({
+//     nome: 'superTask',
+//     desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the',
+//     date: '05/02/2024'
+// })
+    
+    console.log('versão 1.0.1')
+
+
