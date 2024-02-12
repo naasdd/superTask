@@ -18,7 +18,16 @@ function projects(){
 // Parte PROJETOS
 // =========================
 
-let projetos = [];
+let workspaces = ['teste0']
+
+let projetos = []
+let projetos0 = []
+let projetos1 = ['teste']
+let projetos2 = []
+let projetos3 = []
+let projetos4 = []
+let pjPlaceholder = []
+
 let projectname = ''
 let projectdesc = ''
 let projectdate = ''
@@ -27,8 +36,53 @@ let projetoContainer = document.getElementById('projetoContainer')
 let vermaisContainer = document.getElementById('vermaisContainer')
 let hudproject = false
 let container = document.getElementById('container')
+let wContainer = document.getElementById('wContainer')
 
 
+
+function addworkspace(){
+    if(workspaces.length >= 5){
+        window.alert('Você não pode criar mais que 5 workspaces')
+    }
+    else{
+        workspaces.push('teste' + workspaces.length)
+        drawWorkspace()
+    }
+}
+function drawWorkspace(){
+    wContainer.innerHTML = ''
+    for(i = 0; i < workspaces.length; i++){
+        console.log(workspaces[i])
+        wContainer.innerHTML += `<div class="workspace" id="work${i}" onclick="selectWorkspace(${i})">${workspaces[i]}</div>` 
+    }
+}
+
+function selectWorkspace(w){
+    console.log('clicou' + w)
+
+    switch (w) {
+        case w = 0:
+          pjPlaceholder = projetos0
+          break;
+        case w = 1:
+          pjPlaceholder = projetos1
+          console.log('era pra coisar')
+          break;
+        case w = 2:
+          pjPlaceholder = projetos3
+          break;
+        case w = 3:
+          pjPlaceholder = projetos3
+          break;
+        case w = 4:
+          pjPlaceholder = projetos4
+          break;
+    }
+          projetos = pjPlaceholder
+
+    drawProjects()
+
+}
 
 
 function opencreateProject(){
@@ -105,7 +159,6 @@ function fechar_vermais(){
 
 
 function createProject(){
-    let newProject = document.createElement('div');
     titulo = document.getElementById('projectname').value
     desc = document.getElementById('projectdesc').value
     datap = document.getElementById('projectdate').value
@@ -233,15 +286,7 @@ function projectdata(i){
     }, 5000); 
 }
 
+    console.log('versão 1.1.0')
 
 
-let newProject = document.createElement('div');
-// projetos.push({
-//     nome: 'superTask',
-//     desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the',
-//     date: '05/02/2024'
-// })
-    
-    console.log('versão 1.0.1')
-
-
+drawWorkspace()
