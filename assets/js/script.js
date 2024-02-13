@@ -10,6 +10,7 @@ function projects(){
     iconelogo.remove()
     titulosupertask.remove()
     drawProjects()
+    selectWorkspace(0)
 }
 
 
@@ -18,7 +19,24 @@ function projects(){
 // Parte PROJETOS
 // =========================
 
-let projetos = [];
+let tituloproj = document.getElementById('tituloproj')
+let descproj = document.getElementById('descproj')
+let dataproj = document.getElementById('dataproj')
+let acoes = document.getElementById('acoes')
+let divstatus = document.getElementById('divstatus')
+
+let workspaces = ['Principal']
+
+let wrkselected = 0
+
+let projetos = []
+let projetos0 = []
+let projetos1 = []
+let projetos2 = []
+let projetos3 = []
+let projetos4 = []
+let pjPlaceholder = []
+
 let projectname = ''
 let projectdesc = ''
 let projectdate = ''
@@ -27,8 +45,86 @@ let projetoContainer = document.getElementById('projetoContainer')
 let vermaisContainer = document.getElementById('vermaisContainer')
 let hudproject = false
 let container = document.getElementById('container')
+let wContainer = document.getElementById('wContainer')
+let tituloContainer = document.getElementById('tituloContainer')
+let createWorkspace = document.getElementById('createWorkspace')
+let workspaceName = document.getElementById('workspaceName').value
 
 
+
+function addworkspace(){
+    if(workspaces.length >= 5){
+        window.alert('Você não pode criar mais que 5 workspaces')
+    }
+    else{
+        opencreateWorkspace()
+
+
+        drawWorkspace()
+    }
+}
+
+function opencreateWorkspace(){
+    criarprojeto.style.display = 'flex'
+    createWorkspace.style.display = 'flex'
+}
+function confirmCreateWorkspace(){
+    let workspaceName = document.getElementById('workspaceName').value
+    workspaces.push(workspaceName)
+
+    drawWorkspace()
+    hudproject = true
+    closecreate()
+}
+
+function drawWorkspace(){
+    wContainer.innerHTML = ''
+    for(let i = 0; i < workspaces.length; i++){
+        if(wrkselected == i){
+        wContainer.innerHTML += `<div class="workspace-active" id="work${i}" onclick="selectWorkspace(${i})">${workspaces[i]}</div>` 
+        }
+        else{
+            wContainer.innerHTML += `<div class="workspace" id="work${i}" onclick="selectWorkspace(${i})">${workspaces[i]}</div>` 
+        }
+    }
+}
+
+function selectWorkspace(w){
+    switch (w) {
+        case w = 0:
+          pjPlaceholder = projetos0
+          break;
+        case w = 1:
+          pjPlaceholder = projetos1
+          break;
+        case w = 2:
+          pjPlaceholder = projetos2
+          break;
+        case w = 3:
+          pjPlaceholder = projetos3
+          break;
+        case w = 4:
+          pjPlaceholder = projetos4
+          break;
+    }
+          projetos = pjPlaceholder
+
+    wrkselected = w
+    drawWorkspace()
+
+    setTimeout(function() {
+        drawProjects()
+        tituloContainer.innerHTML = workspaces[w]
+            setTimeout(function() {
+                container.style.animation = 'none'
+                tituloContainer.style.animation = 'none'
+                
+            }, 1400); 
+    }, 600); 
+
+    container.style.animation = 'transicaoContainer 2s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+    tituloContainer.style.animation = 'transicaoContainer 2s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+}
 
 
 function opencreateProject(){
@@ -48,6 +144,8 @@ function closecreate(){
         criarprojeto.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
         projetoContainer.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
         vermaisContainer.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+        createWorkspace.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+        
         
         
         // "timer" para que esses códigos apenas sejam rodados depois de acabar a animacao anterior
@@ -57,30 +155,22 @@ function closecreate(){
             criarprojeto.style.display = 'none';
             projetoContainer.style.display = 'none';
             vermaisContainer.style.display = 'none';
+            createWorkspace.style.display = 'none'
 
             criarprojeto.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
         projetoContainer.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
         vermaisContainer.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+        createWorkspace.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
 
         }, 700);  //tempo em ms
     }
 }
 
 
-
-let tituloproj = document.getElementById('tituloproj')
-let descproj = document.getElementById('descproj')
-let dataproj = document.getElementById('dataproj')
-let acoes = document.getElementById('acoes')
-let divstatus = document.getElementById('divstatus')
-
 function vermais(idbotao){
 
     criarprojeto.style.display = 'flex'
     vermaisContainer.style.display = 'flex'
-    
-    console.log('clicou em ver mais')
-    console.log(`button id is  ${idbotao}`)
 
     if(projetos[idbotao].date == 'undefined/undefined/'){
         divstatus.style.display = 'none'
@@ -101,11 +191,7 @@ function fechar_vermais(){
     closecreate()
 }
 
-
-
-
 function createProject(){
-    let newProject = document.createElement('div');
     titulo = document.getElementById('projectname').value
     desc = document.getElementById('projectdesc').value
     datap = document.getElementById('projectdate').value
@@ -129,14 +215,11 @@ function createProject(){
 }
 
 function deleteProject(i){
-    console.log(projetos)
     projetos.pop(i)
-    console.log(projetos)
 
     drawProjects()
     fechar_vermais()
 }
-
 
 function drawProjects(){
     container.innerHTML = ''
@@ -170,7 +253,6 @@ function drawProjects(){
 
 
     if(projetos == ''){
-        console.log('vazio')
         setTimeout(function(){
             container.style.display = 'flex'
             container.style.justifyContent = 'center'
@@ -194,7 +276,6 @@ function drawProjects(){
         addprojeto.style.height = '260px'
     }
 }
-
 
 function projectdata(i){
 
@@ -233,15 +314,5 @@ function projectdata(i){
     }, 5000); 
 }
 
-
-
-let newProject = document.createElement('div');
-// projetos.push({
-//     nome: 'superTask',
-//     desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the',
-//     date: '05/02/2024'
-// })
-    
-    console.log('versão 1.0.1')
-
-
+    console.log('versão 1.1.0')
+drawWorkspace()
