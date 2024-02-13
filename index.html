@@ -38,7 +38,7 @@
             <img src="./assets/img/logosupertask.svg" class="iconelogo" id="iconelogo">
             <h1 class="supertasktitulo" id="superTask">superTask</h1>
         </div>
-        <h1 class="paginatitulo">Projetos</h1>
+        <h1 class="paginatitulo" id="tituloContainer">Projetos</h1>
 
 
         <div class="container" id="container"> 
@@ -99,6 +99,13 @@
                         <p id="dataproj">Carregando data...</p>
                     </div>
                 </div>
+            </div>
+
+            <div id="createWorkspace" onmouseover="overcreatehud()" onmouseout="outcreatehud()">
+                <h1>Criar nova workspace</h1>
+                <p>Nome desejado:</p>
+                <input type="text" id="workspaceName">
+                <button onclick="confirmCreateWorkspace()">Criar nova workspace</button>
             </div>
 
 
