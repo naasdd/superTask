@@ -19,15 +19,15 @@ app.get('/', (req, res) => {
 })
 
 function verifyJWT(req, res, next) {
-    console.log(`> verifyJWT()`)
     const token = req.headers['x-acess-token']
     try {
         jwt.verify(token, jwtKey, (err, decoded) => {
             if (err) {
-                return res.status(500).end()
+                return res.status(500).json({Error: err})
             }
 
-            req.validated = decoded
+            req.decoded = decoded
+            req.token = token
             next()
         })
     }
@@ -66,23 +66,27 @@ app.get('/logIn', async (req, res) => {
     const pass = info.password
 
     const searchOnDatabase = await Users.findOne({ where: { email: info.email }, raw: true })
-    console.log(`> SearchOnDatabase = ${searchOnDatabase.password}`)
-    console.log(`> User pass = ${pass}`)
     const result = bcrypt.compareSync(pass, searchOnDatabase.password)
 
-    console.log(`> Result is ${result}`)
     try {
         if(result){
-            res.status(200).json({Message: "You're in"})
+            const token = jwt.sign({ email: searchOnDatabase.email }, jwtKey, { expiresIn: '7d'})
+            res.status(200).json({ auth: true, token})
         }
         else{
-            res.status(401).json({Message: "not allowed"})
+            res.status(401).json({ auth: false, Message: "not allowed"})
         }
     }
     catch (err) {
         console.log(`X Error on route /logIn, error: ${err}`)
         res.status(500).json({Message: `Some fucking error: ${err}`})
     }
+})
+
+
+app.get('/list', verifyJWT, (req, res) => {
+    console.log(`> Route /list called`)
+    res.status(200).json({"Client-Token": req.decoded, "Token": req.token})
 })
 
 
