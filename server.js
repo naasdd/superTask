@@ -18,12 +18,12 @@ app.get('/', (req, res) => {
     res.status(200).send("Hello world")
 })
 
-function verifyJWT(req, res, next){
+function verifyJWT(req, res, next) {
     console.log(`> verifyJWT()`)
     const token = req.headers['x-acess-token']
-    try{
+    try {
         jwt.verify(token, jwtKey, (err, decoded) => {
-            if(err) {
+            if (err) {
                 return res.status(500).end()
             }
 
@@ -31,7 +31,7 @@ function verifyJWT(req, res, next){
             next()
         })
     }
-    catch(err){
+    catch (err) {
         console.log(`X Failed at verifyJWT(), error: ${err}`)
     }
 }
@@ -39,39 +39,58 @@ function verifyJWT(req, res, next){
 app.post('/signIn', async (req, res) => {
     console.log(`> Route /signIn called.`)
     const info = req.body
-    const pass = toString(info.password)
-    
+    const pass = info.password
+
 
     bcrypt.hash(pass, 10, async (err, hash) => {
-        if(err) {
+        if (err) {
             console.log(`X err returned at hash, error: ${err}`)
             res.status(400)
         }
-        
-        try{
+
+        try {
             console.log(`> hash is: ${hash}`)
-            const insertInDatabase = await Users.create({email : info.email , username : info.username , password : hash})
-            console.log(`_ ${insertInDatabase, {raw: true}}`)
-            res.status(200).json({Message: "User signed in."})
+            const insertInDatabase = await Users.create({ email: info.email, username: info.username, password: hash })
+            res.status(200).json({ Message: "User signed in." })
         }
-        catch(err){
+        catch (err) {
             console.log(`X Failed at bycrypt.hash, error: ${err}`)
             res.status(500)
         }
     })
 })
 
-app.get('/logIn', (req, res) => {
+app.get('/logIn', async (req, res) => {
     console.log(`> Route /logIn called.`)
-    // to do login system..
+    const info = req.body
+    const pass = info.password
+
+    const searchOnDatabase = await Users.findOne({ where: { email: info.email }, raw: true })
+    console.log(`> SearchOnDatabase = ${searchOnDatabase.password}`)
+    console.log(`> User pass = ${pass}`)
+    const result = bcrypt.compareSync(pass, searchOnDatabase.password)
+
+    console.log(`> Result is ${result}`)
+    try {
+        if(result){
+            res.status(200).json({Message: "You're in =D"})
+        }
+        else{
+            res.status(401).json({Message: "not allowed >=("})
+        }
+    }
+    catch (err) {
+        console.log(`X Error on route /logIn, error: ${err}`)
+        res.status(500).json({Message: `Some fucking error: ${err}`})
+    }
 })
 
 
 connect.sync()
-.then(() => {
-    app.listen(3000)
-    console.log(`> Server running.`)
-})
-.catch((err) => {
-    console.error(`X Database sync failed, error: ${err}`)
-})
+    .then(() => {
+        app.listen(3000)
+        console.log(`> Server running.`)
+    })
+    .catch((err) => {
+        console.error(`X Database sync failed, error: ${err}`)
+    })
