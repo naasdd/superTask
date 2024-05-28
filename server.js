@@ -73,10 +73,10 @@ app.get('/logIn', async (req, res) => {
     console.log(`> Result is ${result}`)
     try {
         if(result){
-            res.status(200).json({Message: "You're in =D"})
+            res.status(200).json({Message: "You're in"})
         }
         else{
-            res.status(401).json({Message: "not allowed >=("})
+            res.status(401).json({Message: "not allowed"})
         }
     }
     catch (err) {
