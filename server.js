@@ -5,6 +5,7 @@ const Users = require('./model/users.js')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const { raw } = require('mysql2')
 
 const jwtKey = 'b2uvp2iodupwj-i7'
 
@@ -35,17 +36,23 @@ function verifyJWT(req, res, next){
     }
 }
 
-app.post('/signIn', (req, res) => {
+app.post('/signIn', async (req, res) => {
     console.log(`> Route /signIn called.`)
     const info = req.body
+    const pass = toString(info.password)
+    
 
-    bcrypt.hash(info.password, 10, async (err, hash) => {
-        if(err) return res.status(500).send(err)
+    bcrypt.hash(pass, 10, async (err, hash) => {
+        if(err) {
+            console.log(`X err returned at hash, error: ${err}`)
+            res.status(400)
+        }
         
         try{
+            console.log(`> hash is: ${hash}`)
             const insertInDatabase = await Users.create({email : info.email , username : info.username , password : hash})
-            console.log(`_ ${insertInDatabase}`)
-            res.status(200)
+            console.log(`_ ${insertInDatabase, {raw: true}}`)
+            res.status(200).json({Message: "User signed in."})
         }
         catch(err){
             console.log(`X Failed at bycrypt.hash, error: ${err}`)

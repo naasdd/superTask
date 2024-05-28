@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize')
 
-const sequelize = new Sequelize('superTask', 'root', '123', {
+const sequelize = new Sequelize('supertask', 'root', 'nasd', {
     host: 'localhost',
     dialect: 'mysql'
 })
@@ -10,7 +10,7 @@ sequelize.authenticate()
     console.log(`> Database authenticated with sucess.`)
 })
 .catch((err) => {
-    console.error(`X Failed to authenticate database, error: ${err}`)
+    console.error(`X Failed to authenticate database, \n\n error: ${err}`)
 })
 
 module.exports = sequelize
