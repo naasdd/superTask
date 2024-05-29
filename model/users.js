@@ -1,10 +1,12 @@
 const { DataTypes } = require('sequelize')
 const database = require('../database/connect.js')
 
+console.log(`> Reading users.js`)
 const Users = database.define('users', {
     email: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     username: {
         type: DataTypes.STRING(60),
@@ -19,6 +21,6 @@ const Users = database.define('users', {
     updatedAt: false
 })
 
-// Users.sync({ force: true })
+Users.sync({ force: true })
 
 module.exports = Users

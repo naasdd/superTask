@@ -2,10 +2,11 @@ const express = require('express')
 const app = express()
 const connect = require('./database/connect.js')
 const Users = require('./model/users.js')
+const Workspace = require('./model/workspaces.js')
+const Projects = require('./model/projects.js')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const { raw } = require('mysql2')
 
 const jwtKey = 'b2uvp2iodupwj-i7'
 
@@ -23,7 +24,7 @@ function verifyJWT(req, res, next) {
     try {
         jwt.verify(token, jwtKey, (err, decoded) => {
             if (err) {
-                return res.status(500).json({Error: err})
+                return res.status(500).json({ Error: err })
             }
 
             req.decoded = decoded
@@ -69,25 +70,46 @@ app.get('/logIn', async (req, res) => {
     const result = bcrypt.compareSync(pass, searchOnDatabase.password)
 
     try {
-        if(result){
-            const token = jwt.sign({ email: searchOnDatabase.email }, jwtKey, { expiresIn: '7d'})
-            res.status(200).json({ auth: true, token})
+        if (result) {
+            const token = jwt.sign({ email: searchOnDatabase.email }, jwtKey, { expiresIn: '7d' })
+            res.status(200).json({ auth: true, token })
         }
-        else{
-            res.status(401).json({ auth: false, Message: "not allowed"})
+        else {
+            res.status(401).json({ auth: false, Message: "not allowed" })
         }
     }
     catch (err) {
         console.log(`X Error on route /logIn, error: ${err}`)
-        res.status(500).json({Message: `Some fucking error: ${err}`})
+        res.status(500).json({ Message: `Some fucking error: ${err}` })
     }
 })
 
 
 app.get('/list', verifyJWT, (req, res) => {
     console.log(`> Route /list called`)
-    res.status(200).json({"Client-Token": req.decoded, "Token": req.token})
+    res.status(200).json({ "Client-Token": req.decoded, "Token": req.token })
 })
+
+
+app.get('/getWorkSpace', verifyJWT, async (req, res) => {
+    const client = req.decoded.email
+
+    try {
+        const searchOnDatabase = await Users.findAll({ where: { email: client } })
+        // const getWorkSpaces = await 
+    }
+    catch (err) {
+        console.log(`X Error on route /getWorkSpace, error: ${err}`)
+        res.status(500).json({ err })
+    }
+})
+
+/* 
+    To do:
+        - System to save projects at db
+        - System to save workspaces at db
+
+*/
 
 
 connect.sync()
