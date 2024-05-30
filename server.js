@@ -119,7 +119,7 @@ app.get('/listWorkspace', verifyJWT, async (req, res) => {
         res.status(200).json(searchWorkspace)
     }
     catch (err) {
-        console.log(`X Error during listing workspace`)
+        console.log(`X Error on/listWorkspace, error: ${err}`)
         res.status(500)
     }
 })
@@ -127,11 +127,41 @@ app.get('/listWorkspace', verifyJWT, async (req, res) => {
 
 
 app.post('/createProject', verifyJWT, async (req, res) => {
-    // To do system
+    const userInfoDB = req.userInfoDB
+    console.log(`> Route /createProject called.`)
+
+    const projectName = req.body.projectName
+    const projectDescription = req.body.projectDescription
+    const workspace_id = req.body.workspace_id
+
+    try{
+        if(projectName != null){
+            const createProject = await Projects.create({name : projectName, description : projectDescription, workscpace_id : workspace_id})
+            console.log(`> Project create sucessfully.`)
+            res.status(200)
+        }
+        else{
+            res.status(400)
+        }
+    }
+    catch (err) {
+        console.log(`X Error on /createProject, error: ${err}`)
+        res.status(500)
+    }
 })
 
 app.get('/listProject', verifyJWT, async (req, res) => {
-    // To do system
+    const userInfoDB = req.userInfoDB
+    const workspace_id = req.body.workspace_id
+
+    try{
+        const searchProjects = await Projects.findAll({ where: { workscpace_id: workspace_id }, raw: true })
+        res.status(200).json(searchProjects)
+    }
+    catch (err) {
+        console.log(`X Error on /listProject, error: ${err}`)
+        res.status(500)
+    }
 })
 
 
