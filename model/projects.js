@@ -3,7 +3,7 @@ const database = require('../database/connect.js')
 const Workspaces = require('./workspaces.js')
 
 console.log(`> Reading projects.js`)
-const Projetcs = database.define('projetcs', {
+const Projects = database.define('Projects', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -30,6 +30,8 @@ const Projetcs = database.define('projetcs', {
     updatedAt: false
 })
 
-Projetcs.sync({ force: true })
+Workspaces.hasMany(Projects, { foreignKey: 'workspaces_id' });
+Projects.belongsTo(Workspaces, { foreignKey: 'workspaces_id' });
 
-module.exports = Projetcs
+
+module.exports = Projects

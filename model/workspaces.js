@@ -26,6 +26,7 @@ const Workspaces = database.define('Workspaces', {
     updatedAt: false
 })
 
-Workspaces.sync({ force: true })
+Users.hasMany(Workspaces, { foreignKey: 'user_id' });
+Workspaces.belongsTo(Users, { foreignKey: 'user_id' });
 
 module.exports = Workspaces

@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const connect = require('./database/connect.js')
 const Users = require('./model/users.js')
-const Workspace = require('./model/workspaces.js')
+const Workspaces = require('./model/workspaces.js')
 const Projects = require('./model/projects.js')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
@@ -22,11 +22,13 @@ app.get('/', (req, res) => {
 function verifyJWT(req, res, next) {
     const token = req.headers['x-acess-token']
     try {
-        jwt.verify(token, jwtKey, (err, decoded) => {
+        jwt.verify(token, jwtKey, async (err, decoded) => {
             if (err) {
                 return res.status(500).json({ Error: err })
             }
+            const searchAll = await Users.findOne({ where: { email: decoded.email } })
 
+            req.userInfoDB = searchAll
             req.decoded = decoded
             req.token = token
             next()
@@ -85,31 +87,53 @@ app.get('/logIn', async (req, res) => {
 })
 
 
-app.get('/list', verifyJWT, (req, res) => {
-    console.log(`> Route /list called`)
-    res.status(200).json({ "Client-Token": req.decoded, "Token": req.token })
+app.get('/createWorkspace', verifyJWT, (req, res) => {
+    const client = req.decoded.email
+    console.log(`> Route /createWorkspace requested by: ${client}`)
+
+    const workspaceName = req.body.workspaceName
+    const clientID = req.userInfoDB.id
+    if (workspaceName !== null && clientID != null) {
+        try {
+            const creating = Workspaces.create({ workspaceName: workspaceName, user_id: clientID })
+            console.log(`> Workspace created at database, creating: ${creating}`)
+            res.status(200).json({ Message: `Workspace created with sucess` })
+        }
+        catch (err) {
+            console.log(`X Error during creating workspace`)
+            res.status(500)
+        }
+    }
+    else {
+        res.status(400).json({ Message: "Need more info." })
+    }
+
+
 })
 
-
-app.get('/getWorkSpace', verifyJWT, async (req, res) => {
-    const client = req.decoded.email
+app.get('/listWorkspace', verifyJWT, async (req, res) => {
+    const userInfoDB = req.userInfoDB
 
     try {
-        const searchOnDatabase = await Users.findAll({ where: { email: client } })
-        // const getWorkSpaces = await 
+        const searchWorkspace = await Workspaces.findAll({ where: { user_id: userInfoDB.id }, raw: true })
+        res.status(200).json(searchWorkspace)
     }
     catch (err) {
-        console.log(`X Error on route /getWorkSpace, error: ${err}`)
-        res.status(500).json({ err })
+        console.log(`X Error during listing workspace`)
+        res.status(500)
     }
 })
 
-/* 
-    To do:
-        - System to save projects at db
-        - System to save workspaces at db
 
-*/
+
+app.post('/createProject', verifyJWT, async (req, res) => {
+    // To do system
+})
+
+app.get('/listProject', verifyJWT, async (req, res) => {
+    // To do system
+})
+
 
 
 connect.sync()

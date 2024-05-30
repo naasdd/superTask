@@ -21,6 +21,5 @@ const Users = database.define('users', {
     updatedAt: false
 })
 
-Users.sync({ force: true })
 
 module.exports = Users
