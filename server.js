@@ -13,19 +13,23 @@ const jwtKey = 'b2uvp2iodupwj-i7'
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
+app.use(express.static(__dirname + '/public'))
 
 
 app.get('/', (req, res) => {
-    res.status(200).send("Hello world")
+    res.sendFile('./index.html')
+
 })
 
 function verifyJWT(req, res, next) {
-    const token = req.headers['x-acess-token']
+    const token = req.headers['x-access-token']
     try {
         jwt.verify(token, jwtKey, async (err, decoded) => {
             if (err) {
-                return res.status(500).json({ Error: err })
+                console.log(`X token not accepted`)
+                return res.status(400).json({ Error: 'Token not accepted' })
             }
+            console.log('> Token accepted')
             const searchAll = await Users.findOne({ where: { email: decoded.email } })
 
             req.userInfoDB = searchAll
@@ -38,6 +42,11 @@ function verifyJWT(req, res, next) {
         console.log(`X Failed at verifyJWT(), error: ${err}`)
     }
 }
+
+app.get('/validateAccount', verifyJWT, (req, res) => {
+    const info = req.userInfoDB
+    res.status(200).json({ email: info.email, username: info.username})
+})
 
 app.post('/signIn', async (req, res) => {
     console.log(`> Route /signIn called.`)
@@ -63,7 +72,7 @@ app.post('/signIn', async (req, res) => {
     })
 })
 
-app.get('/logIn', async (req, res) => {
+app.post('/logIn', async (req, res) => {
     console.log(`> Route /logIn called.`)
     const info = req.body
     const pass = info.password
@@ -87,7 +96,7 @@ app.get('/logIn', async (req, res) => {
 })
 
 
-app.get('/createWorkspace', verifyJWT, (req, res) => {
+app.post('/createWorkspace', verifyJWT, (req, res) => {
     const client = req.decoded.email
     console.log(`> Route /createWorkspace requested by: ${client}`)
 
