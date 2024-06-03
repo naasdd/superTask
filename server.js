@@ -96,7 +96,7 @@ app.post('/logIn', async (req, res) => {
 })
 
 
-app.post('/createWorkspace', verifyJWT, (req, res) => {
+app.post('/createWorkspace', verifyJWT, async (req, res) => {
     const client = req.decoded.email
     console.log(`> Route /createWorkspace requested by: ${client}`)
 
@@ -104,7 +104,7 @@ app.post('/createWorkspace', verifyJWT, (req, res) => {
     const clientID = req.userInfoDB.id
     if (workspaceName !== null && clientID != null) {
         try {
-            const creating = Workspaces.create({ workspaceName: workspaceName, user_id: clientID })
+            const creating = await Workspaces.create({ workspaceName: workspaceName, user_id: clientID })
             console.log(`> Workspace created at database`)
             res.status(200).json({ creating })
         }

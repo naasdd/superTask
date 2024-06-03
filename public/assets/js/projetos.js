@@ -42,7 +42,8 @@ function projects(){
         titulo.innerHTML = `${token}`
         iconelogo.remove()
         titulosupertask.remove()
-        selectWorkspace(0)
+        const first = workspaces[0].id
+        selectWorkspace(first)
         drawProjects()
     })
 }
@@ -61,6 +62,9 @@ function updateWorkspace(){
     })
     .then((info) => {
         workspaces = info
+        if(workspaces.length == 0){
+            window.alert('haha vc nao tem nenhuma workspace')
+        }
         drawWorkspace()
     })
 }
@@ -93,11 +97,11 @@ function confirmCreateWorkspace(){
     })
     .then(response => response.json())
     .then(info => {
-        console.log(info)
         updateWorkspace()
         drawWorkspace()
         hudproject = true
         closecreate()
+        selectWorkspace(info.id)
     })
 }
 
@@ -209,14 +213,14 @@ function vermais(idbotao){
         divstatus.style.display = 'block'
     }
 
-    acoes.innerHTML = `<i class="bi bi-x-lg" onclick="fechar_vermais()"></i> <i class="bi bi-trash" onclick="deleteProject(${idbotao})"></i>`
+    acoes.innerHTML = `<i class="bi bi-x-lg" onclick="fechar_vermais()"></i> <i class="bi bi-trash" onclick="deleteProject(${projetos[idbotao].id})"></i>`
 
 
 
     // this has to be rewritten to connect server VV
 
-    tituloproj.innerHTML = projetos[idbotao].nome
-    descproj.innerHTML = projetos[idbotao].desc
+    tituloproj.innerHTML = projetos[idbotao].name
+    descproj.innerHTML = projetos[idbotao].description
     dataproj.innerHTML = projetos[idbotao].date
 
     hudproject = true
@@ -259,12 +263,28 @@ function createProject(){
 }
 
 
-// this has to be rewritten to connect server VV
 function deleteProject(i){
-    projetos.pop(i)
-
-    drawProjects()
-    fechar_vermais()
+    fetch('/deleteProject', {
+        method: 'DELETE',
+        headers: {
+            'x-access-token' : token,
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({ i })
+    }).then(response => {
+        if (response.status === 200) {
+            return response.json(); 
+        } else {
+            throw new Error('Failed to delete project');
+        }
+    })
+    .then((info) => {
+        updateProjects()
+        setTimeout(() => {
+            drawProjects()
+            fechar_vermais()
+        }, 50);
+    })
 }
 
 function drawProjects(){
@@ -277,10 +297,10 @@ function drawProjects(){
         newProject.id = projetos[i].id
 
         if(projetos[i].date == 'undefined/undefined/'){
-            newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="porcentagem"></div><div class="botoes"><button style="width:100%" onclick="vermais(${projetos[i].id})">Ver mais</button></div>`
+            newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="porcentagem"></div><div class="botoes"><button style="width:100%" onclick="vermais(${i})">Ver mais</button></div>`
         }
         else{
-            newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${projetos[i].id})">Ver mais</button><button onclick="projectdata(${i})">${projetos[i].date}</button></div>`
+            newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${i})">Ver mais</button><button onclick="projectdata(${i})">${projetos[i].date}</button></div>`
         }
 
         document.getElementById('container').appendChild(newProject)
@@ -361,5 +381,5 @@ function projectdata(i){
     }, 5000); 
 }
 
-    console.log('versão 1.1.0')
-drawWorkspace()
+    console.log('versão 2.0')
+    drawWorkspace()
