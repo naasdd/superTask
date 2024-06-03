@@ -105,8 +105,8 @@ app.post('/createWorkspace', verifyJWT, (req, res) => {
     if (workspaceName !== null && clientID != null) {
         try {
             const creating = Workspaces.create({ workspaceName: workspaceName, user_id: clientID })
-            console.log(`> Workspace created at database, creating: ${creating}`)
-            res.status(200).json({ Message: `Workspace created with sucess` })
+            console.log(`> Workspace created at database`)
+            res.status(200).json({ creating })
         }
         catch (err) {
             console.log(`X Error during creating workspace`)
@@ -136,11 +136,45 @@ app.get('/listWorkspace', verifyJWT, async (req, res) => {
 
 
 app.post('/createProject', verifyJWT, async (req, res) => {
-    // To do system
+    const client = req.decoded.email
+    console.log(`> Route /createProject requested by: ${client}`)
+    const name = req.body.name
+    const description = req.body.description
+    let date = req.body.date
+    const workspaces_id = req.body.workspaces_id
+
+    
+    try{
+        if(name == null){
+            throw new Error('Name is null')
+        }
+        else{
+            if(date == 'undefined/undefined/'){
+                date = null
+            }
+            const create = await Projects.create({ name : name, description : description, date : date, workspaces_id : workspaces_id})
+            console.log(`> Project created.`)
+            res.status(200).json({Message: "Project created"})
+        }
+    }
+    catch(err){
+        console.log(`X Error during creating project. error: ${err}`)
+        res.status(500).json({err})
+    }
 })
 
-app.get('/listProject', verifyJWT, async (req, res) => {
-    // To do system
+app.post('/listProject', verifyJWT, async (req, res) => {
+    const client = req.decoded.email
+    console.log(`> Route /listProject requested by: ${client}`)
+    const workspaces_id = req.body.workspaces_id
+    try{
+        const search = await Projects.findAll({ where: {workspaces_id : workspaces_id}})
+        res.status(200).json(search)
+    }
+    catch(err){
+        console.log(`X Error during list project. error: ${err}`)
+        res.status(500).json(err)
+    }
 })
 
 

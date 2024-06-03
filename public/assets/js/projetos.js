@@ -9,12 +9,6 @@ let workspaces = [ ]
 let wrkselected = 0
 
 let projetos = []
-let projetos0 = []
-let projetos1 = []
-let projetos2 = []
-let projetos3 = []
-let projetos4 = []
-let pjPlaceholder = []
 
 let projectname = ''
 let projectdesc = ''
@@ -71,6 +65,7 @@ function updateWorkspace(){
     })
 }
 
+
 function addworkspace(){
     if(workspaces.length >= 5){
         window.alert('Você não pode criar mais que 5 workspaces')
@@ -85,6 +80,7 @@ function opencreateWorkspace(){
     criarprojeto.style.display = 'flex'
     createWorkspace.style.display = 'flex'
 }
+
 function confirmCreateWorkspace(){
     let workspaceName = document.getElementById('workspaceName').value
     fetch('/createWorkspace', {
@@ -97,35 +93,36 @@ function confirmCreateWorkspace(){
     })
     .then(response => response.json())
     .then(info => {
+        console.log(info)
         updateWorkspace()
         drawWorkspace()
         hudproject = true
         closecreate()
     })
-
 }
 
-function drawWorkspace(){
+
+function drawWorkspace(wrkselected){
     wContainer.innerHTML = ''
+
     for(let i = 0; i < workspaces.length; i++){
-        if(wrkselected == i){
-        wContainer.innerHTML += `<div class="workspace-active" id="${workspaces[i].id}" onclick="selectWorkspace(${i})">${workspaces[i].workspaceName}</div>` 
+        if(wrkselected == workspaces[i].id){
+        tituloContainer.innerHTML = workspaces[i].workspaceName
+        wContainer.innerHTML += `<div class="workspace-active" id="${workspaces[i].id}" onclick="selectWorkspace(${workspaces[i].id})">${workspaces[i].workspaceName}</div>` 
         }
         else{
-            wContainer.innerHTML += `<div class="workspace" id="${workspaces[i].id}" onclick="selectWorkspace(${i})">${workspaces[i].workspaceName}</div>`
+            wContainer.innerHTML += `<div class="workspace" id="${workspaces[i].id}" onclick="selectWorkspace(${workspaces[i].id})">${workspaces[i].workspaceName}</div>`
         }
     }
 }
 
 function selectWorkspace(w){
-    // to do system that get projects on database
-    
     wrkselected = w
-    drawWorkspace()
+    updateProjects(wrkselected)
+    drawWorkspace(wrkselected)
 
     setTimeout(function() {
-        drawProjects()
-        tituloContainer.innerHTML = workspaces[w]
+        drawProjects(wrkselected)
             setTimeout(function() {
                 container.style.animation = 'none'
                 tituloContainer.style.animation = 'none'
@@ -177,6 +174,28 @@ function closecreate(){
     }
 }
 
+function updateProjects(workspaces_id){
+    fetch('/listProject', {
+        method: 'POST',
+        headers: {
+            'x-access-token' : token,
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({ workspaces_id })
+    })
+    .then(response => {
+        if (response.status === 200) {
+            return response.json(); 
+        } else {
+            window.location.href = './login.html'
+            throw new Error('Failed to fetch projects');
+        }
+    })
+    .then((info) => {
+        projetos = info
+    })
+}
+
 
 function vermais(idbotao){
 
@@ -208,27 +227,35 @@ function fechar_vermais(){
     closecreate()
 }
 
+
+
 function createProject(){
-    titulo = document.getElementById('projectname').value
-    desc = document.getElementById('projectdesc').value
-    datap = document.getElementById('projectdate').value
+    let name = document.getElementById('projectname').value
+    let description = document.getElementById('projectdesc').value
+    let datap = document.getElementById('projectdate').value
 
     let datap_dividida = datap.split('-')
-    let datap_formatada = `${datap_dividida[2]}/${datap_dividida[1]}/${datap_dividida[0]}`
+    let date = `${datap_dividida[2]}/${datap_dividida[1]}/${datap_dividida[0]}`
 
+    let workspaces_id = wrkselected
 
-
-    // this has to be rewritten to connect server VV
-
-    projetos.push({
-        nome: titulo,
-        desc: desc,
-        date: datap_formatada
-    });
-
-    drawProjects()
-    hudproject = true
-    closecreate()
+    fetch('/createProject', {
+        method: 'POST',
+        headers: {
+            'x-access-token' : token,
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({ name, description, date, workspaces_id  })
+    })
+    .then(response => response.json())
+    .then(info => {
+        updateProjects(workspaces_id)
+        hudproject = true
+        closecreate()
+        setTimeout(() => { //timer to handle the delay of list projects
+            drawProjects()
+        }, 500);
+    })
 }
 
 
@@ -247,17 +274,18 @@ function drawProjects(){
 
         let newProject = document.createElement('div');
         newProject.className = 'projeto'
-        newProject.id = 'projeto' + i
+        newProject.id = projetos[i].id
 
         if(projetos[i].date == 'undefined/undefined/'){
-            newProject.innerHTML = `<h1>${projetos[i].nome}</h1><p>${projetos[i].desc}</p><div class="porcentagem"></div><div class="botoes"><button style="width:100%" onclick="vermais(${i})">Ver mais</button></div>`
+            newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="porcentagem"></div><div class="botoes"><button style="width:100%" onclick="vermais(${projetos[i].id})">Ver mais</button></div>`
         }
         else{
-            newProject.innerHTML = `<h1>${projetos[i].nome}</h1><p>${projetos[i].desc}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${i})">Ver mais</button><button onclick="projectdata(${i})">${projetos[i].date}</button></div>`
+            newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${projetos[i].id})">Ver mais</button><button onclick="projectdata(${i})">${projetos[i].date}</button></div>`
         }
 
         document.getElementById('container').appendChild(newProject)
     }
+
     let divadicionar = document.createElement('div')
 
     divadicionar.className = "addprojeto"
@@ -319,7 +347,7 @@ function projectdata(i){
     let soma_dias_prazo = splitdate[2]*365 + splitdate[1]*31 + splitdate[0]
     let dias_restantes = soma_dias_prazo - soma_dias_atual
 
-    txtnotificacao.innerHTML = `Faltam <span> ${dias_restantes} </span> dias para o prazo de <span>${projetos[i].nome}</span>.`
+    txtnotificacao.innerHTML = `Faltam <span> ${dias_restantes} </span> dias para o prazo de <span>${projetos[i].name}</span>.`
 
     setTimeout(function() {
 
