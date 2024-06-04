@@ -4,7 +4,7 @@ let dataproj = document.getElementById('dataproj')
 let acoes = document.getElementById('acoes')
 let divstatus = document.getElementById('divstatus')
 
-let workspaces = [ ]
+let workspaces = []
 
 let wrkselected = 0
 
@@ -24,192 +24,155 @@ let createWorkspace = document.getElementById('createWorkspace')
 let workspaceName = document.getElementById('workspaceName').value
 
 
-function projects(){
+function projects() {
     fetch('/validateAccount', {
-        headers: {'x-access-token' : token}
+        headers: { 'x-access-token': token }
     })
-    .then(response => {
-        if (response.status === 200) {
-            return response.json(); 
-        } else {
-            window.location.href = './login.html'
-            throw new Error('Failed to fetch projects');
-        }
-    })
-    .then((data) => {
-        updateWorkspace()
-        estilo.href = './assets/css/projetos.css'
-        titulo.innerHTML = `${token}`
-        iconelogo.remove()
-        titulosupertask.remove()
-        const first = workspaces[0].id
-        selectWorkspace(first)
-        drawProjects()
-    })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                window.location.href = './login.html'
+                throw new Error('Failed to fetch projects');
+            }
+        })
+        .then((data) => {
+            updateWorkspace()
+            estilo.href = './assets/css/projetos.css'
+            titulo.innerHTML = `${token}`
+            iconelogo.remove()
+            titulosupertask.remove()
+            setTimeout(() => {
+                const first = workspaces[0].id
+                selectWorkspace(first)
+                drawProjects()
+            }, 100);
+        })
 }
 
-function updateWorkspace(){
+
+
+function updateWorkspace() {
     fetch('/listWorkspace', {
-        headers: {'x-access-token' : token}
+        headers: { 'x-access-token': token }
     })
-    .then(response => {
-        if (response.status === 200) {
-            return response.json(); 
-        } else {
-            window.location.href = './login.html'
-            throw new Error('Failed to fetch projects');
-        }
-    })
-    .then((info) => {
-        workspaces = info
-        if(workspaces.length == 0){
-            window.alert('haha vc nao tem nenhuma workspace')
-        }
-        drawWorkspace()
-    })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                window.location.href = './login.html'
+                throw new Error('Failed to fetch projects');
+            }
+        })
+        .then((info) => {
+            workspaces = info
+            if (workspaces.length == 0) {
+                window.alert('haha vc nao tem nenhuma workspace')
+            }
+            drawWorkspace()
+        })
 }
 
-
-function addworkspace(){
-    if(workspaces.length >= 5){
+function addworkspace() {
+    if (workspaces.length >= 5) {
         window.alert('Você não pode criar mais que 5 workspaces')
     }
-    else{
+    else {
         opencreateWorkspace()
         drawWorkspace()
     }
 }
 
-function opencreateWorkspace(){
-    criarprojeto.style.display = 'flex'
-    createWorkspace.style.display = 'flex'
-}
-
-function confirmCreateWorkspace(){
+function confirmCreateWorkspace() {
     let workspaceName = document.getElementById('workspaceName').value
     fetch('/createWorkspace', {
         method: 'POST',
         headers: {
-            'x-access-token' : token,
-            'Content-Type' : 'application/json'
+            'x-access-token': token,
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({ workspaceName })
     })
-    .then(response => response.json())
-    .then(info => {
-        updateWorkspace()
-        drawWorkspace()
-        hudproject = true
-        closecreate()
-        selectWorkspace(info.id)
-    })
+        .then(response => response.json())
+        .then(info => {
+            updateWorkspace()
+            setTimeout(() => {
+                const workspaces_id = info.creating.id
+                drawWorkspace()
+                hudproject = true
+                closecreate()
+                selectWorkspace(workspaces_id)
+            }, 200);
+
+        })
 }
 
-
-function drawWorkspace(wrkselected){
+function drawWorkspace(wrkselected) {
     wContainer.innerHTML = ''
 
-    for(let i = 0; i < workspaces.length; i++){
-        if(wrkselected == workspaces[i].id){
-        tituloContainer.innerHTML = workspaces[i].workspaceName
-        wContainer.innerHTML += `<div class="workspace-active" id="${workspaces[i].id}" onclick="selectWorkspace(${workspaces[i].id})">${workspaces[i].workspaceName}</div>` 
+    for (let i = 0; i < workspaces.length; i++) {
+        if (wrkselected == workspaces[i].id) {
+            tituloContainer.innerHTML = workspaces[i].workspaceName
+            wContainer.innerHTML += `<div class="workspace-active" id="${workspaces[i].id}" onclick="selectWorkspace(${workspaces[i].id})">${workspaces[i].workspaceName}</div>`
         }
-        else{
+        else {
             wContainer.innerHTML += `<div class="workspace" id="${workspaces[i].id}" onclick="selectWorkspace(${workspaces[i].id})">${workspaces[i].workspaceName}</div>`
         }
     }
 }
 
-function selectWorkspace(w){
+function selectWorkspace(w) {
     wrkselected = w
     updateProjects(wrkselected)
     drawWorkspace(wrkselected)
 
-    setTimeout(function() {
+    setTimeout(function () {
         drawProjects(wrkselected)
-            setTimeout(function() {
-                container.style.animation = 'none'
-                tituloContainer.style.animation = 'none'
-                
-            }, 1400); 
-    }, 600); 
+        setTimeout(function () {
+            container.style.animation = 'none'
+            tituloContainer.style.animation = 'none'
+
+        }, 1400);
+    }, 600);
 
     container.style.animation = 'transicaoContainer 2s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
     tituloContainer.style.animation = 'transicaoContainer 2s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
 }
 
 
-function opencreateProject(){
-        criarprojeto.style.display = 'flex'
-        projetoContainer.style.display = 'flex'
-        
-}
-function outcreatehud(){
-    hudproject = true
-}
 
-function overcreatehud(){
-    hudproject = false
-}
-function closecreate(){
-    if(hudproject){
-        criarprojeto.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-        projetoContainer.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-        vermaisContainer.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-        createWorkspace.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-        
-        
-        
-        // "timer" para que esses códigos apenas sejam rodados depois de acabar a animacao anterior
-        setTimeout(function() {
-            hudproject = false
 
-            criarprojeto.style.display = 'none';
-            projetoContainer.style.display = 'none';
-            vermaisContainer.style.display = 'none';
-            createWorkspace.style.display = 'none'
-
-            criarprojeto.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-        projetoContainer.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-        vermaisContainer.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-        createWorkspace.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-
-        }, 700);  //tempo em ms
-    }
-}
-
-function updateProjects(workspaces_id){
+function updateProjects(workspaces_id) {
     fetch('/listProject', {
         method: 'POST',
         headers: {
-            'x-access-token' : token,
-            'Content-Type' : 'application/json'
+            'x-access-token': token,
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({ workspaces_id })
     })
-    .then(response => {
-        if (response.status === 200) {
-            return response.json(); 
-        } else {
-            window.location.href = './login.html'
-            throw new Error('Failed to fetch projects');
-        }
-    })
-    .then((info) => {
-        projetos = info
-    })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                window.location.href = './login.html'
+                throw new Error('Failed to fetch projects');
+            }
+        })
+        .then((info) => {
+            projetos = info
+        })
 }
 
-
-function vermais(idbotao){
+function vermais(idbotao) {
 
     criarprojeto.style.display = 'flex'
     vermaisContainer.style.display = 'flex'
 
-    if(projetos[idbotao].date == 'undefined/undefined/'){
+    if (projetos[idbotao].date == 'undefined/undefined/') {
         divstatus.style.display = 'none'
     }
-    else{
+    else {
         divstatus.style.display = 'block'
     }
 
@@ -226,14 +189,7 @@ function vermais(idbotao){
     hudproject = true
 }
 
-function fechar_vermais(){
-    hudproject = true
-    closecreate()
-}
-
-
-
-function createProject(){
+function createProject() {
     let name = document.getElementById('projectname').value
     let description = document.getElementById('projectdesc').value
     let datap = document.getElementById('projectdate').value
@@ -246,60 +202,61 @@ function createProject(){
     fetch('/createProject', {
         method: 'POST',
         headers: {
-            'x-access-token' : token,
-            'Content-Type' : 'application/json'
+            'x-access-token': token,
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, description, date, workspaces_id  })
+        body: JSON.stringify({ name, description, date, workspaces_id })
     })
-    .then(response => response.json())
-    .then(info => {
-        updateProjects(workspaces_id)
-        hudproject = true
-        closecreate()
-        setTimeout(() => { //timer to handle the delay of list projects
-            drawProjects()
-        }, 500);
-    })
+        .then(response => response.json())
+        .then(info => {
+            updateProjects(workspaces_id)
+            hudproject = true
+            closecreate()
+            setTimeout(() => { //timer to handle the delay of list projects
+                drawProjects()
+            }, 500);
+        })
 }
 
-
-function deleteProject(i){
+function deleteProject(i) {
     fetch('/deleteProject', {
         method: 'DELETE',
         headers: {
-            'x-access-token' : token,
-            'Content-Type' : 'application/json'
+            'x-access-token': token,
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({ i })
-    }).then(response => {
-        if (response.status === 200) {
-            return response.json(); 
-        } else {
-            throw new Error('Failed to delete project');
-        }
     })
-    .then((info) => {
-        updateProjects()
-        setTimeout(() => {
-            drawProjects()
-            fechar_vermais()
-        }, 50);
-    })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw new Error('Failed to delete project');
+            }
+        })
+        .then((info) => {
+            updateProjects(wrkselected)
+            setTimeout(() => {
+                drawProjects()
+                fechar_vermais()
+            }, 250);
+            console.log('foi tudo')
+        })
 }
 
-function drawProjects(){
+function drawProjects() {
     container.innerHTML = ''
 
-    for(i= projetos.length-1; i >= 0; i--){
+    for (i = projetos.length - 1; i >= 0; i--) {
 
         let newProject = document.createElement('div');
         newProject.className = 'projeto'
         newProject.id = projetos[i].id
 
-        if(projetos[i].date == 'undefined/undefined/'){
+        if (projetos[i].date == null) {
             newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="porcentagem"></div><div class="botoes"><button style="width:100%" onclick="vermais(${i})">Ver mais</button></div>`
         }
-        else{
+        else {
             newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${i})">Ver mais</button><button onclick="projectdata(${i})">${projetos[i].date}</button></div>`
         }
 
@@ -319,8 +276,8 @@ function drawProjects(){
     document.getElementById('addprojeto').appendChild(iconeadicionar)
 
 
-    if(projetos == ''){
-        setTimeout(function(){
+    if (projetos == '') {
+        setTimeout(function () {
             container.style.display = 'flex'
             container.style.justifyContent = 'center'
             container.style.alignItems = 'center'
@@ -331,9 +288,9 @@ function drawProjects(){
             addprojeto.style.height = '160px'
             addprojeto.innerHTML = '<p>Não há nada aqui... que tal criar algum projeto?</p> <br> <i class="bi bi-plus-lg"></i>'
         }, 300)
-            
+
     }
-    else{
+    else {
         container.style.display = 'grid'
         container.style.justifyContent = 'center'
         container.style.alignItems = 'start'
@@ -344,7 +301,7 @@ function drawProjects(){
     }
 }
 
-function projectdata(i){
+function projectdata(i) {
 
     let txtnotificacao = document.getElementById('txtnotificacao')
     let divnotificacao = document.getElementById('divnotificacao')
@@ -359,27 +316,30 @@ function projectdata(i){
     let dataprojeto = projetos[i].date
     let splitdate = dataprojeto.split('/')
 
-    for(j = 0; j < 3; j++){
+    for (j = 0; j < 3; j++) {
         splitdate[j] = parseInt(splitdate[j])
     }
 
-    let soma_dias_atual = ano_atual*365 + mes_atual*31 + dia_atual
-    let soma_dias_prazo = splitdate[2]*365 + splitdate[1]*31 + splitdate[0]
+    let soma_dias_atual = ano_atual * 365 + mes_atual * 31 + dia_atual
+    let soma_dias_prazo = splitdate[2] * 365 + splitdate[1] * 31 + splitdate[0]
     let dias_restantes = soma_dias_prazo - soma_dias_atual
 
     txtnotificacao.innerHTML = `Faltam <span> ${dias_restantes} </span> dias para o prazo de <span>${projetos[i].name}</span>.`
 
-    setTimeout(function() {
+    setTimeout(function () {
 
         divnotificacao.style.animation = 'notificacaoanimacaoinversa 3s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
 
-        setTimeout(function(){
+        setTimeout(function () {
 
             divnotificacao.style.display = 'none'
         }, 3000)
-            
-    }, 5000); 
+
+    }, 5000);
 }
 
-    console.log('versão 2.0')
-    drawWorkspace()
+
+
+
+
+drawWorkspace()

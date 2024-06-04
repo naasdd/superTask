@@ -177,6 +177,21 @@ app.post('/listProject', verifyJWT, async (req, res) => {
     }
 })
 
+app.delete('/deleteProject', verifyJWT, async (req, res) => {
+    const client = req.decoded.email
+    console.log(`> Route /deleteProject requested by: ${client}`)
+    const reqid = req.body.i
+    try{
+        await Projects.destroy({ where: { id : reqid}})
+        console.log(`> Project destroyed`)
+        res.status(200).json({Message: "deleted"})
+    }
+    catch(err){
+        console.log(`X Error during delete project. error: ${err}`)
+        res.status(500).json(err)
+    }
+})
+
 
 
 connect.sync()
