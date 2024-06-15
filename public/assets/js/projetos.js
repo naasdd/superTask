@@ -45,8 +45,8 @@ function projects() {
             setTimeout(() => {
                 const first = workspaces[0].id
                 selectWorkspace(first)
-                drawProjects()
             }, 100);
+            drawProjects()
         })
 }
 
@@ -67,7 +67,7 @@ function updateWorkspace() {
         .then((info) => {
             workspaces = info
             if (workspaces.length == 0) {
-                window.alert('haha vc nao tem nenhuma workspace')
+                opencreateWorkspace()
             }
             drawWorkspace()
         })
@@ -169,18 +169,15 @@ function vermais(idbotao) {
     criarprojeto.style.display = 'flex'
     vermaisContainer.style.display = 'flex'
 
-    if (projetos[idbotao].date == 'undefined/undefined/') {
+    if (projetos[idbotao].date == null) {
         divstatus.style.display = 'none'
     }
     else {
         divstatus.style.display = 'block'
     }
-
     acoes.innerHTML = `<i class="bi bi-x-lg" onclick="fechar_vermais()"></i> <i class="bi bi-trash" onclick="deleteProject(${projetos[idbotao].id})"></i>`
 
 
-
-    // this has to be rewritten to connect server VV
 
     tituloproj.innerHTML = projetos[idbotao].name
     descproj.innerHTML = projetos[idbotao].description
@@ -207,7 +204,13 @@ function createProject() {
         },
         body: JSON.stringify({ name, description, date, workspaces_id })
     })
-        .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.json()
+            .then(error => { throw new Error(error.err) });
+        }
+        return response.json();
+    })
         .then(info => {
             updateProjects(workspaces_id)
             hudproject = true
@@ -215,6 +218,27 @@ function createProject() {
             setTimeout(() => { //timer to handle the delay of list projects
                 drawProjects()
             }, 500);
+        })
+        .catch(err => {
+            console.log(err)
+            let txtnotificacao = document.getElementById('txtnotificacao')
+            let divnotificacao = document.getElementById('divnotificacao')
+            divnotificacao.style.display = 'flex'
+            divnotificacao.style.animation = 'notificacaoanimacao 1.5s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+            txtnotificacao.innerHTML = err
+            
+            hudproject = true
+            closecreate()
+            setTimeout(function () {
+
+                divnotificacao.style.animation = 'notificacaoanimacaoinversa 3s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+        
+                setTimeout(function () {
+        
+                    divnotificacao.style.display = 'none'
+                }, 3000)
+        
+            }, 5000);
         })
 }
 
@@ -274,7 +298,6 @@ function drawProjects() {
 
     document.getElementById('container').appendChild(divadicionar)
     document.getElementById('addprojeto').appendChild(iconeadicionar)
-
 
     if (projetos == '') {
         setTimeout(function () {

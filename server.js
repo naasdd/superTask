@@ -45,7 +45,7 @@ function verifyJWT(req, res, next) {
 
 app.get('/validateAccount', verifyJWT, (req, res) => {
     const info = req.userInfoDB
-    res.status(200).json({ email: info.email, username: info.username})
+    res.status(200).json({ email: info.email, username: info.username })
 })
 
 app.post('/signIn', async (req, res) => {
@@ -143,23 +143,25 @@ app.post('/createProject', verifyJWT, async (req, res) => {
     let date = req.body.date
     const workspaces_id = req.body.workspaces_id
 
-    
-    try{
-        if(name == null){
+    try {
+        if (name == null) {
             throw new Error('Name is null')
         }
-        else{
-            if(date == 'undefined/undefined/'){
+        else if (workspaces_id == 0) {
+            throw new Error('You should create a workspace before.')
+        }
+        else {
+            if (date == 'undefined/undefined/') {
                 date = null
             }
-            const create = await Projects.create({ name : name, description : description, date : date, workspaces_id : workspaces_id})
+            const create = await Projects.create({ name: name, description: description, date: date, workspaces_id: workspaces_id })
             console.log(`> Project created.`)
-            res.status(200).json({Message: "Project created"})
+            res.status(200).json({ Message: "Project created" })
         }
     }
-    catch(err){
+    catch (err) {
         console.log(`X Error during creating project. error: ${err}`)
-        res.status(500).json({err})
+        res.status(500).json({ err: err.message })
     }
 })
 
@@ -167,11 +169,11 @@ app.post('/listProject', verifyJWT, async (req, res) => {
     const client = req.decoded.email
     console.log(`> Route /listProject requested by: ${client}`)
     const workspaces_id = req.body.workspaces_id
-    try{
-        const search = await Projects.findAll({ where: {workspaces_id : workspaces_id}})
+    try {
+        const search = await Projects.findAll({ where: { workspaces_id: workspaces_id } })
         res.status(200).json(search)
     }
-    catch(err){
+    catch (err) {
         console.log(`X Error during list project. error: ${err}`)
         res.status(500).json(err)
     }
@@ -181,12 +183,12 @@ app.delete('/deleteProject', verifyJWT, async (req, res) => {
     const client = req.decoded.email
     console.log(`> Route /deleteProject requested by: ${client}`)
     const reqid = req.body.i
-    try{
-        await Projects.destroy({ where: { id : reqid}})
+    try {
+        await Projects.destroy({ where: { id: reqid } })
         console.log(`> Project destroyed`)
-        res.status(200).json({Message: "deleted"})
+        res.status(200).json({ Message: "deleted" })
     }
-    catch(err){
+    catch (err) {
         console.log(`X Error during delete project. error: ${err}`)
         res.status(500).json(err)
     }
