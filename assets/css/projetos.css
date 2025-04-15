@@ -478,6 +478,20 @@ main{
 }
 .headervermais h1{
     font-weight: 200;
+    /* margin-top: ; */
+}
+
+#descproj {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
+}
+
+#divstatus > p {
+    font-size: 30px;
 }
 
 .acoes{
@@ -546,10 +560,13 @@ main{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 100px;
+    margin: 10px 0px;
+    max-width: 100%;
+    overflow: hidden;
 }
+
 .divprazoprojeto i{
-    font-size: 70px;
+    font-size: 40px;
     color: #b4b4b4;
     margin-right: 20px;
 }

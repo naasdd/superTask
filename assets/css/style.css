@@ -38,7 +38,6 @@ body{
     height: 600px;
     border-radius: 31px;
     background: #8CD2E6;
-    -webkit-filter: blur(200px);
     top: 20%;
     left: 180px;
 }
