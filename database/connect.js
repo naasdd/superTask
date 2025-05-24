@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize')
+require('dotenv').config()
 
-const sequelize = new Sequelize('supertask', 'root', 'nasd', {
+const sequelize = new Sequelize(process.env._DataBaseSCHEMA, process.env._DataBaseUSERNAME, process.env._DataBasePASSWORD, {
     host: 'localhost',
     dialect: 'mysql'
 })
