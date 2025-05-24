@@ -23,6 +23,8 @@ let tituloContainer = document.getElementById('tituloContainer')
 let createWorkspace = document.getElementById('createWorkspace')
 let workspaceName = document.getElementById('workspaceName').value
 
+function todo(){ window.alert("Em desenvolvimento.")}
+function weeklytodo(){ window.alert("Em desenvolvimento.")}
 
 function projects() {
     fetch('/validateAccount', {
