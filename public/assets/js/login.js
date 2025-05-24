@@ -1,4 +1,6 @@
-function login(){
+let login = document.getElementById("loginContainer")
+
+login.addEventListener('submit', () => {
     event.preventDefault()
     let email = document.getElementById('email').value
     let password = document.getElementById('password').value
@@ -21,4 +23,4 @@ function login(){
         localStorage.setItem('token', token)
         window.location.href = 'index.html'
     })
-}
+})
