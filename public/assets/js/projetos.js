@@ -266,7 +266,6 @@ function deleteProject(i) {
                 drawProjects()
                 fechar_vermais()
             }, 250);
-            console.log('foi tudo')
         })
 }
 
