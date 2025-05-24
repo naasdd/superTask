@@ -14,6 +14,17 @@ const signIn = async (req, res) => {
     const info = req.body
     const pass = info.password
 
+    if (info.email == "" || info.password == "" || info.email == null || info.password == null) {
+        console.log(`> Invalid input`)
+        return res.status(400).json({ Message: "Invalid input" })
+    }
+
+    const searchOnDatabase = await Users.findOne({ where: { email: info.email }, raw: true })
+    if (searchOnDatabase != null) {
+        return res.status(403).json({ Message: "Email already used." });
+    }
+
+
 
     bcrypt.hash(pass, 10, async (err, hash) => {
         if (err) {
@@ -27,7 +38,7 @@ const signIn = async (req, res) => {
             res.status(200).json({ Message: "User signed in." })
         }
         catch (err) {
-            console.log(`X Failed at bycrypt.hash, error: ${err}`)
+            console.log(`X Failed at signin, error: ${err}`)
             res.status(500)
         }
     })
@@ -38,13 +49,17 @@ const logIn = async (req, res) => {
     const info = req.body
     const pass = info.password
 
-    try {
-        const searchOnDatabase = await Users.findOne({ where: { email: info.email }, raw: true })
+    if (info.email == "" || info.password == "" || info.email == null || info.password == null) {
+        console.log(`X Invalid input`)
+        return res.status(400).json({ Message: "Invalid input" })
+    }
 
-        if (searchOnDatabase == null) {
-            throw new Error("User not found");
-        }
-        
+    const searchOnDatabase = await Users.findOne({ where: { email: info.email }, raw: true })
+    if (searchOnDatabase == null) {
+        return res.status(404).json({ Message: "User not found" });
+    }
+
+    try {
         const result = bcrypt.compareSync(pass, searchOnDatabase.password)
 
         if (result) {
@@ -57,7 +72,7 @@ const logIn = async (req, res) => {
     }
     catch (err) {
         console.log(`X Error on route /logIn, error: ${err}`)
-        res.status(500).json({ Message: `Some fucking error: ${err}` })
+        res.status(500).json({ Message: `Error: ${err}` })
     }
 }
 
