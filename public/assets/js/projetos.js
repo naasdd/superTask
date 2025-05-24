@@ -41,7 +41,7 @@ function projects() {
         .then((data) => {
             updateWorkspace()
             estilo.href = './assets/css/projetos.css'
-            titulo.innerHTML = `${token}`
+            titulo.innerHTML = `Projetos`
             iconelogo.remove()
             titulosupertask.remove()
             setTimeout(() => {

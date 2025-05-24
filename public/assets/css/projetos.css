@@ -501,7 +501,7 @@ main{
     color: darkgray;
     font-size: 28px;
     font-weight: 300;
-    max-width: 80%;
+    max-width: 100%;
     height: auto;
     margin-bottom: 50px;
     word-wrap: break-word;
