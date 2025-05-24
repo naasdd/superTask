@@ -278,10 +278,10 @@ function drawProjects() {
         newProject.id = projetos[i].id
 
         if (projetos[i].date == null) {
-            newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="porcentagem"></div><div class="botoes"><button style="width:100%" onclick="vermais(${i})">Ver mais</button></div>`
+            newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="botoes"><button style="width:100%" onclick="vermais(${i})">Ver mais</button></div>`
         }
         else {
-            newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="porcentagem"></div><div class="botoes"><button onclick="vermais(${i})">Ver mais</button><button onclick="projectdata(${i})">${projetos[i].date}</button></div>`
+            newProject.innerHTML = `<h1>${projetos[i].name}</h1><p>${projetos[i].description}</p><div class="botoes"><button onclick="vermais(${i})">Ver mais</button><button onclick="projectdata(${i})">${projetos[i].date}</button></div>`
         }
 
         document.getElementById('container').appendChild(newProject)

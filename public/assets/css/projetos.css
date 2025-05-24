@@ -86,7 +86,7 @@ section{
     justify-content: flex-start;
     align-items: center;
     width: 500px;
-    height: 70%;
+    height: auto;
 }
 #createWorkspace h1{
     font-weight: 300;
@@ -95,7 +95,7 @@ section{
     letter-spacing: 1px;
 }
 #createWorkspace p{
-    margin-top: 100px;
+    margin-top: 30px;
     font-size: 28px;
 }
 #createWorkspace input{
@@ -122,7 +122,8 @@ section{
     border: 1px solid #8CD2E6;
     background: #1E1E1E;
     box-shadow: 0px 0px 40px -16px #8CD2E6;
-    margin-top: 150px;
+    margin-top: 70px;
+    margin-bottom: 50px;
     color: #FFF;
     text-align: center;
     font-family: Montserrat;
@@ -169,13 +170,16 @@ main{
     flex-wrap: wrap;
     justify-content: center;
     align-items: start;
+    place-items: center;
     width: 90%;
     min-width: 300px;
     min-height: 80vh;
+    padding-bottom: 20px;
     height: min-content;
     background-color: var(--backgroundSecundario);
     border-radius: 50px;
     margin: 0px 30px;
+
     box-shadow: 0px 0px 100px #202020;
 }
 
@@ -217,7 +221,7 @@ main{
     width: 80%;
     min-width: 300px;
     height: 200px;
-    margin: 20px;
+    margin-top: 30px;
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -232,16 +236,14 @@ main{
 }
 .projeto > p{
     font-weight: 300;
-    height: 2.5vw;
+    height: auto;
+    max-width: 100%;
+    word-wrap: break-word;
     color: var(--txtdesc);
     font-size: 1vw;
     margin-bottom: .3vw;
 }
-.projeto > .porcentagem{
-    width: 100%;
-    height: 2vw;
-    background-color: transparent;
-}
+
 .projeto > .botoes{
     width: 100%;
     height: 3vw;
@@ -291,7 +293,7 @@ main{
 }
 #projetoContainer{
     width: 550px;
-    height: 90%;
+    height: auto;
     background-color: var(--background);
     border: solid 1px var(--azul);
     border-radius: 40px;
@@ -329,7 +331,7 @@ main{
     font-weight: 200;
 }
 
-.divnome input, .divdesc input{
+.divnome input, .divdesc textarea{
     color: white;
     width: 100%;
     height: 80%;
@@ -384,29 +386,6 @@ main{
     cursor: pointer;
 }
 
-.divporcentagem{
-    width: 100%;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-}
-.divporcentagem h2{
-    max-width: 60%;
-    text-align: center;
-    font-weight: 200;
-    font-size: 20px;
-}
-.divporcentagem2{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    margin-top: 20px;
-}
 .inputsim, .inputnao{
     display: flex;
     flex-direction: row;
@@ -437,7 +416,8 @@ main{
     border: 1px solid #8CD2E6;
     background: #1E1E1E;
     box-shadow: 0px 0px 40px -16px #8CD2E6;
-    margin-top: 50px;
+    margin-top: 30px;
+    margin-bottom: 20px;
     color: #FFF;
     text-align: center;
     font-family: Montserrat;
@@ -467,7 +447,7 @@ main{
     justify-content: flex-start;
     align-items: center;
     width: 1100px;
-    height: 70%;
+    height: auto;
 }
 .headervermais{
     width: 100%;
@@ -505,11 +485,11 @@ main{
     width: 80%;
     height: 200px;
     margin-top: -40px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 150px;
 }
 .infoproj h1{
     margin-bottom: 20px;
@@ -519,9 +499,12 @@ main{
 }
 .infoproj p{
     color: darkgray;
-    font-size: 36px;
+    font-size: 28px;
     font-weight: 300;
-    max-width: 100%;
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 50px;
+    word-wrap: break-word;
     text-align: center;
 }
 
@@ -547,6 +530,7 @@ main{
     justify-content: center;
     align-items: center;
     height: 100px;
+    margin-bottom: 40px;
 }
 .divprazoprojeto i{
     font-size: 70px;

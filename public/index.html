@@ -58,7 +58,7 @@
                 </div>
                 <div class="divdesc">
                     <h2>Descrição do projeto</h2>
-                    <input type="text" id="projectdesc" maxlength="130">
+                    <textarea id="projectdesc" maxlength="130"></textarea>
                 </div>
                 <div class="divprazo">
                     <h2>Prazo de conclusão</h2>
@@ -66,19 +66,6 @@
                         <i class="bi bi-calendar-week"></i>
                         <!-- <input type="text" id="projectdate" class="projectdate" maxlength="10"> -->
                         <input type="date" id="projectdate" class="projectdate">
-                    </div>
-                </div>
-                <div class="divporcentagem">
-                    <h2>Deseja acrescentar porcentagem ao seu projeto?</h2>
-                    <div class="divporcentagem2">
-                        <div class="inputsim">
-                            <input type="radio" name="porcentagem" id="sim">
-                            <label for="sim">Sim</label>
-                        </div>
-                        <div class="inputnao">
-                            <input type="radio" name="porcentagem" id="nao">
-                            <label for="nao">Não</label>
-                        </div>
                     </div>
                 </div>
                 <button onclick="createProject()">Criar novo projeto</button>
