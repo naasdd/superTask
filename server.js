@@ -77,10 +77,15 @@ app.post('/logIn', async (req, res) => {
     const info = req.body
     const pass = info.password
 
-    const searchOnDatabase = await Users.findOne({ where: { email: info.email }, raw: true })
-    const result = bcrypt.compareSync(pass, searchOnDatabase.password)
-
     try {
+        const searchOnDatabase = await Users.findOne({ where: { email: info.email }, raw: true })
+
+        if (searchOnDatabase == null) {
+            throw new Error("User not found");
+        }
+        
+        const result = bcrypt.compareSync(pass, searchOnDatabase.password)
+
         if (result) {
             const token = jwt.sign({ email: searchOnDatabase.email }, jwtKey, { expiresIn: '7d' })
             res.status(200).json({ auth: true, token })
