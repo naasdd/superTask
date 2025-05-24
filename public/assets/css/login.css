@@ -14,9 +14,8 @@
 }
 
 #loginContainer{
-    width: 400px;
     padding: 20px 100px;
-    height: 60%;
+    height: auto;
     background-color: var(--background);
     border: solid 1px var(--azul);
     border-radius: 40px;
