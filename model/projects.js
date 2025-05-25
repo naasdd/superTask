@@ -17,6 +17,10 @@ const Projects = database.define('Projects', {
         type: DataTypes.STRING(500),
         allowNull: true
     },
+    date: {
+        type: DataTypes.STRING(10),
+        allowNull: true
+    },
     workspaces_id: {
         type: DataTypes.INTEGER, // Tipo de dado deve corresponder ao tipo da coluna referenciada
         allowNull: false,

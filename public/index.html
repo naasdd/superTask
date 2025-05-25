@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="titulopag">superTask</title>
+    <link rel="shortcut icon" href="./assets/img/logosupertask.svg">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="" id="stylesheet" >
+</head>
+<body>
+    <header>
+        <div class="iconeHeader">
+            <div class="ponto1"></div>
+            <div class="ponto2"></div>
+            <div class="ponto3"></div>
+        </div>
+        <div class="menu">
+            <i class="bi bi-person-circle bi-lg" onclick="userIcon()"></i>
+            <i class="bi bi-columns-gap bi-xl" onclick="projects()"></i>
+            <i class="bi bi-clipboard-check bi-2x" onclick="todo()"></i>
+            <i class="bi bi-ui-checks bi-3x" onclick="weeklytodo()"></i>
+        </div>
+        
+    </header>
+    <section>
+        <div class="wContainer" id="wContainer">
+            <div class="workspace">Workspace de teste</div>
+        </div>
+        <div class="addworkspace" onclick="addworkspace()">
+            <p>Adicionar workspace</p>
+        </div>
+    </section>
+    <main>
+        
+        <div class="logoetitulo">
+            <img src="./assets/img/logosupertask.svg" class="iconelogo" id="iconelogo">
+            <h1 class="supertasktitulo" id="superTask">superTask</h1>
+        </div>
+        <h1 class="paginatitulo" id="tituloContainer">Projetos</h1>
+
+
+        <div class="container" id="container"> 
+            <div class="addprojeto" id="addprojeto" onclick="opencreateProject()">
+                <i class="bi bi-plus-lg"></i>
+            </div>
+           
+        </div>
+
+
+        <div id="criarProjeto" onclick="closecreate()">
+            <div id="projetoContainer" onmouseover="overcreatehud()" onmouseout="outcreatehud()">
+                <h1>Defina seu novo projeto</h1>
+                <div class="divnome">
+                    <h2>Nome do projeto</h2>
+                    <input type="text" id="projectname" maxlength="24">
+                </div>
+                <div class="divdesc">
+                    <h2>Descrição do projeto</h2>
+                    <textarea id="projectdesc" maxlength="130"></textarea>
+                </div>
+                <div class="divprazo">
+                    <h2>Prazo de conclusão</h2>
+                    <div class="divprazo2">
+                        <i class="bi bi-calendar-week"></i>
+                        <!-- <input type="text" id="projectdate" class="projectdate" maxlength="10"> -->
+                        <input type="date" id="projectdate" class="projectdate">
+                    </div>
+                </div>
+                <button onclick="createProject()">Criar novo projeto</button>
+            </div>
+
+            <div id="vermaisContainer" onmouseover="overcreatehud()" onmouseout="outcreatehud()">
+                <div class="acoes" id="acoes">
+                </div>
+
+                <div class="infoproj">
+                    <h1 id="tituloproj">Carregando...</h1>
+                    <p id="descproj">Carregando...</p>
+                </div>
+                <div class="status" id="divstatus">
+                    <p>Prazo de conclusão</p>
+                    <div class="divprazoprojeto">
+                        <i class="bi bi-calendar-week"></i>
+                        <p id="dataproj">Carregando data...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="createWorkspace" onmouseover="overcreatehud()" onmouseout="outcreatehud()">
+                <h1>Criar nova workspace</h1>
+                <p>Nome desejado:</p>
+                <input type="text" id="workspaceName">
+                <button onclick="confirmCreateWorkspace()">Criar nova workspace</button>
+            </div>
+
+
+        </div>
+
+        
+        
+
+
+    </main>
+
+    <div class="blur1"></div>
+    <div class="blur2"></div>
+
+    <div class="divnotificacao" id="divnotificacao" style="display: none;">
+            <div class="notificacaocontainer">
+                <h2 id="txtnotificacao">Faltam X dias para o prazo de XXXXXXX!</h2>
+            </div>
+    </div>
+    
+    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/interaction.js"></script>
+    <script src="./assets/js/projetos.js"></script>
+</body>
+</html> 

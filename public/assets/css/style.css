@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 0;
+    color: white;
+    
+}
+
+:root{
+    --azul: #8CD2E6;
+    --roxo: #8C99E6;
+    --escuro: #8CB6E6;
+    --icons: #787878;
+    --background: #1B1B1B;
+    --backgroundSecundario: #161616;
+    --backgroundHeader: #191919;
+    --txtdesc: #B3B3B3;
+}
+::-webkit-scrollbar{
+    width: 1px;
+}
+
+body{
+    background-color: var(--background);
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+}
+.blur1, .blur2{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: 200px;
+    height: 600px;
+    border-radius: 31px;
+    background: #8CD2E6;
+    -webkit-filter: blur(200px);
+    top: 20%;
+    left: 180px;
+}
+.blur2{
+    top: -200px;
+    left: 105%;
+}
+
+header{
+    width: 150px;
+    height: 100%;
+    background-color: var(--backgroundHeader);
+    position: fixed;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    animation: headeranimation 1s cubic-bezier(0.19, 1, 0.22, 1) 2s both;
+    z-index: 999;
+}
+.iconeHeader{
+    margin-top: 25px;
+    margin-left: -5px;
+    width: 90%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.ponto1, .ponto2, .ponto3{
+    width: 16px;
+    height: 16px;
+    background-color: var(--azul);
+    border-radius: 50%;
+}
+.ponto2{
+    background-color: var(--roxo);
+}
+.ponto3{
+    background-color: var(--escuro);
+}
+
+.menu{
+    width: 90%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.menu i{
+    font-size: 30px;
+    color: var(--icons);
+    transition: all .3s;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.menu i:first-child{
+    font-size: 45px;
+    cursor: pointer;
+}
+.menu i:first-child:hover{
+    color: rgb(200,200,200)
+}
+.menu i:nth-child(2):hover{
+    font-size: 45px;
+    color: var(--azul);
+    cursor: pointer;
+}
+.menu i:nth-child(3):hover{
+    font-size: 45px;
+    color: var(--roxo);
+    cursor: pointer;
+}
+.menu i:nth-child(4):hover{
+    font-size: 45px;
+    color: var(--escuro);
+    cursor: pointer;
+}
+
+section{
+    display: none;
+}
+
+.paginatitulo{
+    display: none;
+    margin: 30px 0;
+    font-weight: 500;
+    font-size: 50px;
+    
+}
+.container{
+    display: none;
+}
+
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.supertasktitulo{
+    font-weight: 200;
+    font-size: 40px;
+    
+}
+.iconelogo{
+    width: 100px;
+    height: auto;
+    margin: 20px;
+}
+.logoetitulo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    animation: tituloanimation 2s cubic-bezier(0.19, 1, 0.22, 1) 0.1s both;
+}
+
+#criarProjeto{
+    display: none;
+}
+
+
+@keyframes headeranimation{
+    from{
+        transform: translateX(-100%);
+    }
+    to{
+        transform: translateX(0%);
+    }
+}
+
+@keyframes tituloanimation {
+     from{
+        transform: translateY(-1000%);
+     }
+     to{
+        transform: translateY(0%);
+     }
+}
+
