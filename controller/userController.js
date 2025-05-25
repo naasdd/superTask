@@ -67,7 +67,7 @@ const logIn = async (req, res) => {
             res.status(200).json({ auth: true, token })
         }
         else {
-            res.status(401).json({ auth: false, Message: "not allowed" })
+            res.status(401).json({ auth: false, Message: "Senha incorreta." })
         }
     }
     catch (err) {
