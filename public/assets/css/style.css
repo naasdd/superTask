@@ -103,6 +103,10 @@ header{
 }
 .menu i:first-child{
     font-size: 45px;
+    cursor: pointer;
+}
+.menu i:first-child:hover{
+    color: rgb(200,200,200)
 }
 .menu i:nth-child(2):hover{
     font-size: 45px;

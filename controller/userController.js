@@ -51,12 +51,12 @@ const logIn = async (req, res) => {
 
     if (info.email == "" || info.password == "" || info.email == null || info.password == null) {
         console.log(`X Invalid input`)
-        return res.status(400).json({ Message: "Invalid input" })
+        return res.status(400).json({ Message: "Entradas inválidas" })
     }
 
     const searchOnDatabase = await Users.findOne({ where: { email: info.email }, raw: true })
     if (searchOnDatabase == null) {
-        return res.status(404).json({ Message: "User not found" });
+        return res.status(404).json({ Message: "Usuário não encontrado" });
     }
 
     try {

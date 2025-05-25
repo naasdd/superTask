@@ -1,4 +1,5 @@
 let login = document.getElementById("loginContainer")
+let mensagemErro = document.getElementById("mensagemErro")
 
 login.addEventListener('submit', () => {
     event.preventDefault()
@@ -10,9 +11,11 @@ login.addEventListener('submit', () => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ email, password})
     })
-    .then(response =>{
+    .then(async response =>{
         if(response.status != 200){
-            throw new Error('something failed')
+            const respostaErro = await response.json()
+            console.log(respostaErro)
+            mensagemErro.innerHTML = respostaErro.Message
         }
         else{
             return response.json()

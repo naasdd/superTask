@@ -23,8 +23,24 @@ let tituloContainer = document.getElementById('tituloContainer')
 let createWorkspace = document.getElementById('createWorkspace')
 let workspaceName = document.getElementById('workspaceName').value
 
-function todo(){ window.alert("Em desenvolvimento.")}
-function weeklytodo(){ window.alert("Em desenvolvimento.")}
+
+function userIcon() {
+    fetch('/validateAccount', {
+        headers: { 'x-access-token': token }
+    })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                window.location.href = './login.html'
+                throw new Error('Failed to fetch projects');
+            }
+        })
+        .then((data) => {
+            window.alert(`Email: ${data.email}\nUsuario: ${data.username}`)
+
+        })
+}
 
 function projects() {
     fetch('/validateAccount', {
@@ -52,6 +68,8 @@ function projects() {
         })
 }
 
+function todo() { window.alert("Em desenvolvimento.") }
+function weeklytodo() { window.alert("Em desenvolvimento.") }
 
 
 function updateWorkspace() {
@@ -206,13 +224,13 @@ function createProject() {
         },
         body: JSON.stringify({ name, description, date, workspaces_id })
     })
-    .then(response => {
-        if (!response.ok) {
-            return response.json()
-            .then(error => { throw new Error(error.err) });
-        }
-        return response.json();
-    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json()
+                    .then(error => { throw new Error(error.err) });
+            }
+            return response.json();
+        })
         .then(info => {
             updateProjects(workspaces_id)
             hudproject = true
@@ -228,18 +246,18 @@ function createProject() {
             divnotificacao.style.display = 'flex'
             divnotificacao.style.animation = 'notificacaoanimacao 1.5s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
             txtnotificacao.innerHTML = err
-            
+
             hudproject = true
             closecreate()
             setTimeout(function () {
 
                 divnotificacao.style.animation = 'notificacaoanimacaoinversa 3s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-        
+
                 setTimeout(function () {
-        
+
                     divnotificacao.style.display = 'none'
                 }, 3000)
-        
+
             }, 5000);
         })
 }

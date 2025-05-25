@@ -73,6 +73,16 @@ button:hover{
     box-shadow: 0px 0px 40px -6px #8CD2E6;
 }
 
+#mensagemErro{
+    margin-top: -5px;
+    margin-left: 10px;
+    width: 100%;
+    min-height: 10px;
+    text-align: left;
+    color: red;
+    text-shadow: 0px 0px 15px red;
+}
+
 p{
     margin-top: 5%;
     font-size: 14px;

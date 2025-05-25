@@ -18,9 +18,10 @@
             <form id="loginContainer">
                 <h1>Faça login para continuar</h1>
                 <label for="email">Email</label>
-                <input type="text" required id="email">
+                <input type="text" required id="email" maxlength="50">
                 <label for="password">Senha</label>
-                <input type="password" required id="password">
+                <input type="password" required id="password" maxlength="50">
+                <p id="mensagemErro"></p>
                 <button type="submit">Entrar</button>
                 <p>Não possui uma conta? <a href="cadastrar.html"><span>Cadastrar</span></a></p>
             </form>
