@@ -116,6 +116,7 @@ function confirmCreateWorkspace() {
         .then(response => response.json())
         .then(info => {
             updateWorkspace()
+            document.getElementById('workspaceName').value = ''
             setTimeout(() => {
                 const workspaces_id = info.creating.id
                 drawWorkspace()
@@ -235,6 +236,9 @@ function createProject() {
             updateProjects(workspaces_id)
             hudproject = true
             closecreate()
+            document.getElementById('projectdate').value = ''
+            document.getElementById('projectname').value = ''
+            document.getElementById('projectdesc').value = ''
             setTimeout(() => { //timer to handle the delay of list projects
                 drawProjects()
             }, 500);
