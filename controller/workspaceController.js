@@ -37,24 +37,30 @@ const listWorkspace = async (req, res) => {
     }
 }
 
-const deleteWorkspace = async(req, res) => {
+const deleteWorkspace = async (req, res) => {
     const userInfoDB = req.userInfoDB
     const workToDelete = req.body.workToDelete
 
-    if (workToDelete == undefined){ return res.status(400).json({Message: "Workspace not referred"})}
+    if (workToDelete == undefined) { return res.status(400).json({ Message: "Workspace not referred" }) }
 
-    try{
-        const searchOnDatabase = await Users.findAll({ where: { email : userInfoDB.email}})
-        const jsonSearchOnDatabase = JSON.stringify({searchOnDatabase})
+    try {
+        const searchOnDatabase = await Users.findAll({ where: { email: userInfoDB.email } })
+        const jsonSearchOnDatabase = JSON.stringify({ searchOnDatabase })
         console.log(`> /deleteWorkspace User.email = ${searchOnDatabase[0].email}`)
         console.log(`\n[DEBBUG] worktToDelete = ${workToDelete}\n`)
 
-        const deleteWorkspaceDB = await Workspaces.destroy({where: { id : workToDelete, user_id : searchOnDatabase[0].id}})
-        console.log(`> Workspace deleted`)
+        const deleteWorkspaceDB = await Workspaces.destroy({ where: { id: workToDelete, user_id: searchOnDatabase[0].id } })
 
-        res.status(200).json({deleteWorkspaceDB})
+        if (deleteWorkspaceDB) {
+            console.log(`> Workspace deleted`)
+            res.status(200).json({ Message: "Workspace deleted" })
+        }
+        else if (!deleteWorkspaceDB) {
+            console.log(`> Workspace NOT deleted`)
+            res.status(200).json({ Message: "Workspace NOT deleted" })
+        }
     }
-    catch(err) {
+    catch (err) {
         console.log(`X Error during deleting workspace, erro ${err}`)
         res.status(500).send("deu merda guri")
     }

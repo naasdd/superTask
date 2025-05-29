@@ -1,27 +1,26 @@
-
-
-header{
-    border-right: solid 1px  var(--icons);
+header {
+    border-right: solid 1px var(--icons);
     animation: none;
 }
-.menu i:nth-child(2){
+
+.menu i:nth-child(2) {
     font-size: 45px;
     color: var(--azul);
     filter: drop-shadow(0px 0px 13px var(--azul));
     cursor: pointer;
 }
 
-.supertasktitulo{
+.supertasktitulo {
     font-size: 0;
     display: none
 }
 
-section{
+section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    
+
     animation: headeranimation 1.2s cubic-bezier(0.19, 1, 0.22, 1) 1;
     margin-left: 150px;
     width: 500px;
@@ -31,7 +30,7 @@ section{
     z-index: 2;
 }
 
-.wContainer{
+.wContainer {
     width: 90%;
     height: 75%;
     margin-top: 40px;
@@ -41,7 +40,9 @@ section{
     align-items: center;
 }
 
-.workspace, .addworkspace, .workspace-active{
+.workspace,
+.addworkspace,
+.workspace-active {
     width: 90%;
     height: 60px;
     border: none;
@@ -57,26 +58,30 @@ section{
     cursor: pointer;
     transition: all .3s;
 }
-.workspace-active{
+
+.workspace-active {
     box-shadow: 0px 0px 50px -20px var(--azul);
     border: solid 2px var(--azul);
 }
 
-.addworkspace{
+.addworkspace {
     border: none;
     box-shadow: none;
     box-shadow: 0px 0px 50px -20px var(--azul);
     border: solid 2px var(--azul);
 }
-.addworkspace:hover, .workspace:hover{
+
+.addworkspace:hover,
+.workspace:hover {
     background-color: #1E1E1E;
 }
 
-.addworkspace:active, .workspace:active{
+.addworkspace:active,
+.workspace:active {
     transform: scale(95%);
 }
 
-#createWorkspace{
+#createWorkspace {
     background-color: var(--background);
     border: solid 2px var(--azul);
     border-radius: 60px;
@@ -88,17 +93,20 @@ section{
     width: 500px;
     height: auto;
 }
-#createWorkspace h1{
+
+#createWorkspace h1 {
     font-weight: 300;
     font-size: 32px;
     margin: 50px 0;
     letter-spacing: 1px;
 }
-#createWorkspace p{
+
+#createWorkspace p {
     margin-top: 30px;
     font-size: 28px;
 }
-#createWorkspace input{
+
+#createWorkspace input {
     color: white;
     width: 50%;
     height: auto;
@@ -111,11 +119,12 @@ section{
     font-size: 22px;
     transition: all .3s cubic-bezier(0.19, 1, 0.22, 1);
 }
-#createWorkspace input:focus{
+
+#createWorkspace input:focus {
     transform: scaleX(110%);
 }
 
-#createWorkspace button{
+#createWorkspace button {
     width: 300px;
     height: 50px;
     border-radius: 27px;
@@ -135,35 +144,91 @@ section{
     transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
     cursor: pointer;
 }
-#createWorkspace button:hover{
+
+#createWorkspace button:hover {
     background-color: var(--azul);
     text-shadow: 0px 0px 10px black;
     box-shadow: 0px 0px 40px -6px #8CD2E6;
 }
 
+#iconDeletarWorkspace{
+    cursor: pointer;
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    font-size: 30px;
+    color: var(--icons);
+    background-color: var(--backgroundSecundario);
+    padding: 10px;
+    border-radius: 10px;
+}
 
+#deleteWorkspace{
+    background-color: var(--background);
+    border: solid 2px var(--azul);
+    border-radius: 60px;
+    box-shadow: 0px 4px 250px 0px rgba(140, 210, 230, 0.10);
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 500px;
+    padding: 30px;
+    height: auto;
+}
 
-.blur1, .blur2{
+#deleteWorkspace > h1{
+    margin-bottom: 60px;
+}
+
+#deleteWorkspace button{
+    width: 300px;
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 27px;
+    border: 1px solid #8CD2E6;
+    background: #1E1E1E;
+    box-shadow: 0px 0px 40px -16px #8CD2E6;
+    color: #FFF;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 0.24px;
+    transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: pointer;
+}
+
+#deleteWorkspace button:hover {
+    background-color: var(--azul);
+    text-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 40px -6px #8CD2E6;
+}
+
+.blur1,
+.blur2 {
     display: flex;
     animation: bluranimation 2s cubic-bezier(0.19, 1, 0.22, 1) .5s both;
 }
 
 
-main{
+main {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     animation: transicaomain 2s;
 }
 
-.paginatitulo{
+.paginatitulo {
     display: flex;
 }
 
 
 
 
-.container{
+.container {
     display: grid;
     grid-template-columns: 47% 47%;
     flex-direction: row;
@@ -183,7 +248,16 @@ main{
     box-shadow: 0px 0px 100px #202020;
 }
 
-.addprojeto{
+.divPartedecima {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+
+.addprojeto {
     background-color: transparent;
     border: dashed 2px var(--azul);
     display: flex;
@@ -197,16 +271,18 @@ main{
     cursor: pointer;
     transition: all 0.2s;
 }
-.addprojeto:hover{
+
+.addprojeto:hover {
     background-color: rgba(255, 255, 255, 0.05);
     border-style: solid;
 }
 
-.addprojeto > i{
+.addprojeto>i {
     color: var(--azul);
     font-size: 40px;
 }
-.addprojeto > p{
+
+.addprojeto>p {
     font-size: 24px;
     font-weight: 100;
     letter-spacing: 2%;
@@ -215,7 +291,7 @@ main{
 }
 
 
-.projeto{
+.projeto {
     background-color: var(--background);
     border-radius: 30px;
     width: 80%;
@@ -228,13 +304,15 @@ main{
     align-items: flex-start;
     justify-content: space-around;
 }
-.projeto > h1{
+
+.projeto>h1 {
     font-weight: 400;
     letter-spacing: 1px;
     font-size: 1.7vw;
     margin-bottom: .5vw;
 }
-.projeto > p{
+
+.projeto>p {
     font-weight: 300;
     height: auto;
     max-width: 100%;
@@ -244,7 +322,7 @@ main{
     margin-bottom: .3vw;
 }
 
-.projeto > .botoes{
+.projeto>.botoes {
     width: 100%;
     height: 3vw;
     background-color: transparent;
@@ -252,7 +330,8 @@ main{
     justify-content: space-between;
     align-items: center;
 }
-.botoes > button{
+
+.botoes>button {
     height: 100%;
     width: 48%;
     border-radius: 20px;
@@ -264,20 +343,22 @@ main{
     cursor: pointer;
     transition: all 0.3s;
 }
-.botoes > button:hover{
+
+.botoes>button:hover {
     background-color: rgb(39, 39, 39);
 }
-.botoes > button:active{
+
+.botoes>button:active {
     transform: scale(95%);
     background-color: var(--backgroundHeader);
 }
 
-.vermaissozinho{
+.vermaissozinho {
     width: 100%;
 }
 
 
-#criarProjeto{
+#criarProjeto {
     display: none;
     position: fixed;
     top: 0;
@@ -291,7 +372,8 @@ main{
     justify-content: center;
     align-items: center;
 }
-#projetoContainer{
+
+#projetoContainer {
     width: 550px;
     height: auto;
     background-color: var(--background);
@@ -302,15 +384,17 @@ main{
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    
+
 }
-#projetoContainer > h1{
+
+#projetoContainer>h1 {
     font-weight: 200;
     margin-top: 30px;
     font-size: 30px;
 }
 
-.divnome, .divdesc{
+.divnome,
+.divdesc {
     width: 100%;
     height: 60px;
     margin-top: 50px;
@@ -321,17 +405,19 @@ main{
     align-items: start;
 }
 
-.divdesc{
+.divdesc {
     margin: 0;
     height: 150px;
     margin-top: 40px;
 }
 
-.divnome h2, .divdesc h2{
+.divnome h2,
+.divdesc h2 {
     font-weight: 200;
 }
 
-.divnome input, .divdesc textarea{
+.divnome input,
+.divdesc textarea {
     color: white;
     width: 100%;
     height: 80%;
@@ -342,7 +428,8 @@ main{
     padding: 10px 20px;
     font-size: 22px;
 }
-.divprazo{
+
+.divprazo {
     width: 100%;
     height: 150px;
     display: flex;
@@ -350,13 +437,15 @@ main{
     justify-content: center;
     align-items: center;
 }
-.divprazo h2{
+
+.divprazo h2 {
     width: 100%;
     font-weight: 200;
     text-align: center;
     margin-bottom: -10px;
 }
-.divprazo2{
+
+.divprazo2 {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -365,11 +454,13 @@ main{
     width: 100%;
     margin-top: 20px;
 }
-.divprazo2 i{
+
+.divprazo2 i {
     font-size: 60px;
     color: var(--icons);
 }
-.projectdate{
+
+.projectdate {
     color: white;
     width: 50%;
     height: 30px;
@@ -386,7 +477,8 @@ main{
     cursor: pointer;
 }
 
-.inputsim, .inputnao{
+.inputsim,
+.inputnao {
     display: flex;
     flex-direction: row;
     width: 20%;
@@ -394,22 +486,26 @@ main{
     justify-content: space-evenly;
     align-items: center;
 }
-.inputsim p, .inputnao p{
+
+.inputsim p,
+.inputnao p {
     font-size: 24px;
     color: darkgray;
 }
-#sim, #nao{
+
+#sim,
+#nao {
     width: 20px;
     height: 20px;
     border-radius: 10px;
-    
+
 }
 
 
 
 
 
-#projetoContainer button{
+#projetoContainer button {
     width: 300px;
     height: 50px;
     border-radius: 27px;
@@ -428,8 +524,9 @@ main{
     letter-spacing: 0.24px;
     transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
     cursor: pointer;
-    }
-#projetoContainer button:hover{
+}
+
+#projetoContainer button:hover {
     background-color: var(--azul);
     text-shadow: 0px 0px 10px black;
     box-shadow: 0px 0px 40px -6px #8CD2E6;
@@ -437,7 +534,7 @@ main{
 
 
 
-#vermaisContainer{
+#vermaisContainer {
     background-color: var(--background);
     border: solid 2px var(--azul);
     border-radius: 60px;
@@ -449,18 +546,20 @@ main{
     width: 1000px;
     height: auto;
 }
-.headervermais{
+
+.headervermais {
     width: 100%;
     height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.headervermais h1{
+
+.headervermais h1 {
     font-weight: 200;
 }
 
-.acoes{
+.acoes {
     /* border: solid 1px green; */
     height: 80px;
     display: flex;
@@ -469,19 +568,21 @@ main{
     width: 92%;
     font-size: 30px;
 }
-.acoes i{
+
+.acoes i {
     color: #6d6d6d;
     transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-    cursor: pointer; 
+    cursor: pointer;
     height: 30px;
     width: 30px;
 }
-.acoes i:hover{     
+
+.acoes i:hover {
     transform: scale(110%);
     color: rgb(206, 206, 206);
 }
 
-.infoproj{
+.infoproj {
     width: 50%;
     height: auto;
     margin-top: -40px;
@@ -491,13 +592,15 @@ main{
     justify-content: flex-start;
     align-items: center;
 }
-.infoproj h1{
+
+.infoproj h1 {
     margin-bottom: 20px;
     font-weight: 400;
     letter-spacing: 1px;
     font-size: 42px;
 }
-.infoproj p{
+
+.infoproj p {
     color: darkgray;
     font-size: 28px;
     font-weight: 300;
@@ -509,7 +612,7 @@ main{
 }
 
 
-.status p{
+.status p {
     color: #d4d4d4;
     text-align: center;
     font-family: Montserrat;
@@ -519,12 +622,13 @@ main{
     line-height: normal;
     letter-spacing: 1px;
 }
-.status > p{
+
+.status>p {
     font-size: 40px;
     font-weight: 600;
 }
 
-.divprazoprojeto{
+.divprazoprojeto {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -532,13 +636,14 @@ main{
     height: 100px;
     margin-bottom: 40px;
 }
-.divprazoprojeto i{
+
+.divprazoprojeto i {
     font-size: 70px;
     color: #b4b4b4;
     margin-right: 20px;
 }
 
-.divnotificacao{
+.divnotificacao {
     z-index: 999;
     width: 100%;
     height: 100px;
@@ -548,7 +653,8 @@ main{
     align-items: center;
     animation: none;
 }
-.notificacaocontainer{
+
+.notificacaocontainer {
     width: 1200px;
     min-width: 800px;
     height: 100%;
@@ -557,84 +663,94 @@ main{
     border-bottom: solid 6px var(--azul);
     filter: drop-shadow(0px 0px 100px #8CD2E670);
     box-shadow: inset 0 0 100px -50px rgb(109, 109, 109);
-    
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.notificacaocontainer h2{
+
+.notificacaocontainer h2 {
     color: #ffffffca;
     font-family: Montserrat;
     font-size: 34px;
     font-weight: 300;
     letter-spacing: 0.5px;
 }
-.notificacaocontainer span{
+
+.notificacaocontainer span {
     font-weight: 600;
 
 }
 
 
-@keyframes bluranimation{
-    from{
+@keyframes bluranimation {
+    from {
         opacity: 0;
     }
-    to{
+
+    to {
         opacity: 1;
     }
 }
 
 @keyframes transicaomain {
-    from{
+    from {
         opacity: 0;
     }
-    to{
+
+    to {
         opacity: 1;
     }
 }
 
-@keyframes opacidadeinversa{
-    from{
+@keyframes opacidadeinversa {
+    from {
         opacity: 1;
     }
-    to{
+
+    to {
         opacity: 0;
     }
 }
 
-@keyframes notificacaoanimacao{
-    from{
+@keyframes notificacaoanimacao {
+    from {
         top: -150px;
         opacity: 0;
     }
-    to{
+
+    to {
         top: 0;
         opacity: 1;
     }
 }
-@keyframes notificacaoanimacaoinversa{
-    from{
+
+@keyframes notificacaoanimacaoinversa {
+    from {
         top: 0;
         opacity: 1;
     }
-    to{
+
+    to {
         top: -150px;
         opacity: 0;
     }
 }
 
 @keyframes transicaoContainer {
-    0%{
+    0% {
         opacity: 1;
         transform: translateY(0%);
     }
-    50%{
+
+    50% {
         opacity: 0;
         transform: translateY(110%);
 
     }
-    100%{
+
+    100% {
         opacity: 1;
         transform: translateY(0%);
     }
@@ -643,8 +759,8 @@ main{
 
 
 @media screen and (max-width: 1400px) {
-    .container{
+    .container {
         grid-template-columns: 80%;
     }
-    
+
 }

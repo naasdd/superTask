@@ -18,11 +18,16 @@ let projetoContainer = document.getElementById('projetoContainer')
 let vermaisContainer = document.getElementById('vermaisContainer')
 let hudproject = false
 let container = document.getElementById('container')
+
 let wContainer = document.getElementById('wContainer')
+
 let tituloContainer = document.getElementById('tituloContainer')
 let createWorkspace = document.getElementById('createWorkspace')
 let workspaceName = document.getElementById('workspaceName').value
 
+let iconDeletarWorkspace = document.getElementById('iconDeletarWorkspace')
+let deleteWorkspace = document.getElementById('deleteWorkspace')
+let buttonConfirmDeleteWorkspace = document.getElementById('buttonConfirmDeleteWorkspace')
 
 function userIcon() {
     fetch('/validateAccount', {
@@ -134,6 +139,7 @@ function drawWorkspace(wrkselected) {
     for (let i = 0; i < workspaces.length; i++) {
         if (wrkselected == workspaces[i].id) {
             tituloContainer.innerHTML = workspaces[i].workspaceName
+            iconDeletarWorkspace.outerHTML = `<i class="bi bi-trash" id="iconDeletarWorkspace" onclick="openDeleteWorkspace(${workspaces[i].id})"></i>`
             wContainer.innerHTML += `<div class="workspace-active" id="${workspaces[i].id}" onclick="selectWorkspace(${workspaces[i].id})">${workspaces[i].workspaceName}</div>`
         }
         else {
@@ -158,6 +164,39 @@ function selectWorkspace(w) {
 
     container.style.animation = 'transicaoContainer 2s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
     tituloContainer.style.animation = 'transicaoContainer 2s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+}
+
+
+function openDeleteWorkspace(w) {
+    buttonConfirmDeleteWorkspace.outerHTML = `<button id="buttonConfirmDeleteWorkspace" onclick="confirmDeleteWorkspace(${w})">Deletar Workspace</button>`
+
+    criarprojeto.style.display = `flex`
+    deleteWorkspace.style.display = `flex`
+
+    console.log(`[DEBBUG] Starting to deleting workspace id = ${w}`)
+}
+
+function confirmDeleteWorkspace(w) {
+    fetch('/deleteWorkspace', {
+        method: 'DELETE',
+        headers: {
+            'x-access-token': token,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "workToDelete": w })
+    })
+        .then(response => response.json())
+        .then(resposta => {
+            console.log(resposta.Message)
+            drawWorkspace()
+            closeDeleteWorkspace()
+        })
+    
+}
+
+function closeDeleteWorkspace() {
+    hudproject = true
+    closecreate()
 }
 
 
