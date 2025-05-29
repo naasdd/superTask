@@ -8,7 +8,7 @@ function verifyJWT(req, res, next) {
     try {
         jwt.verify(token, jwtKey, async (err, decoded) => {
             if (err) {
-                console.log(`X token not accepted`)
+                console.log(`X token not accepted, err: ${err}\n\n`)
                 return res.status(400).json({ Error: 'Token not accepted' })
             }
             console.log('> Token accepted')

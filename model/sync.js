@@ -29,8 +29,8 @@ async function syncModelWithRetry(model, retries = 3){
         await syncModelWithRetry(Users)
         await syncModelWithRetry(Workspaces)
         await syncModelWithRetry(Projects)
-        console.log('All tables synced successfully.')
+        console.log('> All tables synced successfully.')
     } catch (error) {
-        console.error('Error syncing tables:', error)
+        console.error('X Error syncing tables:', error)
     }
 })();

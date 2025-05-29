@@ -25,6 +25,7 @@ app.post('/logIn', userController.logIn)
 
 app.post('/createWorkspace', verifyJWT, workspaceController.createWorkspace)
 app.get('/listWorkspace', verifyJWT, workspaceController.listWorkspace)
+app.delete('/deleteWorkspace', verifyJWT, workspaceController.deleteWorkspace)
 
 app.post('/createProject', verifyJWT, projectController.createProject)
 app.post('/listProject', verifyJWT, projectController.listProject)
