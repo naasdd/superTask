@@ -3,17 +3,14 @@
 
  
 
-![Preview do SuperTask](https://prnt.sc/s8FYz9XTB3f-)
+![Preview do SuperTask](./ReadmePREVIEW.png)
 
 SuperTask é uma plataforma web desenvolvida para te ajudar a organizar tarefas, ideias e anotações de forma clara e objetiva. A ideia é oferecer um espaço onde você possa separar diferentes áreas da sua vida ou projetos em workspaces, definindo prazos e mantendo tudo sob controle.
 
 Essa é a primeira versão (beta) da aplicação, com uma funcionalidade já totalmente funcional: criação e gerenciamento de tarefas dentro de workspaces.
 
 ---
----
----
----
----
+
 ## ✨ Funcionalidades no momento:
 ✅ Usuario pode criar até 5 workspaces
 
@@ -30,10 +27,6 @@ Essa é a primeira versão (beta) da aplicação, com uma funcionalidade já tot
 ❌ Responsividade mobile
 
 ---
----
----
----
----
 
 ## 🔜 Funcionalidades em breve
 ⏳ Correções de UI
@@ -44,11 +37,6 @@ Essa é a primeira versão (beta) da aplicação, com uma funcionalidade já tot
 
 ⏳ Atividades semanais
 
----
----
----
----
----
 ---
 
 ## 🛠️ Stack utilizada
@@ -62,12 +50,6 @@ Essa é a primeira versão (beta) da aplicação, com uma funcionalidade já tot
 Super Task atualmente está em uma hospedagem totalmente gratuita.
  
 ---
----
----
----
----
----
-
 
 ## 🌐 Teste agora mesmo e envie seu feedback
 - https://supertask-production.up.railway.app
