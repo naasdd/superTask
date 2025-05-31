@@ -4,7 +4,7 @@ const Users = require('../model/users.js')
 
 const createWorkspace = async (req, res) => {
     const client = req.decoded.email
-    console.log(`> Route /createWorkspace requested by: ${client}`)
+    console.log(`\n\n> Route /createWorkspace requested by: ${client}`)
 
     const workspaceName = req.body.workspaceName
     const clientID = req.userInfoDB.id
@@ -26,6 +26,8 @@ const createWorkspace = async (req, res) => {
 
 const listWorkspace = async (req, res) => {
     const userInfoDB = req.userInfoDB
+    const client = req.decoded.email
+    console.log(`\n\n> Route /listWorkspace requested by: ${client}`)
 
     try {
         const searchWorkspace = await Workspaces.findAll({ where: { user_id: userInfoDB.id }, raw: true })
@@ -38,6 +40,9 @@ const listWorkspace = async (req, res) => {
 }
 
 const deleteWorkspace = async (req, res) => {
+    const client = req.decoded.email
+    console.log(`\n\n> Route /deleteWorkspace requested by: ${client}`)
+
     const userInfoDB = req.userInfoDB
     const workToDelete = req.body.workToDelete
 

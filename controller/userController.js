@@ -10,7 +10,7 @@ const validateAccount = (req, res) => {
 }
 
 const signIn = async (req, res) => {
-    console.log(`> Route /signIn called.`)
+    console.log(`\n\n> Route /signIn called.`)
     const info = req.body
     const pass = info.password
 
@@ -45,7 +45,7 @@ const signIn = async (req, res) => {
 }
 
 const logIn = async (req, res) => {
-    console.log(`> Route /logIn called.`)
+    console.log(`\n\n> Route /logIn called.`)
     const info = req.body
     const pass = info.password
 

@@ -78,7 +78,7 @@ function weeklytodo() { window.alert("Em desenvolvimento.") }
 
 
 function updateWorkspace() {
-    fetch('/listWorkspace', {
+    return fetch('/listWorkspace', {
         headers: { 'x-access-token': token }
     })
         .then(response => {
@@ -94,9 +94,14 @@ function updateWorkspace() {
             if (workspaces.length == 0) {
                 opencreateWorkspace()
             }
-            drawWorkspace()
+            else {
+                drawWorkspace(workspaces[0].id)
+                selectWorkspace(workspaces[0].id)
+            }
         })
 }
+
+
 
 function addworkspace() {
     if (workspaces.length >= 5) {
@@ -104,7 +109,6 @@ function addworkspace() {
     }
     else {
         opencreateWorkspace()
-        drawWorkspace()
     }
 }
 
@@ -133,13 +137,14 @@ function confirmCreateWorkspace() {
         })
 }
 
+// para posicionar as workspace's na sidebar
 function drawWorkspace(wrkselected) {
     wContainer.innerHTML = ''
 
     for (let i = 0; i < workspaces.length; i++) {
         if (wrkselected == workspaces[i].id) {
             tituloContainer.innerHTML = workspaces[i].workspaceName
-            iconDeletarWorkspace.outerHTML = `<i class="bi bi-trash" id="iconDeletarWorkspace" onclick="openDeleteWorkspace(${workspaces[i].id})"></i>`
+            iconDeletarWorkspace.innerHTML = `<i class="bi bi-trash" onclick="openDeleteWorkspace(${workspaces[i].id})"></i>`
             wContainer.innerHTML += `<div class="workspace-active" id="${workspaces[i].id}" onclick="selectWorkspace(${workspaces[i].id})">${workspaces[i].workspaceName}</div>`
         }
         else {
@@ -148,18 +153,19 @@ function drawWorkspace(wrkselected) {
     }
 }
 
+// ao clicar em uma workspace
 function selectWorkspace(w) {
     wrkselected = w
-    updateProjects(wrkselected)
-    drawWorkspace(wrkselected)
-
     setTimeout(function () {
-        drawProjects(wrkselected)
-        setTimeout(function () {
-            container.style.animation = 'none'
-            tituloContainer.style.animation = 'none'
+        drawWorkspace(wrkselected)
+        updateProjects(wrkselected).then(() => {
+            drawProjects(wrkselected)
+            setTimeout(function () {
+                container.style.animation = 'none'
+                tituloContainer.style.animation = 'none'
 
-        }, 1400);
+            }, 1400);
+        })
     }, 600);
 
     container.style.animation = 'transicaoContainer 2s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
@@ -168,7 +174,7 @@ function selectWorkspace(w) {
 
 
 function openDeleteWorkspace(w) {
-    buttonConfirmDeleteWorkspace.outerHTML = `<button id="buttonConfirmDeleteWorkspace" onclick="confirmDeleteWorkspace(${w})">Deletar Workspace</button>`
+    buttonConfirmDeleteWorkspace.innerHTML = `<button id="buttonConfirmDeleteWorkspace" onclick="confirmDeleteWorkspace(${w})">Deletar Workspace</button>`
 
     criarprojeto.style.display = `flex`
     deleteWorkspace.style.display = `flex`
@@ -188,10 +194,13 @@ function confirmDeleteWorkspace(w) {
         .then(response => response.json())
         .then(resposta => {
             console.log(resposta.Message)
-            drawWorkspace()
-            closeDeleteWorkspace()
+            alertMessage(resposta.Message)
+            updateWorkspace().then(() => {
+                selectWorkspace(workspaces[0].id)
+                closeDeleteWorkspace()
+            })
         })
-    
+
 }
 
 function closeDeleteWorkspace() {
@@ -202,8 +211,14 @@ function closeDeleteWorkspace() {
 
 
 
+
+
+
+
+// Projetos
+
 function updateProjects(workspaces_id) {
-    fetch('/listProject', {
+    return fetch('/listProject', {
         method: 'POST',
         headers: {
             'x-access-token': token,
@@ -333,6 +348,17 @@ function deleteProject(i) {
 function drawProjects() {
     container.innerHTML = ''
 
+    for (let i = 0; i < projetos.length; i++) {
+        for (let j = i + 1; j < projetos.length; j++) {
+            if (getProjectData(i) < getProjectData(j)) {
+                let temp = projetos[i]
+                projetos[i] = projetos[j]
+                projetos[j] = temp
+            }
+        }
+    }
+
+
     for (i = projetos.length - 1; i >= 0; i--) {
 
         let newProject = document.createElement('div');
@@ -382,24 +408,22 @@ function drawProjects() {
         addprojeto.style.border = 'dashed 2px var(--azul)'
         addprojeto.style.opacity = '.15'
         addprojeto.style.width = ' 90%'
-        addprojeto.style.height = '260px'
+        addprojeto.style.height = '250px'
     }
 }
 
-function projectdata(i) {
-
-    let txtnotificacao = document.getElementById('txtnotificacao')
-    let divnotificacao = document.getElementById('divnotificacao')
-    divnotificacao.style.display = 'flex'
-    divnotificacao.style.animation = 'notificacaoanimacao 1.5s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-
+function getProjectData(i) {
     let data_atual = new Date()
     let dia_atual = data_atual.getDate()
     let mes_atual = data_atual.getMonth() + 1
     let ano_atual = data_atual.getFullYear()
 
     let dataprojeto = projetos[i].date
+    if(dataprojeto == null) { return 1 }
+
     let splitdate = dataprojeto.split('/')
+
+
 
     for (j = 0; j < 3; j++) {
         splitdate[j] = parseInt(splitdate[j])
@@ -409,7 +433,23 @@ function projectdata(i) {
     let soma_dias_prazo = splitdate[2] * 365 + splitdate[1] * 31 + splitdate[0]
     let dias_restantes = soma_dias_prazo - soma_dias_atual
 
-    txtnotificacao.innerHTML = `Faltam <span> ${dias_restantes} </span> dias para o prazo de <span>${projetos[i].name}</span>.`
+    return dias_restantes
+}
+
+function projectdata(i) {
+    alertMessage(`Faltam <span> ${getProjectData(i)} </span> dias para o prazo de <span>${projetos[i].name}</span>.`)
+}
+
+
+
+
+function alertMessage(message) {
+    let txtnotificacao = document.getElementById('txtnotificacao')
+    let divnotificacao = document.getElementById('divnotificacao')
+    divnotificacao.style.display = 'flex'
+    divnotificacao.style.animation = 'notificacaoanimacao 1.5s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+
+    txtnotificacao.innerHTML = `${message}`
 
     setTimeout(function () {
 
@@ -426,5 +466,3 @@ function projectdata(i) {
 
 
 
-
-drawWorkspace()

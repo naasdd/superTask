@@ -11,8 +11,8 @@ function verifyJWT(req, res, next) {
                 console.log(`X token not accepted, err: ${err}\n\n`)
                 return res.status(400).json({ Error: 'Token not accepted' })
             }
-            console.log('> Token accepted')
             const searchAll = await Users.findOne({ where: { email: decoded.email } })
+            console.log(`\n> Token accepted, identyfied as ${searchAll.email}`)
 
             req.userInfoDB = searchAll
             req.decoded = decoded

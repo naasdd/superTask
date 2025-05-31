@@ -6,14 +6,14 @@ const Workspaces = require('../model/workspaces.js')
 
 const createProject = async (req, res) => {
     const client = req.decoded.email
-    console.log(`> Route /createProject requested by: ${client}`)
+    console.log(`\n\n> Route /createProject requested by: ${client}`)
     const name = req.body.name
     const description = req.body.description
     let date = req.body.date
     const workspaces_id = req.body.workspaces_id
 
     try {
-        if (name == null) {
+        if (name == null || name == '') {
             throw new Error('Name is null')
         }
         else if (workspaces_id == 0) {
@@ -36,7 +36,7 @@ const createProject = async (req, res) => {
 
 const listProject = async (req, res) => {
     const client = req.decoded.email
-    console.log(`> Route /listProject requested by: ${client}`)
+    console.log(`\n\n > Route /listProject requested by: ${client}`)
     const workspaces_id = req.body.workspaces_id
     try {
         const search = await Projects.findAll({ where: { workspaces_id: workspaces_id } })
@@ -50,7 +50,7 @@ const listProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
     const client = req.decoded.email
-    console.log(`> Route /deleteProject requested by: ${client}`)
+    console.log(`\n\n > Route /deleteProject requested by: ${client}`)
     const reqid = req.body.i
     try {
         await Projects.destroy({ where: { id: reqid } })
