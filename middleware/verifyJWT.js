@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken')
 const Users = require('../model/users.js')
+require('dotenv').config()
 
-const jwtKey = 'b2uvp2iodupwj-i7'
+const jwtKey = process.env._JWTkey
 
 function verifyJWT(req, res, next) {
     const token = req.headers['x-access-token']
