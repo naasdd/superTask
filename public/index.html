@@ -12,109 +12,22 @@
 </head>
 
 <body>
-    <header>
-        <div class="iconeHeader">
-            <div class="ponto1"></div>
-            <div class="ponto2"></div>
-            <div class="ponto3"></div>
-        </div>
-        <div class="menu">
-            <i class="bi bi-person-circle bi-lg" onclick="userIcon()"></i>
-            <i class="bi bi-columns-gap bi-xl" onclick="projects()"></i>
-            <i class="bi bi-clipboard-check bi-2x" onclick="todo()"></i>
-            <i class="bi bi-ui-checks bi-3x" onclick="weeklytodo()"></i>
-        </div>
+    <header></header>
 
-    </header>
-    <section>
-        <div class="wContainer" id="wContainer">
-        </div>
-        <div class="addworkspace" onclick="addworkspace()">
-            <p>Adicionar workspace</p>
-        </div>
-    </section>
+    <section></section>
+
     <main>
 
         <div class="logoetitulo">
             <img src="./assets/img/logosupertask.svg" class="iconelogo" id="iconelogo">
             <h1 class="supertasktitulo" id="superTask">superTask</h1>
         </div>
-        <div class="divPartedecima">
-            <h1 class="paginatitulo" id="tituloContainer" style="animation: auto ease 0s 1 normal none running none;">
-                Carregando...</h1>
-            <div id="iconDeletarWorkspace"></div>
-        </div>
-
-        <div class="container" id="container">
-            <div class="addprojeto" id="addprojeto" onclick="opencreateProject()">
-                <i class="bi bi-plus-lg"></i>
-            </div>
-
-        </div>
 
 
-        <div id="criarProjeto" onclick="closecreate()">
-            <form id="projetoContainer" onmouseover="overcreatehud()" onmouseout="outcreatehud()"
-                onsubmit="createProject(); return false;">
-                <h1>Defina seu novo projeto</h1>
-
-                <div class="divnome">
-                    <h2>Nome do projeto</h2>
-                    <input type="text" id="projectname" name="projectname" maxlength="24" required>
-                </div>
-
-                <div class="divdesc">
-                    <h2>Descrição do projeto</h2>
-                    <textarea id="projectdesc" name="projectdesc" maxlength="130"></textarea>
-                </div>
-
-                <div class="divprazo">
-                    <h2>Prazo de conclusão</h2>
-                    <div class="divprazo2">
-                        <i class="bi bi-calendar-week"></i>
-                        <input type="date" id="projectdate" name="projectdate" class="projectdate">
-                    </div>
-                </div>
-
-                <button type="submit">Criar novo projeto</button>
-            </form>
-
-
-            <div id="vermaisContainer" onmouseover="overcreatehud()" onmouseout="outcreatehud()">
-                <div class="acoes" id="acoes">
-                </div>
-
-                <div class="infoproj">
-                    <h1 id="tituloproj">Carregando...</h1>
-                    <p id="descproj">Carregando...</p>
-                </div>
-                <div class="status" id="divstatus">
-                    <p>Prazo de conclusão</p>
-                    <div class="divprazoprojeto">
-                        <i class="bi bi-calendar-week"></i>
-                        <p id="dataproj">Carregando data...</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="createWorkspace" onmouseover="overcreatehud()" onmouseout="outcreatehud()">
-                <h1>Criar nova workspace</h1>
-                <p>Nome desejado:</p>
-                <input type="text" id="workspaceName">
-                <button onclick="confirmCreateWorkspace()">Criar nova workspace</button>
-            </div>
-
-            <div id="deleteWorkspace" onmouseover="overcreatehud()" onmouseout="outcreatehud()">
-                <h1>Deletar workspace?</h1>
-                <div id="buttonConfirmDeleteWorkspace"></div>
-                <button onclick="closeDeleteWorkspace()">Cancelar</button>
-            </div>
+        <div id="menuShowUp" onclick="closeMenu()">
 
 
         </div>
-
-
-
 
 
     </main>
@@ -122,15 +35,13 @@
     <div class="blur1"></div>
     <div class="blur2"></div>
 
-    <div class="divnotificacao" id="divnotificacao" style="display: none;">
-        <div class="notificacaocontainer">
-            <h2 id="txtnotificacao">Faltam X dias para o prazo de XXXXXXX!</h2>
-        </div>
-    </div>
+
+    <script src="./assets/js/headerComponent.js"></script>
+    
+    <script src="./assets/js/menuShowUpComponent.js"></script>
+    <script src="./assets/js/alertMessage.js"></script>
 
     <script src="./assets/js/script.js"></script>
-    <script src="./assets/js/interaction.js"></script>
-    <script src="./assets/js/projetos.js"></script>
 </body>
 
 </html>

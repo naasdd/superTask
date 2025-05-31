@@ -1,216 +1,14 @@
-let tituloproj = document.getElementById('tituloproj')
-let descproj = document.getElementById('descproj')
-let dataproj = document.getElementById('dataproj')
-let acoes = document.getElementById('acoes')
-let divstatus = document.getElementById('divstatus')
-
-let workspaces = []
-
-let wrkselected = 0
-
 let projetos = []
 
 let projectname = ''
 let projectdesc = ''
 let projectdate = ''
-let criarprojeto = document.getElementById('criarProjeto')
 let projetoContainer = document.getElementById('projetoContainer')
-let vermaisContainer = document.getElementById('vermaisContainer')
-let hudproject = false
 let container = document.getElementById('container')
 
-let wContainer = document.getElementById('wContainer')
-
 let tituloContainer = document.getElementById('tituloContainer')
-let createWorkspace = document.getElementById('createWorkspace')
-let workspaceName = document.getElementById('workspaceName').value
 
-let iconDeletarWorkspace = document.getElementById('iconDeletarWorkspace')
-let deleteWorkspace = document.getElementById('deleteWorkspace')
-let buttonConfirmDeleteWorkspace = document.getElementById('buttonConfirmDeleteWorkspace')
-
-function userIcon() {
-    fetch('/validateAccount', {
-        headers: { 'x-access-token': token }
-    })
-        .then(response => {
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                window.location.href = './login.html'
-                throw new Error('Failed to fetch projects');
-            }
-        })
-        .then((data) => {
-            window.alert(`Email: ${data.email}\nUsuario: ${data.username}`)
-
-        })
-}
-
-function projects() {
-    fetch('/validateAccount', {
-        headers: { 'x-access-token': token }
-    })
-        .then(response => {
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                window.location.href = './login.html'
-                throw new Error('Failed to fetch projects');
-            }
-        })
-        .then((data) => {
-            updateWorkspace()
-            estilo.href = './assets/css/projetos.css'
-            titulo.innerHTML = `Projetos`
-            iconelogo.remove()
-            titulosupertask.remove()
-            setTimeout(() => {
-                const first = workspaces[0].id
-                selectWorkspace(first)
-            }, 100);
-            drawProjects()
-        })
-}
-
-function todo() { window.alert("Em desenvolvimento.") }
-function weeklytodo() { window.alert("Em desenvolvimento.") }
-
-
-function updateWorkspace() {
-    return fetch('/listWorkspace', {
-        headers: { 'x-access-token': token }
-    })
-        .then(response => {
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                window.location.href = './login.html'
-                throw new Error('Failed to fetch projects');
-            }
-        })
-        .then((info) => {
-            workspaces = info
-            if (workspaces.length == 0) {
-                opencreateWorkspace()
-            }
-            else {
-                drawWorkspace(workspaces[0].id)
-                selectWorkspace(workspaces[0].id)
-            }
-        })
-}
-
-
-
-function addworkspace() {
-    if (workspaces.length >= 5) {
-        window.alert('Você não pode criar mais que 5 workspaces')
-    }
-    else {
-        opencreateWorkspace()
-    }
-}
-
-function confirmCreateWorkspace() {
-    let workspaceName = document.getElementById('workspaceName').value
-    fetch('/createWorkspace', {
-        method: 'POST',
-        headers: {
-            'x-access-token': token,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ workspaceName })
-    })
-        .then(response => response.json())
-        .then(info => {
-            updateWorkspace()
-            document.getElementById('workspaceName').value = ''
-            setTimeout(() => {
-                const workspaces_id = info.creating.id
-                drawWorkspace()
-                hudproject = true
-                closecreate()
-                selectWorkspace(workspaces_id)
-            }, 200);
-
-        })
-}
-
-// para posicionar as workspace's na sidebar
-function drawWorkspace(wrkselected) {
-    wContainer.innerHTML = ''
-
-    for (let i = 0; i < workspaces.length; i++) {
-        if (wrkselected == workspaces[i].id) {
-            tituloContainer.innerHTML = workspaces[i].workspaceName
-            iconDeletarWorkspace.innerHTML = `<i class="bi bi-trash" onclick="openDeleteWorkspace(${workspaces[i].id})"></i>`
-            wContainer.innerHTML += `<div class="workspace-active" id="${workspaces[i].id}" onclick="selectWorkspace(${workspaces[i].id})">${workspaces[i].workspaceName}</div>`
-        }
-        else {
-            wContainer.innerHTML += `<div class="workspace" id="${workspaces[i].id}" onclick="selectWorkspace(${workspaces[i].id})">${workspaces[i].workspaceName}</div>`
-        }
-    }
-}
-
-// ao clicar em uma workspace
-function selectWorkspace(w) {
-    wrkselected = w
-    setTimeout(function () {
-        drawWorkspace(wrkselected)
-        updateProjects(wrkselected).then(() => {
-            drawProjects(wrkselected)
-            setTimeout(function () {
-                container.style.animation = 'none'
-                tituloContainer.style.animation = 'none'
-
-            }, 1400);
-        })
-    }, 600);
-
-    container.style.animation = 'transicaoContainer 2s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-    tituloContainer.style.animation = 'transicaoContainer 2s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-}
-
-
-function openDeleteWorkspace(w) {
-    buttonConfirmDeleteWorkspace.innerHTML = `<button id="buttonConfirmDeleteWorkspace" onclick="confirmDeleteWorkspace(${w})">Deletar Workspace</button>`
-
-    criarprojeto.style.display = `flex`
-    deleteWorkspace.style.display = `flex`
-
-    console.log(`[DEBBUG] Starting to deleting workspace id = ${w}`)
-}
-
-function confirmDeleteWorkspace(w) {
-    fetch('/deleteWorkspace', {
-        method: 'DELETE',
-        headers: {
-            'x-access-token': token,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ "workToDelete": w })
-    })
-        .then(response => response.json())
-        .then(resposta => {
-            console.log(resposta.Message)
-            alertMessage(resposta.Message)
-            updateWorkspace().then(() => {
-                selectWorkspace(workspaces[0].id)
-                closeDeleteWorkspace()
-            })
-        })
-
-}
-
-function closeDeleteWorkspace() {
-    hudproject = true
-    closecreate()
-}
-
-
-
-
+let hudproject = false
 
 
 
@@ -240,8 +38,17 @@ function updateProjects(workspaces_id) {
 }
 
 function vermais(idbotao) {
+    openMenuShowUp()
+    openVermais()
 
-    criarprojeto.style.display = 'flex'
+    let tituloproj = document.getElementById('tituloproj')
+    let descproj = document.getElementById('descproj')
+    let dataproj = document.getElementById('dataproj')
+    let acoes = document.getElementById('acoes')
+    let divstatus = document.getElementById('divstatus')
+    let vermaisContainer = document.getElementById('vermaisContainer')
+
+
     vermaisContainer.style.display = 'flex'
 
     if (projetos[idbotao].date == null) {
@@ -289,7 +96,7 @@ function createProject() {
         .then(info => {
             updateProjects(workspaces_id)
             hudproject = true
-            closecreate()
+            closeMenu()
             document.getElementById('projectdate').value = ''
             document.getElementById('projectname').value = ''
             document.getElementById('projectdesc').value = ''
@@ -306,7 +113,7 @@ function createProject() {
             txtnotificacao.innerHTML = err
 
             hudproject = true
-            closecreate()
+            closeMenu()
             setTimeout(function () {
 
                 divnotificacao.style.animation = 'notificacaoanimacaoinversa 3s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
@@ -348,6 +155,7 @@ function deleteProject(i) {
 function drawProjects() {
     container.innerHTML = ''
 
+    //Ordena array de projetos com base na quantidade de dias restantes
     for (let i = 0; i < projetos.length; i++) {
         for (let j = i + 1; j < projetos.length; j++) {
             if (getProjectData(i) < getProjectData(j)) {
@@ -359,6 +167,7 @@ function drawProjects() {
     }
 
 
+    //Desenha na tela cada projeto
     for (i = projetos.length - 1; i >= 0; i--) {
 
         let newProject = document.createElement('div');
@@ -375,6 +184,8 @@ function drawProjects() {
         document.getElementById('container').appendChild(newProject)
     }
 
+
+    //Após desenhar ultimo projeto, adiciona botao de adicionar projeto
     let divadicionar = document.createElement('div')
 
     divadicionar.className = "addprojeto"
@@ -419,7 +230,7 @@ function getProjectData(i) {
     let ano_atual = data_atual.getFullYear()
 
     let dataprojeto = projetos[i].date
-    if(dataprojeto == null) { return 1 }
+    if (dataprojeto == null) { return 1 }
 
     let splitdate = dataprojeto.split('/')
 
@@ -439,30 +250,3 @@ function getProjectData(i) {
 function projectdata(i) {
     alertMessage(`Faltam <span> ${getProjectData(i)} </span> dias para o prazo de <span>${projetos[i].name}</span>.`)
 }
-
-
-
-
-function alertMessage(message) {
-    let txtnotificacao = document.getElementById('txtnotificacao')
-    let divnotificacao = document.getElementById('divnotificacao')
-    divnotificacao.style.display = 'flex'
-    divnotificacao.style.animation = 'notificacaoanimacao 1.5s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-
-    txtnotificacao.innerHTML = `${message}`
-
-    setTimeout(function () {
-
-        divnotificacao.style.animation = 'notificacaoanimacaoinversa 3s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-
-        setTimeout(function () {
-
-            divnotificacao.style.display = 'none'
-        }, 3000)
-
-    }, 5000);
-}
-
-
-
-
