@@ -20,7 +20,7 @@ const createWorkspace = async (req, res) => {
     }
     catch (err) {
         console.log(`X Error during creating workspace, error: ${err}`)
-        res.status(500).json({ "Error": err.message })
+        res.status(500).json({ err: err.message })
     }
 
 }

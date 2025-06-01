@@ -65,25 +65,30 @@ function confirmCreateWorkspace() {
         },
         body: JSON.stringify({ workspaceName })
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json()
+                    .then(error => { throw new Error(error.err) });
+            }
+            response.json()
+        })
         .then(info => {
-            console.log(info)
-            if (info.Error == "Invalid input") {
-                alertMessage(`Não foi possível criar workspace, ${info.Error}`)
+            updateWorkspace()
+            document.getElementById('workspaceName').value = ''
+            setTimeout(() => {
+                const workspaces_id = info.creating.id
+                drawWorkspace()
                 hudproject = true
                 closeCreateWorkspace()
-            }
-            else{
-                updateWorkspace()
-                document.getElementById('workspaceName').value = ''
-                setTimeout(() => {
-                    const workspaces_id = info.creating.id
-                    drawWorkspace()
-                    hudproject = true
-                    closeCreateWorkspace()
-                    selectWorkspace(workspaces_id)
-                }, 200);
-            }
+                selectWorkspace(workspaces_id)
+            }, 200);
+
+        })
+        .catch(err => {
+            alertMessage(`Não foi possível criar workspace, ${err}`)
+            hudproject = true
+            closeCreateWorkspace()
+
         })
 }
 

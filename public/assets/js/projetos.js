@@ -105,25 +105,9 @@ function createProject() {
             }, 500);
         })
         .catch(err => {
-            console.log(err)
-            let txtnotificacao = document.getElementById('txtnotificacao')
-            let divnotificacao = document.getElementById('divnotificacao')
-            divnotificacao.style.display = 'flex'
-            divnotificacao.style.animation = 'notificacaoanimacao 1.5s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-            txtnotificacao.innerHTML = err
-
+            alertMessage(`Não foi possível criar projeto, ${err}`)
             hudproject = true
-            closeMenu()
-            setTimeout(function () {
-
-                divnotificacao.style.animation = 'notificacaoanimacaoinversa 3s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
-
-                setTimeout(function () {
-
-                    divnotificacao.style.display = 'none'
-                }, 3000)
-
-            }, 5000);
+            closeCreateProject()
         })
 }
 
