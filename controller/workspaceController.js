@@ -8,20 +8,21 @@ const createWorkspace = async (req, res) => {
 
     const workspaceName = req.body.workspaceName
     const clientID = req.userInfoDB.id
-    if (workspaceName !== null && clientID != null) {
-        try {
+    try {
+        if (workspaceName == null || workspaceName.trim() == '' || clientID == null || clientID == NaN || clientID < 1) {
+            throw new Error('Invalid input')
+        }
+        else {
             const creating = await Workspaces.create({ workspaceName: workspaceName, user_id: clientID })
             console.log(`> Workspace created at database`)
             res.status(200).json({ creating })
         }
-        catch (err) {
-            console.log(`X Error during creating workspace`)
-            res.status(500)
-        }
     }
-    else {
-        res.status(400).json({ Message: "Need more info." })
+    catch (err) {
+        console.log(`X Error during creating workspace, error: ${err}`)
+        res.status(500).json({ "Error": err.message })
     }
+
 }
 
 const listWorkspace = async (req, res) => {
@@ -67,7 +68,7 @@ const deleteWorkspace = async (req, res) => {
     }
     catch (err) {
         console.log(`X Error during deleting workspace, erro ${err}`)
-        res.status(500).send("deu merda guri")
+        res.status(500).send("Error during deleting workspace")
     }
 
 }

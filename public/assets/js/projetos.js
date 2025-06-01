@@ -96,7 +96,7 @@ function createProject() {
         .then(info => {
             updateProjects(workspaces_id)
             hudproject = true
-            closeMenu()
+            closeCreateProject()
             document.getElementById('projectdate').value = ''
             document.getElementById('projectname').value = ''
             document.getElementById('projectdesc').value = ''

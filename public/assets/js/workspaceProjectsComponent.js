@@ -67,16 +67,23 @@ function confirmCreateWorkspace() {
     })
         .then(response => response.json())
         .then(info => {
-            updateWorkspace()
-            document.getElementById('workspaceName').value = ''
-            setTimeout(() => {
-                const workspaces_id = info.creating.id
-                drawWorkspace()
+            console.log(info)
+            if (info.Error == "Invalid input") {
+                alertMessage(`Não foi possível criar workspace, ${info.Error}`)
                 hudproject = true
                 closeCreateWorkspace()
-                selectWorkspace(workspaces_id)
-            }, 200);
-
+            }
+            else{
+                updateWorkspace()
+                document.getElementById('workspaceName').value = ''
+                setTimeout(() => {
+                    const workspaces_id = info.creating.id
+                    drawWorkspace()
+                    hudproject = true
+                    closeCreateWorkspace()
+                    selectWorkspace(workspaces_id)
+                }, 200);
+            }
         })
 }
 

@@ -13,7 +13,7 @@ const createProject = async (req, res) => {
     const workspaces_id = req.body.workspaces_id
 
     try {
-        if (name == null || name == '') {
+        if (name == null || name.trim() == '') {
             throw new Error('Name is null')
         }
         else if (workspaces_id == 0) {
