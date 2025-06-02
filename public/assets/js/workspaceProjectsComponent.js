@@ -70,16 +70,17 @@ function confirmCreateWorkspace() {
                 return response.json()
                     .then(error => { throw new Error(error.err) });
             }
-            response.json()
+            return response.json()
+
         })
-        .then(info => {
+        .then((info) => {
             updateWorkspace()
             document.getElementById('workspaceName').value = ''
             setTimeout(() => {
-                const workspaces_id = info.creating.id
-                drawWorkspace()
                 hudproject = true
                 closeCreateWorkspace()
+                const workspaces_id = info.creating.id
+                drawWorkspace()
                 selectWorkspace(workspaces_id)
             }, 200);
 

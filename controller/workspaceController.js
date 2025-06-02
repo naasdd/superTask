@@ -22,7 +22,6 @@ const createWorkspace = async (req, res) => {
         console.log(`X Error during creating workspace, error: ${err}`)
         res.status(500).json({ err: err.message })
     }
-
 }
 
 const listWorkspace = async (req, res) => {
