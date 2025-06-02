@@ -270,3 +270,4 @@ function closeVermais() {
         }, 700);
     }
 }
+

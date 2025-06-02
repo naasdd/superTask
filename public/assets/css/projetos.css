@@ -367,20 +367,7 @@ main {
 }
 
 
-#menuShowUp {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99999;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(140, 210, 230, 0.05);
-    backdrop-filter: blur(20px);
-    animation: bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both;
-    justify-content: center;
-    align-items: center;
-}
+
 
 #projetoContainer {
     width: 550px;
@@ -693,77 +680,6 @@ main {
 }
 
 
-@keyframes bluranimation {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes transicaomain {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes opacidadeinversa {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
-    }
-}
-
-@keyframes notificacaoanimacao {
-    from {
-        top: -150px;
-        opacity: 0;
-    }
-
-    to {
-        top: 0;
-        opacity: 1;
-    }
-}
-
-@keyframes notificacaoanimacaoinversa {
-    from {
-        top: 0;
-        opacity: 1;
-    }
-
-    to {
-        top: -150px;
-        opacity: 0;
-    }
-}
-
-@keyframes transicaoContainer {
-    0% {
-        opacity: 1;
-        transform: translateY(0%);
-    }
-
-    50% {
-        opacity: 0;
-        transform: translateY(110%);
-
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0%);
-    }
-}
 
 
 
