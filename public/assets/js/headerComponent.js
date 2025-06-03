@@ -110,11 +110,6 @@ function projects() {
                 estilo.href = './assets/css/projetos.css'
                 titulo.innerHTML = `Projetos`
                 iconelogo.remove()
-                titulosupertask.remove()
-                setTimeout(() => {
-                    const first = workspaces[0].id
-                    selectWorkspace(first)
-                }, 100);
                 drawProjects()
 
             }, 100);
