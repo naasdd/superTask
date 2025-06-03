@@ -20,7 +20,7 @@ let workspaces = []
 let wrkselected = 0
 
 
-function updateWorkspace() {
+function updateWorkspace(workspaces_id) {
     return fetch('/listWorkspace', {
         headers: { 'x-access-token': token }
     })
@@ -37,7 +37,10 @@ function updateWorkspace() {
             if (workspaces.length == 0) {
                 opencreateWorkspace()
             }
-            else {
+            else if(workspaces_id >= 1){
+                selectWorkspace(workspaces_id)
+            }
+            else{
                 drawWorkspace(workspaces[0].id)
                 selectWorkspace(workspaces[0].id)
             }
@@ -74,14 +77,13 @@ function confirmCreateWorkspace() {
 
         })
         .then((info) => {
-            updateWorkspace()
+            const workspaces_id = info.creating.id
+            updateWorkspace(workspaces_id)
             document.getElementById('workspaceName').value = ''
             setTimeout(() => {
                 hudproject = true
                 closeCreateWorkspace()
-                const workspaces_id = info.creating.id
                 drawWorkspace()
-                selectWorkspace(workspaces_id)
             }, 200);
 
         })
@@ -150,7 +152,6 @@ function confirmDeleteWorkspace(w) {
         .then(resposta => {
             alertMessage(resposta.Message)
             updateWorkspace().then(() => {
-                selectWorkspace(workspaces[0].id)
                 hudproject = true
                 closeDeleteWorkspace()
             })
