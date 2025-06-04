@@ -683,28 +683,36 @@ main {
 
 
 
-@media screen and (max-width: 1400px) {
+/* @media screen and (max-width: 1400px) {
     .container {
         grid-template-columns: 80%;
     }
 
-}
+} */
 
 @media (orientation : portrait) {
+    .blur1, .blur2{
+        display: none;
+        width: 1px;
+        height: 1px;
+    }
+
+
     section {
-        margin-left: 0;
+        margin-left: 0px;
         margin-top: 50px;
-        width: 35vw;
+        width: 30vw;
     }
 
     .wContainer {
-        height: 70vh;
+        height: 75vh;
+        width: 100%;
     }
-
+    
     .workspace,
     .addworkspace,
     .workspace-active {
-        width: 95%;
+        width: 85%;
         height: auto;
         min-height: 40px;
         font-size: 12px;
@@ -714,4 +722,60 @@ main {
         padding: 0;
         border-radius: 10px;
     }
+
+    main{
+        width: 70vw;
+    }
+
+    .divPartedecima{
+        margin-top: 70px;
+        width: 70vw;
+    }
+
+    .paginatitulo{
+        font-size: 24px;
+    }
+
+    #iconDeletarWorkspace>i {
+        top: 100px;
+        padding: 5px;
+        font-size: 20px;
+    }
+
+
+    .container{
+        min-width: 0;
+        width: 92%;
+        border-radius: 25px;
+        grid-template-columns: 85%;
+    }
+    
+    .projeto{
+        min-width: 0;
+        width: 95%;
+        height: 120px;
+        margin-top: 15px;
+        padding: 0 15px;
+        border-radius: 15px;
+    }
+
+    .projeto>h1{
+        font-size: 20px;
+    }
+
+    .projeto>p{
+        font-size: 14px;
+        margin-top: -10px;
+    }
+
+    .projeto>.botoes{
+        height: 30px;
+    }
+
+    .botoes>button{
+        font-size: 12px;
+        border-radius: 10px;
+    }
+
+
 }

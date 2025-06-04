@@ -388,6 +388,9 @@ main {
         flex-direction: row;
     }
 
+    .menu i{
+        height: 60px;
+    }
 
     #userIconMenu{
         width: 80vw;
