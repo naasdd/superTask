@@ -80,3 +80,10 @@ p{
 span{
     text-decoration: underline;
 }
+
+
+@media (orientation : portrait){
+    #cadastrarContainer{
+        padding: 20px 20px;
+    }
+}

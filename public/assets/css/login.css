@@ -1,4 +1,4 @@
-#login{
+#login {
     display: flex;
     position: fixed;
     top: 0;
@@ -13,7 +13,7 @@
     align-items: center;
 }
 
-#loginContainer{
+#loginContainer {
     padding: 20px 100px;
     height: auto;
     background-color: var(--background);
@@ -25,19 +25,21 @@
     justify-content: flex-start;
     align-items: center;
 }
-h1{
+
+h1 {
     margin-top: 5%;
     font-weight: 200;
     text-wrap: nowrap;
 }
 
-label{
+label {
     margin-top: 15%;
     text-align: start;
     width: 100%;
     font-size: 30px;
 }
-input{
+
+input {
     width: 90%;
     margin: 10px;
     height: 50px;
@@ -48,7 +50,7 @@ input{
     outline: none;
 }
 
-button{
+button {
     width: 300px;
     height: 50px;
     border-radius: 27px;
@@ -66,14 +68,15 @@ button{
     letter-spacing: 0.24px;
     transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
     cursor: pointer;
-    }
-button:hover{
+}
+
+button:hover {
     background-color: var(--azul);
     text-shadow: 0px 0px 10px black;
     box-shadow: 0px 0px 40px -6px #8CD2E6;
 }
 
-#mensagemErro{
+#mensagemErro {
     margin-top: -5px;
     margin-left: 10px;
     width: 100%;
@@ -83,10 +86,29 @@ button:hover{
     text-shadow: 0px 0px 15px red;
 }
 
-p{
+p {
     margin-top: 5%;
     font-size: 14px;
 }
-span{
+
+span {
     text-decoration: underline;
+}
+
+@media (orientation: portrait) {
+    #loginContainer {
+        padding: 20px 20px;
+    }
+
+    h1{
+        font-size: 24px;
+    }
+
+    label{
+        font-size: 22px;
+    }
+
+    input{
+        width: 90%;
+    }
 }
