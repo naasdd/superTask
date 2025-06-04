@@ -387,4 +387,16 @@ main {
         height: 100%;
         flex-direction: row;
     }
+
+
+    #userIconMenu{
+        width: 80vw;
+        padding: 30px 20px;
+    }
+
+    #userIconMenu>button {
+        width: 80%;
+    
+    }
+
 }
