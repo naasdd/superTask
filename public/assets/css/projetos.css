@@ -803,7 +803,7 @@ main {
         font-size: 20px;
         margin-bottom: 20px;
     }
-    
+
 
     .status p{
         font-size: 22px;
@@ -811,5 +811,23 @@ main {
 
     .divprazoprojeto{
         margin-bottom: 0px;
+    }
+
+
+
+    .divnotificacao{
+        height: 80px;
+        margin-top: 20px;
+    }
+
+    .notificacaocontainer{
+        width: 85vw;
+        min-width: 0;
+        padding: 0px 10px;
+    }
+
+    .notificacaocontainer h2{
+        font-size: 20px;
+        text-align: center;
     }
 }

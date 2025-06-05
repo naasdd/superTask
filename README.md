@@ -24,7 +24,7 @@ Essa é a primeira versão (beta) da aplicação, com uma funcionalidade já tot
 
 ✅ Tarefas ordenadas com base no prazo
 
-❌ Responsividade mobile
+✅ Responsividade mobile
 
 ---
 
@@ -52,7 +52,7 @@ Super Task atualmente está em uma hospedagem totalmente gratuita.
 ---
 
 ## 🌐 Teste agora mesmo e envie seu feedback
-- https://supertask-production.up.railway.app
+- https://www.mysupertask.shop
 - Caso deseja mandar uma sugestão, abra um ISSUE aqui mesmo no repositório do github!
 - Ao cadastrar, o aplicativo pedirá um email, mas por enquanto, não precisa ser um email válido.
-- Atualizado dia 31/05/2025
+- Atualizado dia 05/06/2025
