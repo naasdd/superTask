@@ -556,7 +556,6 @@ main {
 }
 
 .acoes {
-    /* border: solid 1px green; */
     height: 80px;
     display: flex;
     justify-content: space-between;
@@ -778,4 +777,39 @@ main {
     }
 
 
+
+    #vermaisContainer{
+        border-radius: 30px;
+        width: 90vw;
+    }
+
+    .acoes{
+        height: 45px;
+        font-size: 26px;
+    }
+
+    .infoproj{
+        width: 70%;
+        margin-top: -10px;
+    }
+
+    .infoproj h1{
+        text-align: center;
+        font-size: 28px;
+    }
+
+    .infoproj p{
+        text-align: center;
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+
+    .status p{
+        font-size: 22px;
+    }
+
+    .divprazoprojeto{
+        margin-bottom: 0px;
+    }
 }
