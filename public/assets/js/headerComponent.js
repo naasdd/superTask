@@ -106,12 +106,9 @@ function projects() {
             }
 
             setTimeout(() => {
-                updateWorkspace()
                 estilo.href = './assets/css/projetos.css'
                 titulo.innerHTML = `Projetos`
-                iconelogo.remove()
-                drawProjects()
-
+                iconelogo.remove()  
             }, 100);
         })
 }

@@ -156,5 +156,6 @@ function confirmDeleteWorkspace(w) {
                 closeDeleteWorkspace()
             })
         })
-
 }
+updateWorkspace()
+drawProjects()
