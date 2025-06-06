@@ -132,7 +132,7 @@ function deleteProject(i) {
             setTimeout(() => {
                 drawProjects()
                 fechar_vermais()
-            }, 250);
+            }, 500);
         })
 }
 
