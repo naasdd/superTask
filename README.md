@@ -28,14 +28,12 @@ Essa é a primeira versão (beta) da aplicação, com uma funcionalidade já tot
 
 ---
 
-## 🔜 Funcionalidades em breve
-⏳ Correções de UI
+## 🆕 Update da versão  v1.7 (14/06/2025)
 
-⏳ Status para tarefa (Iniciado, em processo, concluido, etc...)
+⏳ Editar projeto
 
-⏳ Editar tarefa
+⏳ Esc para fechar menu
 
-⏳ Atividades semanais
 
 ---
 
@@ -55,4 +53,3 @@ Super Task atualmente está em uma hospedagem totalmente gratuita.
 - https://www.mysupertask.shop
 - Caso deseja mandar uma sugestão, abra um ISSUE aqui mesmo no repositório do github!
 - Ao cadastrar, o aplicativo pedirá um email, mas por enquanto, não precisa ser um email válido.
-- Atualizado dia 05/06/2025
