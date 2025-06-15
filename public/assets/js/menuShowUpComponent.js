@@ -1,5 +1,16 @@
 let menuShowUp = document.getElementById('menuShowUp')
 
+addEventListener('keydown', (e) => {
+    switch (e.key) {
+        case 'Escape':
+            hudproject = true
+            menuShowUp.onclick()
+            break;
+            
+        default:
+            break;
+    }
+})
 
 function openMenuShowUp() {
     menuShowUp.style.display = 'flex'
