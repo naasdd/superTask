@@ -232,5 +232,15 @@ function getProjectData(i) {
 }
 
 function projectdata(i) {
-    alertMessage(`Faltam <span> ${getProjectData(i)} </span> dias para o prazo de <span>${projetos[i].name}</span>.`)
+    let getProjectDataResultado = getProjectData(i)
+
+    if (getProjectDataResultado >= 1) {
+        alertMessage(`Faltam <span> ${getProjectDataResultado} </span> dias para o prazo de <span>${projetos[i].name}</span>.`)
+    }
+    else if(getProjectDataResultado == 0){
+        alertMessage(`<span>Hoje</span> é o prazo de <span>${projetos[i].name}</span>`)
+    }
+    else if(getProjectDataResultado <= -1){
+        alertMessage(`Você está a <span>${getProjectDataResultado}</span> dias atrasado para o prazo de <span>${projetos[i].name}</span>`)
+    }
 }
