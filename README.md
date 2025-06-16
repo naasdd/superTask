@@ -28,12 +28,13 @@ Essa é a primeira versão (beta) da aplicação, com uma funcionalidade já tot
 
 ---
 
-## 🆕 Update da versão  v1.7 (14/06/2025)
+## 🆕 Update da versão  v1.7 (16/06/2025)
 
-⏳ Editar projeto
+☑️ Menu de informações do site
 
-⏳ Esc para fechar menu
+☑️ Esc para fechar menu
 
+☑️ Mensagem de dias restantes para prazo se ajusta caso esteja atrasada ou seja hoje
 
 ---
 
