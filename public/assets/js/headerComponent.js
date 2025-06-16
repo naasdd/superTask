@@ -56,7 +56,7 @@ function openUserIcon(data) {
     menuShowUp.setAttribute('onclick', 'closeUserIcon()')
 }
 
-function fechar_usericon(){
+function fechar_usericon() {
     hudproject = true
     closeUserIcon()
 }
@@ -108,7 +108,7 @@ function projects() {
             setTimeout(() => {
                 estilo.href = './assets/css/projetos.css'
                 titulo.innerHTML = `Projetos`
-                iconelogo.remove()  
+                iconelogo.remove()
             }, 100);
         })
 }
@@ -118,7 +118,7 @@ function todo() { window.alert("Em desenvolvimento.") }
 function weeklytodo() { window.alert("Em desenvolvimento.") }
 function logout() {
     localStorage.removeItem("token")
-    window.location.href = './login.html' 
+    window.location.href = './login.html'
 }
 
 
@@ -135,4 +135,62 @@ function carregarScriptsProjetos() {
         script.src = src
         document.body.appendChild(script)
     })
+}
+
+
+
+
+
+function openWebsiteInfo() {
+    openMenuShowUp()
+
+
+    let webSiteInfo = document.createElement('div')
+    webSiteInfo.id = "webSiteInfo"
+    webSiteInfo.style.display = 'flex'
+
+    webSiteInfo.setAttribute('onmouseover', 'overcreatehud()')
+    webSiteInfo.setAttribute('onmouseout', 'outcreatehud()')
+
+    menuShowUp.appendChild(webSiteInfo)
+
+    webSiteInfo.innerHTML = `<h1>Feito por José Gabriel</h1>
+                <button onclick="vergithub()">Ver github</button>`
+
+    menuShowUp.setAttribute('onclick', 'closeWebsiteInfo()')
+
+}
+
+function vergithub() {
+    window.open("https://github.com/naasdd", "_blank")
+}
+
+
+function fechar_websiteInfo() {
+    hudproject = true
+    menuShowUp.onclick()
+}
+
+function closeWebsiteInfo() {
+    let webSiteInfo = document.getElementById('webSiteInfo')
+    if (hudproject) {
+        menuShowUp.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+        webSiteInfo.style.animation = 'opacidadeinversa 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+
+        menuShowUp.setAttribute('onclick', 'closeMenu()')
+
+        // "timer" para que esses códigos apenas sejam rodados depois de acabar a animacao anterior
+        setTimeout(function () {
+            hudproject = false
+
+
+            menuShowUp.style.display = 'none';
+            webSiteInfo.style.display = 'none'
+
+            menuShowUp.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+            webSiteInfo.style.animation = 'bluranimation 1s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+
+            webSiteInfo.remove()
+        }, 700);
+    }
 }

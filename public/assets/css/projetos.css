@@ -28,9 +28,6 @@ section {
     max-height: 100%;
     background-color: var(--backgroundHeader);
     z-index: 2;
-
-    /* border: solid 2px red; */
-
 }
 
 .wContainer {

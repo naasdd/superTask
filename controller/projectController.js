@@ -29,7 +29,7 @@ const createProject = async (req, res) => {
         }
     }
     catch (err) {
-        console.log(`X Error during creating project. error: ${err}`)
+        console.error(`X Error during creating project. error: ${err}`)
         res.status(500).json({ err: err.message })
     }
 }
@@ -43,10 +43,11 @@ const listProject = async (req, res) => {
         res.status(200).json(search)
     }
     catch (err) {
-        console.log(`X Error during list project. error: ${err}`)
+        console.error(`X Error during list project. error: ${err}`)
         res.status(500).json(err)
     }
 }
+
 
 const deleteProject = async (req, res) => {
     const client = req.decoded.email
@@ -58,7 +59,7 @@ const deleteProject = async (req, res) => {
         res.status(200).json({ Message: "deleted" })
     }
     catch (err) {
-        console.log(`X Error during delete project. error: ${err}`)
+        console.error(`X Error during delete project. error: ${err}`)
         res.status(500).json(err)
     }
 }

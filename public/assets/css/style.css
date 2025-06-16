@@ -199,6 +199,54 @@ section {
     box-shadow: 0px 0px 40px -6px #8CD2E6;
 }
 
+
+
+
+#webSiteInfo {
+    background-color: var(--background);
+    border: solid 2px var(--azul);
+    border-radius: 60px;
+    box-shadow: 0px 4px 250px 0px rgba(140, 210, 230, 0.10);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 400px;
+    padding: 30px;
+    height: auto;
+}
+
+#webSiteInfo h1 {
+    text-align: center;
+    font-size: 26px;
+    margin: 20px;
+}
+
+#webSiteInfo>button {
+    width: 270px;
+    height: 50px;
+    margin: 10px;
+    border-radius: 27px;
+    border: 1px solid #8CD2E6;
+    background: #1E1E1E;
+    box-shadow: 0px 0px 40px -16px #8CD2E6;
+    color: #FFF;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 0.24px;
+    transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: pointer;
+}
+
+#webSiteInfo>button:hover {
+    background-color: var(--azul);
+    text-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 40px -6px #8CD2E6;
+}
+
+
+
 .paginatitulo {
     display: none;
     margin: 30px 0;
@@ -388,18 +436,18 @@ main {
         flex-direction: row;
     }
 
-    .menu i{
+    .menu i {
         height: 60px;
     }
 
-    #userIconMenu{
+    #userIconMenu {
         width: 80vw;
         padding: 30px 20px;
     }
 
     #userIconMenu>button {
         width: 80%;
-    
+
     }
 
 }
