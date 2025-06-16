@@ -93,7 +93,7 @@ header {
     background-color: var(--escuro);
 }
 
-.menu {
+.menu, .webInfo {
     width: 90%;
     height: 400px;
     display: flex;
@@ -102,7 +102,8 @@ header {
     align-items: center;
 }
 
-.menu i {
+
+.menu i, .webInfo i {
     font-size: 30px;
     color: var(--icons);
     transition: all .3s;
@@ -139,6 +140,23 @@ header {
     color: var(--escuro);
     cursor: pointer;
 }
+
+
+.webInfo{
+    height: 30%;
+    justify-content: flex-end;
+}
+.webInfo i{
+    height: 50px;
+    font-size: 25px;
+    cursor: pointer;
+}
+.webInfo i:hover{
+    font-size: 30px;
+    color: rgba(140, 210, 230);
+}
+
+
 
 section {
     display: none;
@@ -431,13 +449,18 @@ main {
     }
 
     .menu {
-        width: 100%;
+        width: 85%;
         height: 100%;
         flex-direction: row;
     }
 
     .menu i {
         height: 60px;
+    }
+
+    .webInfo{
+        width: 15%;
+        justify-content: center;
     }
 
     #userIconMenu {
