@@ -145,6 +145,8 @@ header {
 .webInfo{
     height: 30%;
     justify-content: flex-end;
+    position: absolute;
+    bottom: 0px;
 }
 .webInfo i{
     height: 50px;
@@ -461,6 +463,7 @@ main {
     .webInfo{
         width: 15%;
         justify-content: center;
+        position: relative;
     }
 
     #userIconMenu {
