@@ -4,6 +4,7 @@ const cors = require('cors')
 
 const connect = require('./database/connect.js')
 const { verifyJWT } = require('./middleware/verifyJWT.js')
+const { verifyCSRF } = require('./middleware/verifyCSRF.js')
 const userController = require('./controller/userController.js')
 const workspaceController = require('./controller/workspaceController.js')
 const projectController = require('./controller/projectController.js')
@@ -22,14 +23,15 @@ app.get('/', (req, res) => {
 app.get('/validateAccount', verifyJWT, userController.validateAccount)
 app.post('/signIn', userController.signIn)
 app.post('/logIn', userController.logIn)
+app.post('/logOut', userController.logOut)
 
-app.post('/createWorkspace', verifyJWT, workspaceController.createWorkspace)
+app.post('/createWorkspace', verifyJWT, verifyCSRF, workspaceController.createWorkspace)
 app.get('/listWorkspace', verifyJWT, workspaceController.listWorkspace)
-app.delete('/deleteWorkspace', verifyJWT, workspaceController.deleteWorkspace)
+app.delete('/deleteWorkspace', verifyJWT, verifyCSRF, workspaceController.deleteWorkspace)
 
-app.post('/createProject', verifyJWT, projectController.createProject)
+app.post('/createProject', verifyJWT, verifyCSRF, projectController.createProject)
 app.post('/listProject', verifyJWT, projectController.listProject)
-app.delete('/deleteProject', verifyJWT, projectController.deleteProject)
+app.delete('/deleteProject', verifyJWT, verifyCSRF, projectController.deleteProject)
 
 
 connect.sync()

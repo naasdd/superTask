@@ -1,67 +1,81 @@
-const Projects = require('../model/projects.js')
-const Users = require('../model/users.js')
-const Workspaces = require('../model/workspaces.js')
+const projectService = require('../services/projectService.js')
+const { isDomainError } = require('../services/domainError.js')
 
 
 
-const createProject = async (req, res) => {
-    const client = req.decoded.email
-    console.log(`\n\n> Route /createProject requested by: ${client}`)
-    const name = req.body.name
-    const description = req.body.description
-    let date = req.body.date
-    const workspaces_id = req.body.workspaces_id
-
+const createProjectController = async (req, res) => {
     try {
-        if (name == null || name.trim() == '') {
-            throw new Error('Name is null')
-        }
-        else if (workspaces_id == 0) {
-            throw new Error('You should create a workspace before.')
-        }
-        else {
-            if (date == 'undefined/undefined/') {
-                date = null
-            }
-            const create = await Projects.create({ name: name, description: description, date: date, workspaces_id: workspaces_id })
-            console.log(`> Project created.`)
-            res.status(200).json({ Message: "Project created" })
-        }
+        const client = req.authenticatedUserEmail
+        console.log(`\n\n> Route /createProject requested by: ${client}`)
+
+        await projectService.createProject({
+            userId: req.authenticatedUserId,
+            name: req.body.name,
+            description: req.body.description,
+            date: req.body.date,
+            workspaces_id: req.body.workspaces_id
+        })
+
+        console.log(`> Project created.`)
+        res.status(200).json({ Message: "Project created" })
     }
     catch (err) {
+        if (isDomainError(err)) {
+            return res.status(err.statusCode).json({ err: err.message })
+        }
+
         console.error(`X Error during creating project. error: ${err}`)
-        res.status(500).json({ err: err.message })
+        res.status(500).json({ err: 'Internal server error' })
     }
 }
 
-const listProject = async (req, res) => {
-    const client = req.decoded.email
-    console.log(`\n\n > Route /listProject requested by: ${client}`)
-    const workspaces_id = req.body.workspaces_id
+const listProjectController = async (req, res) => {
     try {
-        const search = await Projects.findAll({ where: { workspaces_id: workspaces_id } })
+        const client = req.authenticatedUserEmail
+        console.log(`\n\n > Route /listProject requested by: ${client}`)
+        const search = await projectService.listProject({
+            userId: req.authenticatedUserId,
+            workspaces_id: req.body.workspaces_id
+        })
+
         res.status(200).json(search)
     }
     catch (err) {
+        if (isDomainError(err)) {
+            return res.status(err.statusCode).json({ err: err.message })
+        }
+
         console.error(`X Error during list project. error: ${err}`)
-        res.status(500).json(err)
+        res.status(500).json({ err: 'Internal server error' })
     }
 }
 
 
-const deleteProject = async (req, res) => {
-    const client = req.decoded.email
-    console.log(`\n\n > Route /deleteProject requested by: ${client}`)
-    const reqid = req.body.i
+const deleteProjectController = async (req, res) => {
     try {
-        await Projects.destroy({ where: { id: reqid } })
+        const client = req.authenticatedUserEmail
+        console.log(`\n\n > Route /deleteProject requested by: ${client}`)
+
+        await projectService.deleteProject({
+            userId: req.authenticatedUserId,
+            projectId: req.body.i
+        })
+
         console.log(`> Project destroyed`)
         res.status(200).json({ Message: "deleted" })
     }
     catch (err) {
+        if (isDomainError(err)) {
+            return res.status(err.statusCode).json({ err: err.message })
+        }
+
         console.error(`X Error during delete project. error: ${err}`)
-        res.status(500).json(err)
+        res.status(500).json({ Message: 'Internal server error' })
     }
 }
 
-module.exports = { createProject, listProject, deleteProject }
+module.exports = {
+    createProject: createProjectController,
+    deleteProject: deleteProjectController,
+    listProject: listProjectController
+}

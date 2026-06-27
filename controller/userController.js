@@ -1,79 +1,86 @@
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
-const Users = require('../model/users.js')
-const { jwtKey } = require('../middleware/verifyJWT.js')
+const userService = require('../services/userService.js')
+const { isDomainError } = require('../services/domainError.js')
+
+const cookieBaseOptions = {
+    httpOnly: true,
+    sameSite: 'lax',
+    path: '/',
+    secure: process.env.NODE_ENV === 'production'
+}
 
 
-const validateAccount = (req, res) => {
-    const info = req.userInfoDB
-    res.status(200).json({ email: info.email, username: info.username })
+const validateAccount = async (req, res) => {
+    try {
+        const info = await userService.getAuthenticatedAccount(req.authenticatedUserId)
+        res.status(200).json({ email: info.email, username: info.username })
+    }
+    catch (err) {
+        if (isDomainError(err)) {
+            return res.status(err.statusCode).json({ Message: err.message })
+        }
+
+        console.log(`X Failed at validateAccount, error: ${err}`)
+        return res.status(500).json({ Message: 'Internal server error' })
+    }
 }
 
 const signIn = async (req, res) => {
     console.log(`\n\n> Route /signIn called.`)
-    const info = req.body
-    const pass = info.password
-
-    if (info.email == "" || info.password == "" || info.email == null || info.password == null) {
-        console.log(`> Invalid input`)
-        return res.status(400).json({ Message: "Invalid input" })
+    try {
+        await userService.signUp(req.body)
+        res.status(200).json({ Message: "User signed in." })
     }
+    catch (err) {
+        if (isDomainError(err)) {
+            return res.status(err.statusCode).json({ Message: err.message })
+        }
 
-    const searchOnDatabase = await Users.findOne({ where: { email: info.email }, raw: true })
-    if (searchOnDatabase != null) {
-        return res.status(403).json({ Message: "Email already used." });
+        console.log(`X Failed at signin, error: ${err}`)
+        return res.status(500).json({ Message: 'Internal server error' })
     }
-
-
-
-    bcrypt.hash(pass, 10, async (err, hash) => {
-        if (err) {
-            console.log(`X err returned at hash, error: ${err}`)
-            res.status(400)
-        }
-
-        try {
-            console.log(`> hash is: ${hash}`)
-            const insertInDatabase = await Users.create({ email: info.email, username: info.username, password: hash })
-            res.status(200).json({ Message: "User signed in." })
-        }
-        catch (err) {
-            console.log(`X Failed at signin, error: ${err}`)
-            res.status(500)
-        }
-    })
 }
 
 const logIn = async (req, res) => {
     console.log(`\n\n> Route /logIn called.`)
-    const info = req.body
-    const pass = info.password
-
-    if (info.email == "" || info.password == "" || info.email == null || info.password == null) {
-        console.log(`X Invalid input`)
-        return res.status(400).json({ Message: "Entradas inválidas" })
-    }
-
-    const searchOnDatabase = await Users.findOne({ where: { email: info.email }, raw: true })
-    if (searchOnDatabase == null) {
-        return res.status(404).json({ Message: "Usuário não encontrado" });
-    }
-
     try {
-        const result = bcrypt.compareSync(pass, searchOnDatabase.password)
+        const { token, csrfToken } = await userService.logIn(req.body)
 
-        if (result) {
-            const token = jwt.sign({ email: searchOnDatabase.email }, jwtKey, { expiresIn: '7d' })
-            res.status(200).json({ auth: true, token })
-        }
-        else {
-            res.status(401).json({ auth: false, Message: "Senha incorreta." })
-        }
+        res.cookie('st_auth', token, {
+            ...cookieBaseOptions,
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        })
+
+        res.cookie('st_csrf', csrfToken, {
+            sameSite: 'lax',
+            path: '/',
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        })
+
+        res.status(200).json({ auth: true })
     }
     catch (err) {
+        if (isDomainError(err)) {
+            return res.status(err.statusCode).json({ auth: false, Message: err.message })
+        }
+
         console.log(`X Error on route /logIn, error: ${err}`)
-        res.status(500).json({ Message: `Error: ${err}` })
+        return res.status(500).json({ Message: 'Internal server error' })
     }
 }
 
-module.exports = { validateAccount, signIn, logIn }
+const logOut = async (req, res) => {
+    res.clearCookie('st_auth', {
+        path: '/',
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production'
+    })
+    res.clearCookie('st_csrf', {
+        path: '/',
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production'
+    })
+    res.status(200).json({ Message: 'Logged out' })
+}
+
+module.exports = { validateAccount, signIn, logIn, logOut }

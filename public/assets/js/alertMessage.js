@@ -4,25 +4,27 @@ function alertMessage(message) {
     criarDivnNotificacao.id = "divnotificacao"
     criarDivnNotificacao.style = "display: none;"
     document.body.appendChild(criarDivnNotificacao)
-    criarDivnNotificacao.innerHTML = `<div class="notificacaocontainer">
-            <h2 id="txtnotificacao">Faltam X dias para o prazo de XXXXXXX!</h2>
-        </div>`
+    const notificacaoContainer = document.createElement('div')
+    notificacaoContainer.className = 'notificacaocontainer'
 
-    let txtnotificacao = document.getElementById('txtnotificacao')
-    let divnotificacao = document.getElementById('divnotificacao')
+    const txtnotificacao = document.createElement('h2')
+    txtnotificacao.id = 'txtnotificacao'
+    setSafeText(txtnotificacao, message)
 
-    divnotificacao.style.display = 'flex'
-    divnotificacao.style.animation = 'notificacaoanimacao 1.5s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+    notificacaoContainer.appendChild(txtnotificacao)
+    criarDivnNotificacao.appendChild(notificacaoContainer)
 
-    txtnotificacao.innerHTML = `${message}`
+    criarDivnNotificacao.style.display = 'flex'
+    criarDivnNotificacao.style.animation = 'notificacaoanimacao 1.5s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+
 
     setTimeout(function () {
 
-        divnotificacao.style.animation = 'notificacaoanimacaoinversa 3s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
+        criarDivnNotificacao.style.animation = 'notificacaoanimacaoinversa 3s cubic-bezier(0.19, 1, 0.22, 1) .1s both'
 
         setTimeout(function () {
 
-            divnotificacao.style.display = 'none'
+            criarDivnNotificacao.style.display = 'none'
             criarDivnNotificacao.remove()
         }, 3000)
 
