@@ -1,10 +1,10 @@
-function buildHudPanel(tagName, id, innerHTML) {
+function buildHudPanel(tagName, id, staticMarkup) {
     const panel = document.createElement(tagName)
     panel.id = id
     panel.style.display = 'flex'
     panel.setAttribute('onmouseover', 'overcreatehud()')
     panel.setAttribute('onmouseout', 'outcreatehud()')
-    panel.innerHTML = innerHTML
+    panel.innerHTML = staticMarkup
     menuShowUp.appendChild(panel)
     return panel
 }

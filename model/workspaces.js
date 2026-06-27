@@ -2,7 +2,6 @@ const { DataTypes } = require('sequelize')
 const database = require('../database/connect.js')
 const Users = require('./users.js')
 
-console.log(`> Reading model/workspaces.js`)
 const Workspaces = database.define('Workspaces', {
     id: {
         type: DataTypes.INTEGER,

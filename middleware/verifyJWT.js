@@ -6,9 +6,7 @@ require('dotenv').config()
 const jwtKey = process.env._JWTkey
 
 async function verifyJWT(req, res, next) {
-    const cookieToken = getCookieValue(req, 'st_auth')
-    const headerToken = req.headers['x-access-token']
-    const token = cookieToken || headerToken
+    const token = getCookieValue(req, 'st_auth')
 
     if (!token) {
         return res.status(401).json({ Error: 'Token not accepted' })
@@ -24,8 +22,6 @@ async function verifyJWT(req, res, next) {
             return res.status(401).json({ Error: 'Token not accepted' })
         }
 
-        console.log(`\n> Token accepted, identyfied as ${searchAll.email}`)
-
         req.authenticatedUserId = searchAll.id
         req.authenticatedUserEmail = searchAll.email
         req.authenticatedUser = searchAll
@@ -34,7 +30,6 @@ async function verifyJWT(req, res, next) {
         next()
     }
     catch (err) {
-        console.log(`X Failed at verifyJWT(), error: ${err}`)
         return res.status(401).json({ Error: 'Token not accepted' })
     }
 }

@@ -51,6 +51,6 @@ Super Task atualmente está em uma hospedagem totalmente gratuita.
 ---
 
 ## 🌐 Teste agora mesmo e envie seu feedback
-- https://www.mysupertask.shop
+- https://www.supertask.onrender.com
 - Caso deseja mandar uma sugestão, abra um ISSUE aqui mesmo no repositório do github!
 - Ao cadastrar, o aplicativo pedirá um email, mas por enquanto, não precisa ser um email válido.

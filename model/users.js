@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize')
 const database = require('../database/connect.js')
 
-console.log(`> Reading model/users.js`)
 const Users = database.define('users', {
     email: {
         type: DataTypes.STRING(100),

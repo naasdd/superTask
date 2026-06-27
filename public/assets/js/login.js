@@ -16,7 +16,6 @@ login.addEventListener('submit', async (event) => {
         window.location.href = 'index.html'
     }
     catch (error) {
-        console.log(error)
         setSafeText(mensagemErro, error.message)
     }
 })

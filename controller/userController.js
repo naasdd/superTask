@@ -19,13 +19,11 @@ const validateAccount = async (req, res) => {
             return res.status(err.statusCode).json({ Message: err.message })
         }
 
-        console.log(`X Failed at validateAccount, error: ${err}`)
         return res.status(500).json({ Message: 'Internal server error' })
     }
 }
 
 const signIn = async (req, res) => {
-    console.log(`\n\n> Route /signIn called.`)
     try {
         await userService.signUp(req.body)
         res.status(200).json({ Message: "User signed in." })
@@ -35,13 +33,11 @@ const signIn = async (req, res) => {
             return res.status(err.statusCode).json({ Message: err.message })
         }
 
-        console.log(`X Failed at signin, error: ${err}`)
         return res.status(500).json({ Message: 'Internal server error' })
     }
 }
 
 const logIn = async (req, res) => {
-    console.log(`\n\n> Route /logIn called.`)
     try {
         const { token, csrfToken } = await userService.logIn(req.body)
 
@@ -64,7 +60,6 @@ const logIn = async (req, res) => {
             return res.status(err.statusCode).json({ auth: false, Message: err.message })
         }
 
-        console.log(`X Error on route /logIn, error: ${err}`)
         return res.status(500).json({ Message: 'Internal server error' })
     }
 }
