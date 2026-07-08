@@ -1,0 +1,130 @@
+header {
+    border-right: solid 0px var(--icons);
+    animation: none;
+}
+
+.menu i:nth-child(3) {
+    font-size: 45px;
+    color: var(--roxo);
+    filter: drop-shadow(0px 0px 13px var(--roxo));
+    cursor: pointer;
+}
+
+
+
+.blur1,
+.blur2 {
+    background-color: var(--roxo);
+    display: flex;
+    animation: bluranimation 2s cubic-bezier(0.19, 1, 0.22, 1) .5s both;
+}
+
+#userIconMenu,
+#webSiteInfo {
+    border: solid 2px var(--roxo);
+    box-shadow: 0px 4px 250px 0px rgba(82, 77, 237, 0.2);
+}
+
+#userIconMenu>button,
+#webSiteInfo>button {
+    border: 1px solid var(--roxo);
+    box-shadow: 0px 0px 40px -16px var(--roxo);
+}
+
+#userIconMenu>button:hover,
+#webSiteInfo>button:hover {
+    background-color: var(--roxo);
+    text-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 40px -6px var(--roxo);
+}
+
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: calc(100vw - 150px);
+    margin-left: 150px;
+}
+
+#tituloPrincipal {
+    width: 100%;
+    padding: 30px 0;
+    font-weight: 900;
+    font-size: 40px;
+    text-align: center;
+}
+
+#tituloPrincipal h1 {
+    font-weight: 300;
+
+}
+
+#camadaOpcoes {
+    width: 95%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+#camadaOpcoes>button {
+    background-color: var(--roxoEscuro);
+    padding: 0 20px;
+    height: 70%;
+    font-size: 14px;
+    font-weight: 400;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+#containerSemanas {
+    width: 100%;
+    height: 1500px;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#containerSemanas .semana {
+    width: 95%;
+    min-height: 40vh;
+    background-color: var(--backgroundHeader);
+    border-radius: 20px;
+    padding: 10px;
+    z-index: 40;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    column-gap: 15px;
+}
+
+.semana .diaSemana {
+    border: solid 1px red;
+    background-color: var(--background);
+    border-radius: 15px;
+    border: solid 1px var(--background);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.diaSemana > h2{
+    width: 100%;
+    padding: 10px 0;
+    font-weight: 300;
+    text-align: center;
+}
+
+.atividadeSemanal{
+    border: solid 1px red;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+}
+
+.atividadeSemanal > input[type="checkbox"]{
+    margin-right: 5px;
+}
